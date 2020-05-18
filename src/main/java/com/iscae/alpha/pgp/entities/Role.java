@@ -16,6 +16,7 @@ public class Role {
 	@GeneratedValue
 	private Long idRole;
 	private String role;
+	
 	@OneToMany(mappedBy = "role", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Utilisateur> users;
 	

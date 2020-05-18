@@ -7,6 +7,7 @@ import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -24,11 +25,22 @@ public class Utilisateur implements Serializable {
 	
 	@ManyToOne
 	private Role role;
+	
 	@ManyToMany
+	@JoinTable(name = "Utilisateur_Profession")
 	private List<Profession> professions;
 	
 	@ManyToOne
 	private Projet projet;
+	
+	@ManyToOne
+	private Rapport rapport;
+
+	@ManyToOne
+	private Commentaire commentaire;
+	
+	@ManyToOne
+	private Entreprise entreprise;
 
 	public Utilisateur() {
 		super();
@@ -46,6 +58,15 @@ public class Utilisateur implements Serializable {
 		this.role = role;
 		this.professions = professions;
 		this.projet = projet;
+	}
+
+	
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
 	public String getNom() {
@@ -112,5 +133,11 @@ public class Utilisateur implements Serializable {
 		this.projet = projet;
 	}
 
-	
+	public Rapport getRapport() {
+		return rapport;
+	}
+
+	public void setRapport(Rapport rapport) {
+		this.rapport = rapport;
+	}
 }
