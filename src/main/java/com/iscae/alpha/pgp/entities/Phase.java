@@ -3,7 +3,7 @@ package com.iscae.alpha.pgp.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.swing.table.TableStringConverter;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Phase {
@@ -12,5 +12,8 @@ public class Phase {
 	private Long NumPhase;
 	private String titrePhase;
 	private String description;
+	
+	@ManyToOne
+	private Projet projet;
 
 }
