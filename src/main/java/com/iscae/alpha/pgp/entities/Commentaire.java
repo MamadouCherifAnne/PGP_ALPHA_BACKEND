@@ -1,7 +1,7 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,7 +19,7 @@ public class Commentaire implements Serializable{
 	private Long idComment;
 	
 	@Temporal(TemporalType.DATE)
-	private Date dateComment;
+	private java.util.Date dateComment;
 	private String comment;
 	
 	@OneToMany(mappedBy = "rapport", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -37,7 +37,7 @@ public class Commentaire implements Serializable{
 		this.user = user;
 	}
 
-	public Date getDateComment() {
+	public java.util.Date getDateComment() {
 		return dateComment;
 	}
 

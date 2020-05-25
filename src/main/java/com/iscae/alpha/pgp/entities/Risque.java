@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,14 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Risque {
+public class Risque implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long numRisque;
 	
 	private int probabliteRisque;
 	private int tauxImpact;
-	private  List<String> domaineImpacte;
+	private  String  domaineImpacte;
 	private String etat;
 	private String source;
 	
@@ -27,7 +28,7 @@ public class Risque {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Risque(int probabliteRisque, int tauxImpact, List<String> domaineImpacte, String etat, String source,
+	public Risque(int probabliteRisque, int tauxImpact, String domaineImpacte, String etat, String source,
 			Projet projet) {
 		super();
 		this.probabliteRisque = probabliteRisque;
@@ -54,11 +55,11 @@ public class Risque {
 		this.tauxImpact = tauxImpact;
 	}
 
-	public List<String> getDomaineImpacte() {
+	public String getDomaineImpacte() {
 		return domaineImpacte;
 	}
 
-	public void setDomaineImpacte(List<String> domaineImpacte) {
+	public void setDomaineImpacte(String domaineImpacte) {
 		this.domaineImpacte = domaineImpacte;
 	}
 

@@ -1,6 +1,7 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.File;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Fichier {
+public class Fichier implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long NumFichier;

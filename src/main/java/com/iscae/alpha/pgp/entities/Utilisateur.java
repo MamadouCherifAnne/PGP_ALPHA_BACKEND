@@ -20,7 +20,9 @@ public class Utilisateur implements Serializable {
 	private String nom;
 	private String prenom;
 	private String email;
+	private String password;
 	private String adresse;
+	private boolean actif;
 	private String telephone;
 	
 	@ManyToOne
@@ -47,26 +49,23 @@ public class Utilisateur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(String nom, String prenom, String email, String adresse, String telephone, Role role,
-			List<Profession> professions, Projet projet) {
+	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
+			String telephone, Role role, List<Profession> professions, Projet projet, Rapport rapport,
+			Commentaire commentaire, Entreprise entreprise) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
+		this.password = password;
 		this.adresse = adresse;
+		this.actif = actif;
 		this.telephone = telephone;
 		this.role = role;
 		this.professions = professions;
 		this.projet = projet;
-	}
-
-	
-	public int getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+		this.rapport = rapport;
+		this.commentaire = commentaire;
+		this.entreprise = entreprise;
 	}
 
 	public String getNom() {
@@ -93,12 +92,28 @@ public class Utilisateur implements Serializable {
 		this.email = email;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getAdresse() {
 		return adresse;
 	}
 
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
+	}
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
 	}
 
 	public String getTelephone() {
@@ -140,4 +155,22 @@ public class Utilisateur implements Serializable {
 	public void setRapport(Rapport rapport) {
 		this.rapport = rapport;
 	}
+
+	public Commentaire getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(Commentaire commentaire) {
+		this.commentaire = commentaire;
+	}
+
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
+	}
+	
 }
+	

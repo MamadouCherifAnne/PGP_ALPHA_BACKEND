@@ -1,5 +1,7 @@
 package com.iscae.alpha.pgp.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Depense {
+public class Depense implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long NumDepense;

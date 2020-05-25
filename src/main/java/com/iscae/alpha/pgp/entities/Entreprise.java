@@ -6,9 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 @Entity
 public class Entreprise implements Serializable{
+	@Id
+	@GeneratedValue
 	private Long idEntreprise;
 	private String nameEntreprise;
 	private String domaine_Entreprise;

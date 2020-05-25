@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Tache {
+public class Tache implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long NumTache;
@@ -34,7 +35,7 @@ public class Tache {
 	@OneToOne
 	private Facture facture;
 	
-	@OneToMany(mappedBy = "tahe" )
+	@OneToMany(mappedBy = "tache" )
 	private List<Depense> depenses;
 	
 	@OneToMany(mappedBy = "tacheConcerne")

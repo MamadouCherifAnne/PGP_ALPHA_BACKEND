@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Profession {
+public class Profession implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long NumProfession;
