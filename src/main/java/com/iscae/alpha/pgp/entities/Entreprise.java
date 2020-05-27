@@ -6,28 +6,33 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 @Entity
 public class Entreprise implements Serializable{
+	@Id
+	@GeneratedValue
 	private Long idEntreprise;
 	private String nameEntreprise;
 	private String domaine_Entreprise;
 	private String adresse;
 	
-	@OneToMany(mappedBy = "rapport", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Utilisateur> users;
+	@ManyToOne
+	private Utilisateur user;
 
 	public Entreprise() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Entreprise(String nameEntreprise, String domaine_Entreprise, String adresse, List<Utilisateur> users) {
-		super();
-		this.nameEntreprise = nameEntreprise;
-		this.domaine_Entreprise = domaine_Entreprise;
-		this.adresse = adresse;
-		this.users = users;
+	public Long getIdEntreprise() {
+		return idEntreprise;
+	}
+
+	public void setIdEntreprise(Long idEntreprise) {
+		this.idEntreprise = idEntreprise;
 	}
 
 	public String getNameEntreprise() {
@@ -54,13 +59,14 @@ public class Entreprise implements Serializable{
 		this.adresse = adresse;
 	}
 
-	public List<Utilisateur> getUsers() {
-		return users;
+	public Utilisateur getUser() {
+		return user;
 	}
 
-	public void setUsers(List<Utilisateur> users) {
-		this.users = users;
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
+
 	
 	 
 }

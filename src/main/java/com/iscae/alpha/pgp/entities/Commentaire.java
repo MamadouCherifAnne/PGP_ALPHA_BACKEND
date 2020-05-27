@@ -1,7 +1,7 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,19 +23,27 @@ public class Commentaire implements Serializable{
 	private Date dateComment;
 	private String comment;
 	
-	@OneToMany(mappedBy = "rapport", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Utilisateur> user;
+	@ManyToOne
+	private Utilisateur user;
 
 	public Commentaire() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Commentaire(Date dateComment, String comment, List<Utilisateur> user) {
+	public Commentaire(Date dateComment, String comment, Utilisateur user) {
 		super();
 		this.dateComment = dateComment;
 		this.comment = comment;
 		this.user = user;
+	}
+
+	public Long getIdComment() {
+		return idComment;
+	}
+
+	public void setIdComment(Long idComment) {
+		this.idComment = idComment;
 	}
 
 	public Date getDateComment() {
@@ -53,13 +62,17 @@ public class Commentaire implements Serializable{
 		this.comment = comment;
 	}
 
-	public List<Utilisateur> getUser() {
+	public Utilisateur getUser() {
 		return user;
 	}
 
-	public void setUser(List<Utilisateur> user) {
+	public void setUser(Utilisateur user) {
 		this.user = user;
 	}
+
+	
+	
+
 	
 	
 }

@@ -35,4 +35,87 @@ public class Projet {
 	 
 	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
+
+	public Projet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Projet(String nomProjet, Date debutProjet, Date finProjet, String zoneRealisation,
+			List<Utilisateur> responsables, List<Risque> risques, List<Phase> phases) {
+		super();
+		this.nomProjet = nomProjet;
+		this.debutProjet = debutProjet;
+		this.finProjet = finProjet;
+		this.zoneRealisation = zoneRealisation;
+		this.responsables = responsables;
+		this.risques = risques;
+		this.phases = phases;
+	}
+
+	public Long getNumProjet() {
+		return NumProjet;
+	}
+
+	public void setNumProjet(Long numProjet) {
+		NumProjet = numProjet;
+	}
+
+	public String getNomProjet() {
+		return nomProjet;
+	}
+
+	public void setNomProjet(String nomProjet) {
+		this.nomProjet = nomProjet;
+	}
+
+	public Date getDebutProjet() {
+		return debutProjet;
+	}
+
+	public void setDebutProjet(Date debutProjet) {
+		this.debutProjet = debutProjet;
+	}
+
+	public Date getFinProjet() {
+		return finProjet;
+	}
+
+	public void setFinProjet(Date finProjet) {
+		this.finProjet = finProjet;
+	}
+
+	public String getZoneRealisation() {
+		return zoneRealisation;
+	}
+
+	public void setZoneRealisation(String zoneRealisation) {
+		this.zoneRealisation = zoneRealisation;
+	}
+
+	public List<Utilisateur> getResponsables() {
+		return responsables;
+	}
+
+	public void setResponsables(List<Utilisateur> responsables) {
+		this.responsables = responsables;
+	}
+
+	public List<Risque> getRisques() {
+		return risques;
+	}
+
+	public void setRisques(List<Risque> risques) {
+		this.risques = risques;
+	}
+
+	public List<Phase> getPhases() {
+		return phases;
+	}
+
+	public void setPhases(List<Phase> phases) {
+		this.phases = phases;
+	}
+	 
+	 
 }

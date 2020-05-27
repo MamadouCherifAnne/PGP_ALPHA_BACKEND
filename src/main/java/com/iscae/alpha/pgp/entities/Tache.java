@@ -28,17 +28,16 @@ public class Tache {
 	private double chargeTache;
 	private String niveauPriorite;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne()
 	private Phase phase;
 	
 	@OneToOne
 	private Facture facture;
 	
-	@OneToMany(mappedBy = "tahe" )
+	@OneToMany(mappedBy = "tache" )
 	private List<Depense> depenses;
 	
 	@OneToMany(mappedBy = "tacheConcerne")
-	
 	private List<Fichier> fichiers;
 	
 	

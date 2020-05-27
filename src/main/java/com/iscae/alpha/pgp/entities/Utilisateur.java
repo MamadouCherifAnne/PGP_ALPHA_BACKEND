@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Utilisateur implements Serializable {
@@ -33,14 +36,14 @@ public class Utilisateur implements Serializable {
 	@ManyToOne
 	private Projet projet;
 	
-	@ManyToOne
-	private Rapport rapport;
+	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Rapport> rapports;
 
-	@ManyToOne
-	private Commentaire commentaire;
+	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Commentaire> commentaires;
 	
-	@ManyToOne
-	private Entreprise entreprise;
+	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Entreprise> entreprises;
 
 	public Utilisateur() {
 		super();
@@ -48,7 +51,8 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String email, String adresse, String telephone, Role role,
-			List<Profession> professions, Projet projet) {
+			List<Profession> professions, Projet projet, List<Rapport> rapports, List<Commentaire> commentaires,
+			List<Entreprise> entreprises) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -58,9 +62,11 @@ public class Utilisateur implements Serializable {
 		this.role = role;
 		this.professions = professions;
 		this.projet = projet;
+		this.rapports = rapports;
+		this.commentaires = commentaires;
+		this.entreprises = entreprises;
 	}
 
-	
 	public int getIdUser() {
 		return idUser;
 	}
@@ -133,11 +139,29 @@ public class Utilisateur implements Serializable {
 		this.projet = projet;
 	}
 
-	public Rapport getRapport() {
-		return rapport;
+	public List<Rapport> getRapports() {
+		return rapports;
 	}
 
-	public void setRapport(Rapport rapport) {
-		this.rapport = rapport;
+	public void setRapports(List<Rapport> rapports) {
+		this.rapports = rapports;
 	}
+
+	public List<Commentaire> getCommentaires() {
+		return commentaires;
+	}
+
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+
+	public List<Entreprise> getEntreprises() {
+		return entreprises;
+	}
+
+	public void setEntreprises(List<Entreprise> entreprises) {
+		this.entreprises = entreprises;
+	}
+	
+	
 }

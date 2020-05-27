@@ -15,6 +15,50 @@ public class Facture {
 	
 	@OneToOne(mappedBy = "facture")
 	private Tache tache;
-	
 
+	public Facture() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Facture(String codeFacture, double montantFacture, Tache tache) {
+		super();
+		this.codeFacture = codeFacture;
+		this.montantFacture = montantFacture;
+		this.tache = tache;
+	}
+
+	public Long getNumFacture() {
+		return NumFacture;
+	}
+
+	public void setNumFacture(Long numFacture) {
+		NumFacture = numFacture;
+	}
+
+	public String getCodeFacture() {
+		return codeFacture;
+	}
+
+	public void setCodeFacture(String codeFacture) {
+		this.codeFacture = codeFacture;
+	}
+
+	public double getMontantFacture() {
+		return montantFacture;
+	}
+
+	public void setMontantFacture(double montantFacture) {
+		this.montantFacture = montantFacture;
+	}
+
+	public Tache getTache() {
+		return tache;
+	}
+
+	public void setTache(Tache tache) {
+		this.tache = tache;
+	}
+	
+	
 }

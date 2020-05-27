@@ -19,6 +19,42 @@ public class Role {
 	
 	@OneToMany(mappedBy = "role", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Utilisateur> users;
-	
 
+	public Role() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Role(Long idRole, String role, List<Utilisateur> users) {
+		super();
+		this.idRole = idRole;
+		this.role = role;
+		this.users = users;
+	}
+
+	public Long getIdRole() {
+		return idRole;
+	}
+
+	public void setIdRole(Long idRole) {
+		this.idRole = idRole;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public List<Utilisateur> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<Utilisateur> users) {
+		this.users = users;
+	}
+	
+	
 }

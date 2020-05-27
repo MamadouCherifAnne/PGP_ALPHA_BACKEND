@@ -1,7 +1,7 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,15 +25,15 @@ public class Rapport implements Serializable{
 	private Date dateAjout;
 	private String description;
 	
-	@OneToMany(mappedBy = "rapport", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Utilisateur> user;
+	@ManyToOne
+	private Utilisateur user;
 
 	public Rapport() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Rapport(String nameRapport, Date dateAjout, String description, List<Utilisateur> user) {
+	public Rapport(String nameRapport, Date dateAjout, String description, Utilisateur user) {
 		super();
 		this.nameRapport = nameRapport;
 		this.dateAjout = dateAjout;
@@ -72,13 +73,14 @@ public class Rapport implements Serializable{
 		this.description = description;
 	}
 
-	public List<Utilisateur> getUser() {
+	public Utilisateur getUser() {
 		return user;
 	}
 
-	public void setUser(List<Utilisateur> user) {
+	public void setUser(Utilisateur user) {
 		this.user = user;
 	}
+
 	
 	
 }

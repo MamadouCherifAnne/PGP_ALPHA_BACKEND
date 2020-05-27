@@ -15,6 +15,7 @@ public class Risque {
 	
 	private int probabliteRisque;
 	private int tauxImpact;
+	
 	private  List<String> domaineImpacte;
 	private String etat;
 	private String source;

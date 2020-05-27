@@ -16,7 +16,7 @@ public class Depense {
 	private double coutDepense;
 	private String description;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne()
 	private Tache tache;
 
 	public Depense() {
