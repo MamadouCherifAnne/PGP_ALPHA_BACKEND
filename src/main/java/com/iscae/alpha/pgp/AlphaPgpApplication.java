@@ -13,7 +13,7 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackageClasses = UtilisateurRepository.class)
+
 public class AlphaPgpApplication {
 
 	public static void main(String[] args) {

@@ -4,19 +4,22 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Utilisateur implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	private int idUser;
+	private Long idUser;
+	@Column(unique = true)
 	private String nom;
 	private String prenom;
 	private String email;
@@ -35,14 +38,14 @@ public class Utilisateur implements Serializable {
 	@ManyToOne
 	private Projet projet;
 	
-	@ManyToOne
-	private Rapport rapport;
+	@OneToMany
+	private List<Rapport> rapport;
 
-	@ManyToOne
-	private Commentaire commentaire;
+	@OneToMany
+	private List<Commentaire> commentaire;
 	
-	@ManyToOne
-	private Entreprise entreprise;
+	@OneToMany
+	private List<Entreprise> entreprise;
 
 	public Utilisateur() {
 		super();
@@ -50,8 +53,8 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
-			String telephone, Role role, List<Profession> professions, Projet projet, Rapport rapport,
-			Commentaire commentaire, Entreprise entreprise) {
+			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapport,
+			List<Commentaire> commentaire, List<Entreprise> entreprise) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -86,6 +89,11 @@ public class Utilisateur implements Serializable {
 
 	public String getEmail() {
 		return email;
+	}
+	
+
+	public Long getIdUser() {
+		return idUser;
 	}
 
 	public void setEmail(String email) {
@@ -132,6 +140,10 @@ public class Utilisateur implements Serializable {
 		this.role = role;
 	}
 
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+
 	public List<Profession> getProfessions() {
 		return professions;
 	}
@@ -148,27 +160,27 @@ public class Utilisateur implements Serializable {
 		this.projet = projet;
 	}
 
-	public Rapport getRapport() {
+	public List<Rapport> getRapport() {
 		return rapport;
 	}
 
-	public void setRapport(Rapport rapport) {
+	public void setRapport(List<Rapport> rapport) {
 		this.rapport = rapport;
 	}
 
-	public Commentaire getCommentaire() {
+	public List<Commentaire> getCommentaire() {
 		return commentaire;
 	}
 
-	public void setCommentaire(Commentaire commentaire) {
+	public void setCommentaire(List<Commentaire> commentaire) {
 		this.commentaire = commentaire;
 	}
 
-	public Entreprise getEntreprise() {
+	public List<Entreprise> getEntreprise() {
 		return entreprise;
 	}
 
-	public void setEntreprise(Entreprise entreprise) {
+	public void setEntreprise(List<Entreprise> entreprise) {
 		this.entreprise = entreprise;
 	}
 	
