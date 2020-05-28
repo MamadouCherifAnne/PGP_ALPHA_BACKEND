@@ -23,7 +23,9 @@ public class Utilisateur implements Serializable {
 	private String nom;
 	private String prenom;
 	private String email;
+	private String password;
 	private String adresse;
+	private boolean actif;
 	private String telephone;
 	
 	@ManyToOne
@@ -36,13 +38,13 @@ public class Utilisateur implements Serializable {
 	@ManyToOne
 	private Projet projet;
 	
-	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
 	private List<Rapport> rapports;
 
 	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Commentaire> commentaires;
 	
-	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
 	private List<Entreprise> entreprises;
 
 	public Utilisateur() {
@@ -50,14 +52,17 @@ public class Utilisateur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(String nom, String prenom, String email, String adresse, String telephone, Role role,
+	public Utilisateur(String nom, String prenom, String email, String password, boolean actif, String adresse, String telephone, Role role,
 			List<Profession> professions, Projet projet, List<Rapport> rapports, List<Commentaire> commentaires,
 			List<Entreprise> entreprises) {
+
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
+		this.password = password;
 		this.adresse = adresse;
+		this.actif = actif;
 		this.telephone = telephone;
 		this.role = role;
 		this.professions = professions;
@@ -99,12 +104,28 @@ public class Utilisateur implements Serializable {
 		this.email = email;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getAdresse() {
 		return adresse;
 	}
 
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
+	}
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
 	}
 
 	public String getTelephone() {
@@ -162,6 +183,7 @@ public class Utilisateur implements Serializable {
 	public void setEntreprises(List<Entreprise> entreprises) {
 		this.entreprises = entreprises;
 	}
-	
+
 	
 }
+	

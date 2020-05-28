@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Role {
+public class Role implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long idRole;
@@ -20,17 +21,18 @@ public class Role {
 	@OneToMany(mappedBy = "role", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Utilisateur> users;
 
+
 	public Role() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Role(Long idRole, String role, List<Utilisateur> users) {
+	public Role(String role, List<Utilisateur> users) {
 		super();
-		this.idRole = idRole;
 		this.role = role;
 		this.users = users;
 	}
+
 
 	public Long getIdRole() {
 		return idRole;

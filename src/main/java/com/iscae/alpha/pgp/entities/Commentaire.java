@@ -20,7 +20,7 @@ public class Commentaire implements Serializable{
 	private Long idComment;
 	
 	@Temporal(TemporalType.DATE)
-	private Date dateComment;
+	private java.util.Date dateComment;
 	private String comment;
 	
 	@ManyToOne
@@ -37,6 +37,7 @@ public class Commentaire implements Serializable{
 		this.comment = comment;
 		this.user = user;
 	}
+
 
 	public Long getIdComment() {
 		return idComment;

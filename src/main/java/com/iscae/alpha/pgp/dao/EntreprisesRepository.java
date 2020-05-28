@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.iscae.alpha.pgp.entities.Entreprise;
 
-public interface EntrepriseRepository extends JpaRepository<Entreprise, Long> {
+public interface EntreprisesRepository extends JpaRepository<Entreprise, Long> {
 
 }

@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Tache {
+public class Tache implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long NumTache;

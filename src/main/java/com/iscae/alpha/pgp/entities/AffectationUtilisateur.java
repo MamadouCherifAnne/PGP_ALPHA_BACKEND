@@ -1,11 +1,15 @@
 package com.iscae.alpha.pgp.entities;
 
-import javax.persistence.EmbeddedId;
+import java.io.Serializable;
 
-public class AffectationUtilisateur {
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+
+@Entity
+public class AffectationUtilisateur implements Serializable {
 
 	@EmbeddedId
-	private AffectationUtilisateur user_task;
+	private UserToTache user_task;
 	
 	private double tempsPasser;
 
@@ -14,17 +18,17 @@ public class AffectationUtilisateur {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AffectationUtilisateur(AffectationUtilisateur user_task, double tempsPasser) {
+	public AffectationUtilisateur(UserToTache user_task, double tempsPasser) {
 		super();
 		this.user_task = user_task;
 		this.tempsPasser = tempsPasser;
 	}
 
-	public AffectationUtilisateur getUser_task() {
+	public UserToTache getUser_task() {
 		return user_task;
 	}
 
-	public void setUser_task(AffectationUtilisateur user_task) {
+	public void setUser_task(UserToTache user_task) {
 		this.user_task = user_task;
 	}
 
