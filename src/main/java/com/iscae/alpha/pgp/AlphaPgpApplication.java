@@ -8,6 +8,7 @@ public class AlphaPgpApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AlphaPgpApplication.class, args);
+		
 	}
 
 }
