@@ -83,6 +83,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			if(user.getProfessions()!= null) {
 			for (Profession p : user.getProfessions()) {
 				p.getUtilisateurs().remove(user);
+				
 			}
 			}
 			// Suppression de L'utilisateur dans la liste de role avec aui il est en relation
