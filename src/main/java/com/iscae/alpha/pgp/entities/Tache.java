@@ -65,6 +65,18 @@ public class Tache implements Serializable {
 		this.fichiers = fichiers;
 	}
 
+	
+
+	public Long getNumTache() {
+		return NumTache;
+	}
+
+
+
+	public void setNumTache(Long numTache) {
+		NumTache = numTache;
+	}
+
 
 
 	public String getNomTache() {

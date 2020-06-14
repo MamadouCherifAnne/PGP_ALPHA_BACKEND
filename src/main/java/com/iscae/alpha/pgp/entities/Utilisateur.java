@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Generated;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,8 @@ public class Utilisateur implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	private int idUser;
+	private Long idUser;
+	@Column(unique = true)
 	private String nom;
 	private String prenom;
 	private String email;
@@ -47,6 +49,16 @@ public class Utilisateur implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private List<Entreprise> entreprises;
 
+	@OneToMany
+	private List<Rapport> rapport;
+
+	@OneToMany
+	private List<Commentaire> commentaire;
+	
+	@OneToMany
+	private List<Entreprise> entreprise;
+
+
 	public Utilisateur() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -72,11 +84,11 @@ public class Utilisateur implements Serializable {
 		this.entreprises = entreprises;
 	}
 
-	public int getIdUser() {
+	public Long getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(int idUser) {
+	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
 	}
 
@@ -183,6 +195,32 @@ public class Utilisateur implements Serializable {
 	public void setEntreprises(List<Entreprise> entreprises) {
 		this.entreprises = entreprises;
 	}
+
+	public List<Rapport> getRapport() {
+		return rapport;
+	}
+
+	public void setRapport(List<Rapport> rapport) {
+		this.rapport = rapport;
+	}
+
+	public List<Commentaire> getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(List<Commentaire> commentaire) {
+		this.commentaire = commentaire;
+	}
+
+	public List<Entreprise> getEntreprise() {
+		return entreprise;
+	}
+
+	public void setEntreprise(List<Entreprise> entreprise) {
+		this.entreprise = entreprise;
+	}
+
+	
 
 	
 }

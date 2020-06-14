@@ -9,5 +9,6 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
 
-	Projet findByDateDebut(Date date);
+	Projet findByDebutProjet(Date date);
+	Projet findByFinProjet(Date dateFin);
 }

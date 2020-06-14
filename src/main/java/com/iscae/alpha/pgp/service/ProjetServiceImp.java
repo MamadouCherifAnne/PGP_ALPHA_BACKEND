@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.ProjetRepository;
 import com.iscae.alpha.pgp.entities.Projet;
 
+@Service 
 public class ProjetServiceImp implements ProjetService{
 	
 	@Autowired
@@ -20,7 +22,7 @@ public class ProjetServiceImp implements ProjetService{
 	}
 
 	@Override
-	public void updateProjet(Projet projet) {
+	public boolean updateProjet(Projet projet) {
 		Optional<Projet> projet1 = projetRepository.findById(projet.getNumProjet());
 		
 		if(projet1 != null) {
@@ -34,7 +36,9 @@ public class ProjetServiceImp implements ProjetService{
 			projet2.setRisques(projet.getRisques());
 			
 			projetRepository.save(projet2);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -57,7 +61,7 @@ public class ProjetServiceImp implements ProjetService{
 
 	@Override
 	public Projet findByDateDebut(Date dateDebut) {
-		Projet projet = projetRepository.findByDateDebut(dateDebut);
+		Projet projet = projetRepository.findByDebutProjet(dateDebut);
 		return projet;
 	}
 
@@ -71,6 +75,12 @@ public class ProjetServiceImp implements ProjetService{
 	public Projet export(Projet projet) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Projet findByDateFin(Date dateFin) {
+		Projet projet = projetRepository.findByFinProjet(dateFin);
+		return projet;
 	}
 
 }

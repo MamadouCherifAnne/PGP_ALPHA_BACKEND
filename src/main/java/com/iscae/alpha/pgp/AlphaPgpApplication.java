@@ -14,7 +14,6 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackageClasses = UtilisateurRepository.class)
 public class AlphaPgpApplication {
 
 	public static void main(String[] args) {
@@ -28,7 +27,7 @@ public class AlphaPgpApplication {
 			userRepo.save(new Utilisateur("user2020", "baba", "mmd@pg", "12345", "nktt", true, "45", r2, null, null, null, null, null));
 		}*/
 		
-		ProjetRepository projetRepository = ctx.getBean(ProjetRepository.class);
+		/*ProjetRepository projetRepository = ctx.getBean(ProjetRepository.class);
 		
 		Projet projet = new Projet();
 		projet.setNumProjet(1L);
@@ -39,7 +38,7 @@ public class AlphaPgpApplication {
 		projet.setResponsables(null);
 		projet.setRisques(null);
 		projet.setZoneRealisation("Bababé");
-		projetRepository.save(projet);
+		projetRepository.save(projet);*/
 		
 	}
 

@@ -8,7 +8,7 @@ public interface PhaseService {
 	
 	Phase addPhase(Phase phase);
 	void deleatePhase(Long phaseId);
-	Phase updatePhaseE(Phase phase);
+	boolean updatePhase(Phase phase);
 	Phase findPHhaseById(Long phaseId);
 	List<Phase> findAllPhase();
 	
