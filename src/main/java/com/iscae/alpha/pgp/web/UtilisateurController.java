@@ -38,15 +38,15 @@ public class UtilisateurController {
 		return userService.getAllUsers();
 	}
 	
-	@PostMapping("/delete/{id}")
-	public String deleteUser(@PathVariable Long id) {
+	@PostMapping(value="/delete/{id}", consumes="application/json", produces="application/json")
+	public boolean deleteUser(@PathVariable Long id) {
 		boolean deleteResult=false;
 		
 		 deleteResult=userService.deleteUser(id);
 		if(deleteResult==true) {
-		return "SUCCESS";
+		return true;
 	}else {
-		return "La suppression a echoué";
+		return false;
 		}
 	}
 	
@@ -54,6 +54,13 @@ public class UtilisateurController {
 	public Utilisateur getUserByName(@PathVariable String prenom){
 		
 		return userService.getUserByName(prenom);
+		
+	}
+	
+	@GetMapping("/findUser/{id}")
+	public Utilisateur getUserById(@PathVariable Long id){
+		
+		return userService.getUserById(id);
 		
 	}
 	

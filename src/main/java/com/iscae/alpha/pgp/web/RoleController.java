@@ -33,8 +33,9 @@ public class RoleController {
 	public String updateRole(@PathVariable Long id, @RequestBody Role role) {
 		role.setIdRole(id);
 		try {
-				roleService.updateRole(role);
 				LOGGER.debug("La suppression est bonne");
+				roleService.updateRole(role);
+				
 				return "Modification effectué avec succes";
 		}
 		catch(Exception updateException) {
@@ -43,11 +44,19 @@ public class RoleController {
 		}
 	}
 	
-	@PostMapping("/delete/{id}")
-	public String deleteRole(@PathVariable Long id) {
-		
+	@PostMapping(value="/delete/{id}", produces="application/json")
+	public boolean deleteRole(@PathVariable Long id) {
+		boolean retour=false;
 		LOGGER.debug("Suppresion d'un role ");
-		return roleService.deleteRole(id);
+		retour = roleService.deleteRole(id);
+		String message="";
+		if(retour == true) {
+			message="Suppression reussie";
+			return true ;
+		}else {
+			message ="La suppression a echoue";
+			return false ;
+		}
 	}
 	
 	@GetMapping("/all")

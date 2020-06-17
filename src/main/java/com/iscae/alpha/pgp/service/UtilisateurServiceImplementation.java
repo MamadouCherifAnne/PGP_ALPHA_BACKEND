@@ -59,6 +59,10 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			oldUser.setEmail(user.getEmail());
 			oldUser.setTelephone(user.getTelephone());
 			oldUser.setPrenom(user.getPrenom());
+			oldUser.setRole(user.getRole());
+			oldUser.setProfessions(user.getProfessions());
+			oldUser.setRapport(user.getRapport());
+			oldUser.setCommentaire(user.getCommentaire());
 			
 			if(userRepository.findByNom(user.getNom())==null) {
 			oldUser.setNom(user.getNom());
@@ -108,6 +112,20 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	public Utilisateur getUserByName(String prenom) {
 		
 			return userRepository.findByNom(prenom);
+	}
+
+
+
+	@Override
+	public Utilisateur getUserById(Long id) {
+		Utilisateur user = new Utilisateur();
+		Optional<Utilisateur> verifUser = userRepository.findByIdUser(id);
+		if(verifUser != null) {
+			 user = userRepository.getOne(id);
+			 return user;
+		}else {
+			return null;
+		}
 	}
 
 }

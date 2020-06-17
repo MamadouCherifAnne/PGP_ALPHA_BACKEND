@@ -18,4 +18,7 @@ public interface UtilisateurService {
 	
 	// Rechercher Un utilisateur par son Nom
 	public Utilisateur getUserByName(String nom);
+	
+	// Recherche par identifiant
+	public Utilisateur getUserById(Long id);
 }

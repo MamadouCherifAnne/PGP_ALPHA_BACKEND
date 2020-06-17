@@ -8,7 +8,7 @@ public interface ProfessionService {
 	
 	Profession addProfession(Profession profession);
 	Profession updateProfession(Profession profession);
-	void deleateProfession(Long idProfession);
+	boolean deleteProfession(Long idProfession);
 	Profession findProfessionById(Long idProfession);
 	public List<Profession> getAllProfession();
 }
