@@ -10,6 +10,10 @@ public class UserToTache implements Serializable {
 	private Long idTache;
 	
 	
+	public UserToTache() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public UserToTache(Long idUser, Long idTache) {
 		super();
 		this.idUser = idUser;

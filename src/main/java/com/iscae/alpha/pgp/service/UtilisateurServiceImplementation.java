@@ -60,7 +60,19 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			oldUser.setTelephone(user.getTelephone());
 			oldUser.setPrenom(user.getPrenom());
 			oldUser.setRole(user.getRole());
-			oldUser.setProfessions(user.getProfessions());
+			
+			// actualiser la profession
+			if(user.getProfessions() !=null) {
+				List<Profession> listprof =new ArrayList<>();
+				
+				for(Profession p:user.getProfessions()) {
+				listprof.add(profRepo.findByNumProfession(p.getNumProfession()).get());
+				}
+			oldUser.setProfessions(listprof);	
+			}
+			
+			
+			////////////////////////////////////////////////////////////////////////////
 			oldUser.setRapport(user.getRapport());
 			oldUser.setCommentaire(user.getCommentaire());
 			

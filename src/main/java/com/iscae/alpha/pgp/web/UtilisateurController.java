@@ -79,6 +79,7 @@ public class UtilisateurController {
 	@PostMapping("/update/{id}")
 	public String updateUser(@PathVariable Long id,@RequestBody Utilisateur user) {
 		try {
+			System.out.println("#############3"+user.getProfessions());
 		user.setIdUser(id);
 		userService.updateUser(user);
 		return "Succes";

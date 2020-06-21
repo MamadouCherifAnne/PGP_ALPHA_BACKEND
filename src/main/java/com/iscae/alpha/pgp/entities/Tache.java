@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 public class Tache implements Serializable {
 	@Id
 	@GeneratedValue
-	private Long NumTache;
+	private Long numTache;
 	private String nomTache;
 	@Temporal(TemporalType.DATE)
 	private Date debutTache;
@@ -183,6 +183,18 @@ public class Tache implements Serializable {
 
 	public void setFichiers(List<Fichier> fichiers) {
 		this.fichiers = fichiers;
+	}
+
+
+
+	public Long getNumTache() {
+		return numTache;
+	}
+
+
+
+	public void setNumTache(Long numTache) {
+		this.numTache = numTache;
 	}
 	
 	
