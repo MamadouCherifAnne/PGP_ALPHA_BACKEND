@@ -30,7 +30,10 @@ public class ProfessionServiceImplementation implements ProfessionService {
 	@Override
 	public Profession updateProfession(Profession profession) {
 		// TODO Auto-generated method stub
-		return null;
+		Profession p=profRepo.getOne(profession.getNumProfession());
+		p.setTitreProfession(profession.getTitreProfession());
+		
+		return profRepo.save(p);
 	}
 
 	@Override

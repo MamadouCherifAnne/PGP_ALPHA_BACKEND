@@ -27,6 +27,17 @@ public class ProfessionController {
 		
 	}
 	
+	// Modification d' une profession
+	@PostMapping(value="/update/{idProf}", consumes= {"application/json"})
+	public String updateProfession(@RequestBody Profession prof, @PathVariable Long idProf ) {
+		prof.setNumProfession((idProf));
+		Profession verifProf =profService.updateProfession(prof);
+		if(verifProf!=null) {
+		return "Succesfuly";}
+		else {
+			return "Echec de modification";
+		}
+	}
 	
 	//supprimer une profession
 	
