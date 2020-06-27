@@ -1,6 +1,8 @@
 package com.iscae.alpha.pgp.service;
 
+
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.RoleRepository;
 import com.iscae.alpha.pgp.entities.Role;
+
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
@@ -25,6 +28,7 @@ public class RoleServiceImplementation implements  RoleService {
 	@Override
 	public Role updateRole(Role role) {
 		// TODO Auto-generated method stub
+
 		Role oldRole= roleRepo.getOne(role.getIdRole());
 		
 		// Set new Values

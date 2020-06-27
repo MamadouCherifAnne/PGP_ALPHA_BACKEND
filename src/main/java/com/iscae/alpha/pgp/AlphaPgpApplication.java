@@ -21,25 +21,10 @@ public class AlphaPgpApplication {
 
 
 		ApplicationContext ctx= SpringApplication.run(AlphaPgpApplication.class, args);
-		/*	RoleRepository roleRepo=ctx.getBean(RoleRepository.class);
-			UtilisateurRepository userRepo=ctx.getBean(UtilisateurRepository.class);
-			
-			Role r2=roleRepo.save(new Role("USER", null));
-			userRepo.save(new Utilisateur("user2020", "baba", "mmd@pg", "12345", "nktt", true, "45", r2, null, null, null, null, null));
-		}*/
-		
+	
+
 		ProjetRepository projetRepository = ctx.getBean(ProjetRepository.class);
-		
-		Projet projet = new Projet();
-		projet.setNumProjet(1L);
-		projet.setDebutProjet(null);
-		projet.setFinProjet(null);
-		projet.setNomProjet("first projet");
-		projet.setPhases(null);
-		projet.setResponsables(null);
-		projet.setRisques(null);
-		projet.setZoneRealisation("Bababé");
-		projetRepository.save(projet);
+
 		
 	}
 

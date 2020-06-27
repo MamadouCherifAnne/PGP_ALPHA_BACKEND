@@ -1,11 +1,13 @@
 package com.iscae.alpha.pgp.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,16 +44,19 @@ public class UtilisateurServiceTest {
 	@Test
 	public void DeleteUserTest() {
 		
+
 		Utilisateur user=getUtilisateur();
 		user.setIdUser(1L);
 		Mockito.when(userRepo.getOne(1L)).thenReturn(user);
 		Mockito.when(userRepo.existsById(user.getIdUser())).thenReturn(false);
 		assertTrue(userService.deleteUser(1L));
+
 	}
 	
 	// Test du service modification des informations d'un utilsateur
 	@Test
 	public void UpdateUtilisateurTest() {
+
 		Utilisateur user=getUtilisateur();
 		user.setIdUser(1L);
 		
@@ -93,12 +98,13 @@ public class UtilisateurServiceTest {
 	public Utilisateur getUtilisateur() {
 		Utilisateur user=new Utilisateur();
 		user.setNom("Bilalapgp");
+
 		user.setAdresse("KSAR");
 		user.setActif(true);
 		user.setPrenom("Samba");
 		user.setTelephone("454566");
-		user.setCommentaire(null);
-		user.setEntreprise(null);
+		user.setCommentaires(null);
+		user.setEntreprises(null);
 		user.setEmail("pgp@gamil.com");
 		return user;
 	}

@@ -1,15 +1,18 @@
 package com.iscae.alpha.pgp.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
 import com.iscae.alpha.pgp.entities.Profession;
+
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
@@ -17,13 +20,16 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 public class UtilisateurServiceImplementation implements UtilisateurService{
 	@Autowired
 	UtilisateurRepository userRepository;
+
 	@Autowired
 	ProfessionRepository profRepo;
+
 		
 	
 	@Override
 	public Utilisateur addUser(Utilisateur user) {
 		// Verification d'un utilisateur 
+
 		Utilisateur use=userRepository.findByNom(user.getNom());
 		
 		if(use==null) {
@@ -42,7 +48,6 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			return userRepository.save(user) ;}
 		else {return null;}
 		
-		
 		}
 		
 	
@@ -51,6 +56,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	public Utilisateur updateUser(Utilisateur user) {
 		
 		//Verifier si l'utilisateur existe puis changer les valuers a modifier
+
 			Utilisateur oldUser= userRepository.getOne(user.getIdUser());
 		
 		// Set new Values
@@ -73,16 +79,18 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			
 			
 			////////////////////////////////////////////////////////////////////////////
-			oldUser.setRapport(user.getRapport());
-			oldUser.setCommentaire(user.getCommentaire());
+			oldUser.setRapports(user.getRapports());
+			oldUser.setCommentaires(user.getCommentaires());
 			
 			if(userRepository.findByNom(user.getNom())==null) {
 			oldUser.setNom(user.getNom());
+
 			}
 		}
 		
-		
+
 		return userRepository.save(oldUser);
+
 	}
 	
 
@@ -90,6 +98,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	public boolean deleteUser(Long id) {
 		
 		// Verifier si lutilisqteur existe dabord
+
 		Utilisateur user = new Utilisateur();
 		Optional<Utilisateur> verifUser = userRepository.findByIdUser(id);
 		if(verifUser != null) {
@@ -123,6 +132,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	@Override
 	public Utilisateur getUserByName(String prenom) {
 		
+
 			return userRepository.findByNom(prenom);
 	}
 
@@ -138,6 +148,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		}else {
 			return null;
 		}
+
 	}
 
 }

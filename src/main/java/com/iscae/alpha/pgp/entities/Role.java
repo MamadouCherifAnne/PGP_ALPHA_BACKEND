@@ -7,10 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -19,11 +22,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Role implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	private Long idRole;
 	private String role;
 	
 	@OneToMany(mappedBy = "role", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+
 	@JsonBackReference
+
 	private List<Utilisateur> users;
 
 

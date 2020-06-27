@@ -3,6 +3,7 @@ package com.iscae.alpha.pgp.entities;
 import java.io.Serializable;
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class Profession implements Serializable {
 	@JoinTable(name = "Utilisateur_Profession",
 	joinColumns = @JoinColumn(name="numProfession"), inverseJoinColumns = @JoinColumn(name="id_user"))
 	@JsonSetter
+
 	private List<Utilisateur> utilisateurs;
 
 	public Profession() {
@@ -41,11 +43,13 @@ public class Profession implements Serializable {
 	}
 
 	public Long getNumProfession() {
+
 		return numProfession;
 	}
 
 	public void setNumProfession(Long numProfession) {
 		this.numProfession = numProfession;
+
 	}
 
 	public String getTitreProfession() {

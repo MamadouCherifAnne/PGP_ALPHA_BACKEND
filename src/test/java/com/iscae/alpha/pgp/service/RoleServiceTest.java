@@ -1,8 +1,10 @@
 package com.iscae.alpha.pgp.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.iscae.alpha.pgp.dao.RoleRepository;
 import com.iscae.alpha.pgp.entities.Role;
+
+import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
 @ExtendWith(SpringExtension.class)
@@ -35,6 +39,7 @@ public class RoleServiceTest {
 			
 		}
 		
+
 		// Teste de la methode de modification dun role;
 		@Test
 		public void updateRoleTest() {
@@ -66,7 +71,6 @@ public class RoleServiceTest {
 			Role role=new Role();
 			role.setIdRole(1L);
 			role.setRole("Collaborateurs");
-			
 			
 		return role;
 		}

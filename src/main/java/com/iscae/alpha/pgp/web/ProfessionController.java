@@ -21,13 +21,17 @@ public class ProfessionController {
 	@Autowired
 	ProfessionService profService;
 	
+	//.................Ajout d'une Profession .....................................................................
+	//................................................................................................
+	
 	@PostMapping(value="/add", consumes={"application/json"})
 	public Profession addProfession(@RequestBody Profession profession){
 		return profService.addProfession(profession);
 		
 	}
 	
-	// Modification d' une profession
+	//.................Modification d'une Profession .....................................................................
+	//................................................................................................
 	@PostMapping(value="/update/{idProf}", consumes= {"application/json"})
 	public String updateProfession(@RequestBody Profession prof, @PathVariable Long idProf ) {
 		prof.setNumProfession((idProf));
@@ -38,9 +42,8 @@ public class ProfessionController {
 			return "Echec de modification";
 		}
 	}
-	
-	//supprimer une profession
-	
+	//.................Suppression d'une Profession .....................................................................
+	//................................................................................................
 	@PostMapping(value="/delete/{id}")
 	public String deleteProfession(@PathVariable Long id){
 		 boolean retour =false;
@@ -54,7 +57,8 @@ public class ProfessionController {
 		
 	}
 	
-	// afficher toutes les professions
+	//.................Afficher toutes les professions .....................................................................
+	//................................................................................................
 	@GetMapping(value="/all")
 	public List<Profession> getAllProfessions(){
 		return profService.getAllProfession();
