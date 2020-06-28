@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,9 +19,11 @@ import javax.persistence.TemporalType;
 @Entity
 public class Tache implements Serializable {
 	@Id
+
 	@GeneratedValue
 
 	private Long numTache;
+
 
 	private String nomTache;
 	@Temporal(TemporalType.DATE)
@@ -30,6 +33,7 @@ public class Tache implements Serializable {
 	private double tauxAvancement;
 	private double chargeTache;
 	private String niveauPriorite;
+	private int duree;
 	
 	@ManyToOne()
 	private Phase phase;
@@ -53,7 +57,8 @@ public class Tache implements Serializable {
 
 
 	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
-			String niveauPriorite, Phase phase, Facture facture, List<Depense> depenses, List<Fichier> fichiers) {
+			String niveauPriorite, Phase phase, Facture facture, List<Depense> depenses, 
+			List<Fichier> fichiers,  int duree) {
 		super();
 		this.nomTache = nomTache;
 		this.debutTache = debutTache;
@@ -65,6 +70,7 @@ public class Tache implements Serializable {
 		this.facture = facture;
 		this.depenses = depenses;
 		this.fichiers = fichiers;
+		this.duree = duree;
 	}
 
 
@@ -190,17 +196,26 @@ public class Tache implements Serializable {
 
 
 
+
+	public int getDuree() {
+		return duree;
+	}
 	public Long getNumTache() {
 		return numTache;
+
 	}
 
 
+
+
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
 
 	public void setNumTache(Long numTache) {
 		this.numTache = numTache;
 	}
 
-	
 	
 	
 	

@@ -7,17 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.PhaseRepository;
+import com.iscae.alpha.pgp.dao.ProjetRepository;
 import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.Projet;
 @Service 
 public class PhaseServiceImp implements PhaseService{
 	
 	@Autowired
 	private PhaseRepository phaseRepository;
+	@Autowired
+	ProjetRepository projRepo;
+	
 	
 //.................Ajout phase........................................................................
 //....................................................................................................
 	@Override
 	public Phase addPhase(Phase phase) {
+		Optional<Projet> p = projRepo.findById(phase.getProjet().getNumProjet());
+		if(p.isPresent()) {
+			phase.setProjet(p.get());
+		}
 		
 		return phaseRepository.save(phase);
 	}

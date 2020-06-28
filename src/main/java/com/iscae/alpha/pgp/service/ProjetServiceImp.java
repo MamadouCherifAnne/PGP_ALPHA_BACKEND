@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.iscae.alpha.pgp.dao.ProjetRepository;
+import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 
 
@@ -36,6 +37,9 @@ public class ProjetServiceImp implements ProjetService{
 			projet2.setNumProjet(projet.getNumProjet());
 			projet2.setNomProjet(projet.getNomProjet());
 			projet2.setDebutProjet(projet.getDebutProjet());
+			
+			projet2.setDescription(projet.getDescription());
+			projet2.setZoneRealisation(projet.getZoneRealisation());
 			projet2.setFinProjet(projet.getFinProjet());
 			projet2.setPhases(projet.getPhases());
 			projet2.setResponsables(projet.getResponsables());
@@ -89,6 +93,12 @@ public class ProjetServiceImp implements ProjetService{
 	public Projet findByDateFin(Date dateFin) {
 		Projet projet = projetRepository.findByFinProjet(dateFin);
 		return projet;
+	}
+
+	@Override
+	public List<Phase> listPhaseProjet(Long idProjet) {
+		Projet projet = projetRepository.findById(idProjet).get();
+		return projet.getPhases();
 	}
 
 }

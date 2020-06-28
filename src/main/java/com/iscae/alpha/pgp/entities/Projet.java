@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Projet implements Serializable {
 	@Id
 	@GeneratedValue
-	private Long NumProjet;
+	private Long numProjet;
 	
 	private String nomProjet;
 	
@@ -40,6 +41,7 @@ public class Projet implements Serializable {
 	 @OneToMany(mappedBy = "projet")
 	 private List<Risque> risques;
 	 
+	 @JsonBackReference
 	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
 
@@ -66,11 +68,11 @@ public class Projet implements Serializable {
 	}
 
 	public Long getNumProjet() {
-		return NumProjet;
+		return numProjet;
 	}
 
 	public void setNumProjet(Long numProjet) {
-		NumProjet = numProjet;
+		this.numProjet = numProjet;
 	}
 
 	public String getNomProjet() {

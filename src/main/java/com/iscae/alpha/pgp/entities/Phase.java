@@ -25,9 +25,10 @@ public class Phase  implements Serializable {
 	
 	@ManyToOne
 	private Projet projet;
-	
+
 	@JsonBackReference
-	@OneToMany(mappedBy = "phase",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "phase",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
 	@JsonSetter
 	private List<Tache> taches;
 
