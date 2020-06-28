@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 @Entity
 public class AffectationUtilisateur implements Serializable {
 
+	private static final Long serialVersionUID =1L;
+
+
 	@EmbeddedId
 	private UserToTache user_task;
 	

@@ -7,6 +7,7 @@ import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 
 public interface ProjetService {
+
     //Ajouter un projett
 	Projet AddProjet(Projet projet);
 	 //modifier un projet
@@ -24,6 +25,7 @@ public interface ProjetService {
 	//importer un projet 
 	Projet importer(Projet projet);
 	//exporter un projet 
+
 	Projet export(Projet projet);
 	
 	List<Phase> listPhaseProjet(Long idProjet);

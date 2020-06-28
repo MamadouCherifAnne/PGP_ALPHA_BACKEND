@@ -3,19 +3,32 @@ package com.iscae.alpha.pgp.entities;
 import java.io.Serializable;
 import java.util.List;
 
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 public class Profession implements Serializable {
 	@Id
-	@GeneratedValue
-	private Long NumProfession;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long numProfession;
 	private String titreProfession;
 	
-	@ManyToMany(mappedBy = "professions")
+	@JsonBackReference
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "Utilisateur_Profession",
+	joinColumns = @JoinColumn(name="numProfession"), inverseJoinColumns = @JoinColumn(name="id_user"))
+	@JsonSetter
+
 	private List<Utilisateur> utilisateurs;
 
 	public Profession() {
@@ -30,11 +43,13 @@ public class Profession implements Serializable {
 	}
 
 	public Long getNumProfession() {
-		return NumProfession;
+
+		return numProfession;
 	}
 
 	public void setNumProfession(Long numProfession) {
-		NumProfession = numProfession;
+		this.numProfession = numProfession;
+
 	}
 
 	public String getTitreProfession() {

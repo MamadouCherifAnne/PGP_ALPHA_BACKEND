@@ -8,5 +8,8 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 
 public interface UtilisateurRepository  extends JpaRepository<Utilisateur, Long>{
 
-	Optional<Utilisateur> findByNom(String nom);
+
+	Utilisateur findByNom(String nom);
+	public Optional<Utilisateur> findByIdUser(Long idUser);
+
 }

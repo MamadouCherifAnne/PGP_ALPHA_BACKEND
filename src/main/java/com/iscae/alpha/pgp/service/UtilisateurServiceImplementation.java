@@ -1,12 +1,18 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
+import com.iscae.alpha.pgp.entities.Profession;
+
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
@@ -14,13 +20,34 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 public class UtilisateurServiceImplementation implements UtilisateurService{
 	@Autowired
 	UtilisateurRepository userRepository;
+
+	@Autowired
+	ProfessionRepository profRepo;
+
 		
 	
 	@Override
 	public Utilisateur addUser(Utilisateur user) {
 		// Verification d'un utilisateur 
+
+		Utilisateur use=userRepository.findByNom(user.getNom());
 		
-		return userRepository.save(user) ;
+		if(use==null) {
+			/*
+			 *  verification que la liste des profession nest pas null puis actualiser la liste des utilisateur
+			 *  de chacune de ces professions
+			 */
+			if(user.getProfessions() !=null) {
+						List<Profession> listprof =new ArrayList<>();
+						
+						for(Profession p:user.getProfessions()) {
+						listprof.add(profRepo.findByNumProfession(p.getNumProfession()).get());
+						}
+					user.setProfessions(listprof);	
+			}
+			return userRepository.save(user) ;}
+		else {return null;}
+		
 		}
 		
 	
@@ -29,22 +56,41 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	public Utilisateur updateUser(Utilisateur user) {
 		
 		//Verifier si l'utilisateur existe puis changer les valuers a modifier
-		Optional<Utilisateur> oldUser= userRepository.findById(user.getIdUser());
+
+			Utilisateur oldUser= userRepository.getOne(user.getIdUser());
 		
 		// Set new Values
 		if(oldUser!=null) {
-			oldUser.get().setAdresse(user.getAdresse());
-			oldUser.get().setEmail(user.getEmail());
-			oldUser.get().setTelephone(user.getTelephone());
-			oldUser.get().setPrenom(user.getPrenom());
+			oldUser.setAdresse(user.getAdresse());
+			oldUser.setEmail(user.getEmail());
+			oldUser.setTelephone(user.getTelephone());
+			oldUser.setPrenom(user.getPrenom());
+			oldUser.setRole(user.getRole());
+			
+			// actualiser la profession
+			if(user.getProfessions() !=null) {
+				List<Profession> listprof =new ArrayList<>();
+				
+				for(Profession p:user.getProfessions()) {
+				listprof.add(profRepo.findByNumProfession(p.getNumProfession()).get());
+				}
+			oldUser.setProfessions(listprof);	
+			}
+			
+			
+			////////////////////////////////////////////////////////////////////////////
+			oldUser.setRapports(user.getRapports());
+			oldUser.setCommentaires(user.getCommentaires());
 			
 			if(userRepository.findByNom(user.getNom())==null) {
-			oldUser.get().setNom(user.getNom());
+			oldUser.setNom(user.getNom());
+
 			}
 		}
 		
-		
-		return userRepository.save(oldUser.get());
+
+		return userRepository.save(oldUser);
+
 	}
 	
 
@@ -52,16 +98,27 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	public boolean deleteUser(Long id) {
 		
 		// Verifier si lutilisqteur existe dabord
-		try {		
-			userRepository.deleteById(id);
+
+		Utilisateur user = new Utilisateur();
+		Optional<Utilisateur> verifUser = userRepository.findByIdUser(id);
+		if(verifUser != null) {
+			 user = userRepository.getOne(id);
 			
-		}catch(Exception e) {
-			return false;
-		}
-		
-		return true;
-		
-		
+			// Supprimer l'utilisateur de la liste des utilisateur dans les profession avec lesquelles il etait liee
+			if(user.getProfessions()!= null) {
+			for (Profession p : user.getProfessions()) {
+				p.getUtilisateurs().remove(user);
+			}
+			}
+			// Suppression de L'utilisateur dans la liste de role avec aui il est en relation
+			if(user.getRole() !=null) {
+				user.getRole().getUsers().remove(user);
+			}
+				userRepository.deleteById(id);
+				return true;
+				}else {
+					return false;
+				}
 	}
 
 	@Override
@@ -75,8 +132,23 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	@Override
 	public Utilisateur getUserByName(String prenom) {
 		
-	
-			return userRepository.findByNom(prenom).get();
+
+			return userRepository.findByNom(prenom);
+	}
+
+
+
+	@Override
+	public Utilisateur getUserById(Long id) {
+		Utilisateur user = new Utilisateur();
+		Optional<Utilisateur> verifUser = userRepository.findByIdUser(id);
+		if(verifUser != null) {
+			 user = userRepository.getOne(id);
+			 return user;
+		}else {
+			return null;
+		}
+
 	}
 
 }

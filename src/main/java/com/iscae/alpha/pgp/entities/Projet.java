@@ -11,7 +11,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonBackReference;
+=======
+
+>>>>>>> 97cfc3de00eccb84c167004288436473d5f36e2b
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -22,7 +26,9 @@ public class Projet implements Serializable {
 	
 	private String nomProjet;
 	
+
 	private String description;
+
 	@Temporal(TemporalType.DATE)
 	private Date debutProjet;
 	
@@ -47,7 +53,9 @@ public class Projet implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	public Projet(String nomProjet, String description, Date debutProjet, Date finProjet, String zoneRealisation,
+
 			List<Utilisateur> responsables, List<Risque> risques, List<Phase> phases) {
 		super();
 		this.nomProjet = nomProjet;
@@ -57,7 +65,9 @@ public class Projet implements Serializable {
 		this.responsables = responsables;
 		this.risques = risques;
 		this.phases = phases;
+
 		this.description= description;
+
 	}
 
 	public Long getNumProjet() {
@@ -131,6 +141,7 @@ public class Projet implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	 
 	 
 }

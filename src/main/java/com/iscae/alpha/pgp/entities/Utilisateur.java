@@ -4,22 +4,40 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Generated;
+
+import javax.persistence.Column;
+
+import javax.persistence.CascadeType;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+
 @Entity
 public class Utilisateur implements Serializable {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Long idUser;
 	@Column(unique = true)
 	private String nom;
@@ -33,13 +51,19 @@ public class Utilisateur implements Serializable {
 	@ManyToOne
 	private Role role;
 	
-	@ManyToMany
-	@JoinTable(name = "Utilisateur_Profession")
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "Utilisateur_Profession",
+	joinColumns = @JoinColumn(name="id_user"), inverseJoinColumns = @JoinColumn(name="numProfession"))
+	@JsonSetter
+
 	private List<Profession> professions;
 	
 	@ManyToOne
 	private Projet projet;
 	
+
+
 	@OneToMany(mappedBy = "user")
 	private List<Rapport> rapports;
 
@@ -49,25 +73,16 @@ public class Utilisateur implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private List<Entreprise> entreprises;
 
-	@OneToMany
-	private List<Rapport> rapport;
-
-	@OneToMany
-	private List<Commentaire> commentaire;
-	
-	@OneToMany
-	private List<Entreprise> entreprise;
-
-
 	public Utilisateur() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(String nom, String prenom, String email, String password, boolean actif, String adresse, String telephone, Role role,
-			List<Profession> professions, Projet projet, List<Rapport> rapports, List<Commentaire> commentaires,
-			List<Entreprise> entreprises) {
 
+	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
+			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapport,
+			List<Commentaire> commentaire, List<Entreprise> entreprise, List<Rapport> rapports,
+			List<Commentaire> commentaires, List<Entreprise> entreprises) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -79,9 +94,10 @@ public class Utilisateur implements Serializable {
 		this.role = role;
 		this.professions = professions;
 		this.projet = projet;
-		this.rapports = rapports;
-		this.commentaires = commentaires;
-		this.entreprises = entreprises;
+
+		this.rapports = rapport;
+		this.commentaires = commentaire;
+		this.entreprises = entreprise;
 	}
 
 	public Long getIdUser() {
@@ -172,6 +188,9 @@ public class Utilisateur implements Serializable {
 		this.projet = projet;
 	}
 
+
+
+
 	public List<Rapport> getRapports() {
 		return rapports;
 	}
@@ -195,33 +214,7 @@ public class Utilisateur implements Serializable {
 	public void setEntreprises(List<Entreprise> entreprises) {
 		this.entreprises = entreprises;
 	}
-
-	public List<Rapport> getRapport() {
-		return rapport;
-	}
-
-	public void setRapport(List<Rapport> rapport) {
-		this.rapport = rapport;
-	}
-
-	public List<Commentaire> getCommentaire() {
-		return commentaire;
-	}
-
-	public void setCommentaire(List<Commentaire> commentaire) {
-		this.commentaire = commentaire;
-	}
-
-	public List<Entreprise> getEntreprise() {
-		return entreprise;
-	}
-
-	public void setEntreprise(List<Entreprise> entreprise) {
-		this.entreprise = entreprise;
-	}
-
 	
 
-	
 }
 	
