@@ -26,7 +26,9 @@ public class PhaseController {
 	
 	@PostMapping("/add")
 	public Phase addPhase(@RequestBody Phase phase) {
-		return phaseService.addPhase(phase);
+		
+		System.out.println("############"+phase.getProjet().getNumProjet());
+		return  phaseService.addPhase(phase);
 	}
 	
 	@DeleteMapping("/delete/{id}")
@@ -39,18 +41,18 @@ public class PhaseController {
 		}
 	}
 	
-	@PostMapping("update/{phaseId}")
+	@PostMapping("/update/{phaseId}")
 	public String updatePhase(@PathVariable Long phaseId, @RequestBody Phase phase) {
 		try {
 			phase.setNumPhase(phaseId);
 			phaseService.updatePhase(phase);
 			return "Modifiée avec succes"; 
-		}catch(Exception e) {
+		}catch(Exception e){
 			return e.getMessage() + "erreur de modification"; 
 		}
 	}
 	
-	@GetMapping("allPhase")
+	@GetMapping("/allPhase")
 	public List<Phase> findAllPhase(){
 		return phaseService.findAllPhase();
 	}

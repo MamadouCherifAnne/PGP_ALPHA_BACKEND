@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 @Entity
 public class Phase  implements Serializable {
 	@Id
@@ -22,8 +25,9 @@ public class Phase  implements Serializable {
 	
 	@ManyToOne
 	private Projet projet;
-	
-	@OneToMany(mappedBy = "phase",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonBackReference
+	@OneToMany(mappedBy = "phase",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonSetter
 	private List<Tache> taches;
 
 	public Phase() {

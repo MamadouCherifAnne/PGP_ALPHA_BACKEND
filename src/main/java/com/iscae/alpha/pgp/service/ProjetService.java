@@ -3,6 +3,7 @@ package com.iscae.alpha.pgp.service;
 import java.util.Date;
 import java.util.List;
 
+import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 
 public interface ProjetService {
@@ -24,4 +25,6 @@ public interface ProjetService {
 	Projet importer(Projet projet);
 	//exporter un projet 
 	Projet export(Projet projet);
+	
+	List<Phase> listPhaseProjet(Long idProjet);
 }
