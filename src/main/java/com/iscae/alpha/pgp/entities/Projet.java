@@ -10,12 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonBackReference;
-=======
-
->>>>>>> 97cfc3de00eccb84c167004288436473d5f36e2b
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity

@@ -18,16 +18,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Tache implements Serializable {
-	@Id
-<<<<<<< HEAD
+
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long NumTache;
-=======
-	@GeneratedValue
-
 	private Long numTache;
-
->>>>>>> 97cfc3de00eccb84c167004288436473d5f36e2b
 	private String nomTache;
 	@Temporal(TemporalType.DATE)
 	private Date debutTache;
@@ -199,27 +192,24 @@ public class Tache implements Serializable {
 
 
 
-<<<<<<< HEAD
 	public int getDuree() {
 		return duree;
-=======
+	}
 	public Long getNumTache() {
 		return numTache;
->>>>>>> 97cfc3de00eccb84c167004288436473d5f36e2b
+
 	}
 
 
 
-<<<<<<< HEAD
 	public void setDuree(int duree) {
 		this.duree = duree;
 	}
-=======
 	public void setNumTache(Long numTache) {
 		this.numTache = numTache;
 	}
 
->>>>>>> 97cfc3de00eccb84c167004288436473d5f36e2b
+
 	
 	
 	
