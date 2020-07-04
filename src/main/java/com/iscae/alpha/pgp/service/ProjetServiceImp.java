@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.iscae.alpha.pgp.dao.ProjetRepository;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
+import com.iscae.alpha.pgp.entities.Tache;
 
 
 @Service 
@@ -99,6 +100,12 @@ public class ProjetServiceImp implements ProjetService{
 	public List<Phase> listPhaseProjet(Long idProjet) {
 		Projet projet = projetRepository.findById(idProjet).get();
 		return projet.getPhases();
+	}
+
+	@Override
+	public List<Tache> listTache(Long idProjet) {
+		
+		return null;
 	}
 
 }
