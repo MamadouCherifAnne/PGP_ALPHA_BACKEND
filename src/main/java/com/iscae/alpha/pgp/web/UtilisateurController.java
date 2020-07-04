@@ -1,12 +1,10 @@
 package com.iscae.alpha.pgp.web;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.RoleRepository;
-import com.iscae.alpha.pgp.entities.Profession;
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.UtilisateurService;
 
@@ -97,6 +94,12 @@ public class UtilisateurController {
 			return e.getMessage()+"La modification n'a pa spu être effectués";
 			
 		}
+	}
+	
+	// Afficher les taches a realiser par un seul utilisateur
+	@GetMapping(value="/tacheToRealise/{idUser}")
+	public List<Tache> getTacheToRealiseForUser(@PathVariable Long idUser){
+		return userService.TacheToRealise(idUser);
 	}
 
 }

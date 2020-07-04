@@ -2,6 +2,7 @@ package com.iscae.alpha.pgp.service;
 
 import java.util.List;
 
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 public interface UtilisateurService {
@@ -23,5 +24,8 @@ public interface UtilisateurService {
 	
 	// Recherche par identifiant
 	public Utilisateur getUserById(Long id);
+	
+	// Afficher la liste de toutes les tache dont il est affecter
+	public List<Tache> TacheToRealise(Long idUser);
 
 }
