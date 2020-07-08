@@ -1,18 +1,18 @@
 package com.iscae.alpha.pgp.service;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
+import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Profession;
-
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
@@ -20,7 +20,10 @@ import com.iscae.alpha.pgp.entities.Utilisateur;
 public class UtilisateurServiceImplementation implements UtilisateurService{
 	@Autowired
 	UtilisateurRepository userRepository;
-
+	@ Autowired
+	AffectationUtilisateurService affectService;
+	@Autowired
+	TacheService tacheService;
 	@Autowired
 	ProfessionRepository profRepo;
 
@@ -149,6 +152,29 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			return null;
 		}
 
+	}
+
+
+	// Afficher la liste des Tache de L' utilisateur
+	@Override
+	public List<Tache> TacheToRealise(Long idUser) {
+		List<Tache> tacheToRealise =new ArrayList<>();
+		List<AffectationUtilisateur> affectations = new ArrayList<>();
+		affectations = affectService.getAffectationsForUser(idUser);
+		if(!affectations.isEmpty()) {
+			for(AffectationUtilisateur af:affectations) {
+				// On recupere l'identifiant de la tache puis on allimente la liste des tache
+				Tache task =new Tache();
+				task =tacheService.findTache(af.getUser_task().getIdTache());
+				tacheToRealise.add(task);
+			
+			}
+			// On ordonne la liste par ordre croissant de date de debut de tache
+			Collections.sort(tacheToRealise, (x, y) -> x.getDebutTache().compareTo(y.getDebutTache()));
+			
+			return tacheToRealise;
+		}
+		return null;
 	}
 
 }

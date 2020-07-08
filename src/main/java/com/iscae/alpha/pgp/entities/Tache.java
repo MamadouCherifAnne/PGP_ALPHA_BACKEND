@@ -16,15 +16,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 public class Tache implements Serializable {
 
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long numTache;
 
 	private String nomTache;
+	private String description;
 	@Temporal(TemporalType.DATE)
 	private Date debutTache;
 	@Temporal(TemporalType.DATE)
@@ -40,6 +48,7 @@ public class Tache implements Serializable {
 	@OneToOne
 	private Facture facture;
 	
+	
 	@OneToMany(mappedBy = "tache" )
 	private List<Depense> depenses;
 	
@@ -47,33 +56,42 @@ public class Tache implements Serializable {
 	private List<Fichier> fichiers;
 	
 	
+	@JsonProperty("predecesseurs")
+	@OneToMany(cascade= CascadeType.MERGE ,fetch = FetchType.LAZY)
+	private List<Tache> predecesseurs;
+	
+	//relatives aux  sous taches
+	
+	
+	@JsonProperty("les_sous_taches")
+	@OneToMany(cascade= CascadeType.MERGE,fetch = FetchType.LAZY)
+	private List<Tache>  les_sous_taches;  
+	
+
+	public List<Tache> getPredecesseurs() {
+		return predecesseurs;
+	}
+
+
+	public void setPredecesseurs(List<Tache> predecesseurs) {
+		this.predecesseurs = predecesseurs;
+	}
+
+
+	public List<Tache> getLes_sous_taches() {
+		return les_sous_taches;
+	}
+
+
+	public void setLes_sous_taches(List<Tache> les_sous_taches) {
+		this.les_sous_taches = les_sous_taches;
+	}
+
 
 	public Tache() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
-			String niveauPriorite, Phase phase, Facture facture, List<Depense> depenses, 
-			List<Fichier> fichiers,  int duree) {
-		super();
-		this.nomTache = nomTache;
-		this.debutTache = debutTache;
-		this.finTache = finTache;
-		this.tauxAvancement = tauxAvancement;
-		this.chargeTache = chargeTache;
-		this.niveauPriorite = niveauPriorite;
-		this.phase = phase;
-		this.facture = facture;
-		this.depenses = depenses;
-		this.fichiers = fichiers;
-		this.duree = duree;
-	}
-
-
-
 
 	public String getNomTache() {
 		return nomTache;
@@ -90,6 +108,7 @@ public class Tache implements Serializable {
 	public Date getDebutTache() {
 		return debutTache;
 	}
+
 
 
 
@@ -210,6 +229,21 @@ public class Tache implements Serializable {
 	public void setNumTache(Long numTache) {
 		this.numTache = numTache;
 	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
 
 
 	

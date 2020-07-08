@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 public class Projet implements Serializable {
@@ -39,7 +40,7 @@ public class Projet implements Serializable {
 	 @OneToMany(mappedBy = "projet")
 	 private List<Risque> risques;
 	 
-	 @JsonBackReference
+	 @JsonBackReference 
 	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
 
