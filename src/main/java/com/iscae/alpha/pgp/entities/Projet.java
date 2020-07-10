@@ -13,18 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
-
-
-@Entity
-/*@JsonIdentityInfo(
-generator = ObjectIdGenerators.PropertyGenerator.class, 
-property = "numProjet") */ 
+@Entity 
 public class Projet implements Serializable {
 	@Id
 	@GeneratedValue
@@ -50,9 +40,8 @@ public class Projet implements Serializable {
 	 @OneToMany(mappedBy = "projet")
 	 private List<Risque> risques;
 	 
-	 @JsonBackReference
-	 @OneToMany(mappedBy = "projet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 @JsonSetter
+	 //......................................................................................
+	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
 
 	public Projet() {
