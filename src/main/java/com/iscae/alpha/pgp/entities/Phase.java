@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
@@ -23,13 +25,13 @@ public class Phase  implements Serializable {
 	private String titrePhase;
 	private String description;
 	
+	@JsonBackReference
 	@ManyToOne
 	private Projet projet;
 
-	@JsonBackReference
-	@OneToMany(mappedBy = "phase",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@OneToMany(mappedBy = "phase")
 
-	@JsonSetter
 	private List<Tache> taches;
 
 	public Phase() {

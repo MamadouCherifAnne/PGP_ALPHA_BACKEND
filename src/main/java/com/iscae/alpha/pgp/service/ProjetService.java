@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
+import com.iscae.alpha.pgp.entities.Tache;
 
 public interface ProjetService {
 
@@ -29,4 +30,8 @@ public interface ProjetService {
 	Projet export(Projet projet);
 	
 	List<Phase> listPhaseProjet(Long idProjet);
+	// Liste des taches d'un projet
+	public List<Tache> projectTasks(Long numProjet);
+	
+
 }

@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -7,14 +8,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.iscae.alpha.pgp.dao.PhaseRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 @Service 
 public class TacheServiceImpl implements TacheService{
 	
 	@Autowired
 	private TacheRepository tacheRepository;
+	@Autowired
+	 AffectationUtilisateurService affectService;
+	@Autowired
+	UtilisateurService userService;
 	
 	@Override
 	public Tache addTache(Tache tache) {
@@ -71,6 +77,27 @@ public class TacheServiceImpl implements TacheService{
 	@Override
 	public List<Tache> findAllTache() {
 		return tacheRepository.findAll();
+	}
+
+	@Override
+	public List<Utilisateur> getAllRessources(Long idTache) {
+		// TODO Auto-generated method stub
+		List<Utilisateur> ressources= new ArrayList<>();
+		List<AffectationUtilisateur> affectations = new ArrayList<>();
+		affectations = affectService.getAffectationsForTache(idTache);
+		if(!affectations.isEmpty()) {
+			for(AffectationUtilisateur af:affectations) {
+				// On recupere l'identifiant de la tache puis on allimente la liste des tache
+				Utilisateur ressource =new Utilisateur();
+				ressource =userService.getUserById(af.getUser_task().getIdUser());
+				ressources.add(ressource);
+			
+			}
+			return ressources;
+		}
+		else {
+			return null;
+		}
 	}
 
 }

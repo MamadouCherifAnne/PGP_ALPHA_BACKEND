@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.service.AffectationUtilisateurService;
 
 @RestController
@@ -30,8 +31,9 @@ public class AffectationUtilisateurController {
 	}
 	
 	// Service de recuperation des affectations concernant un utilisateur
-	@GetMapping(value="/userAffectation/{idUser}")
+	@GetMapping(value="/tacheToRealise/{idUser}")
 	public List<AffectationUtilisateur> getAllUserAffectations(@PathVariable Long idUser){
+		
 		return userToJobService.getAffectationsForUser(idUser);
 		
 	}
@@ -39,6 +41,7 @@ public class AffectationUtilisateurController {
 	// Service de recuperation des affectations concernant une Tache
 		@GetMapping(value="/tacheAffectations/{idTache}")
 		public List<AffectationUtilisateur> getAllTacheAffectations(@PathVariable Long idTache){
+			
 			return userToJobService.getAffectationsForTache(idTache);
 			
 		}

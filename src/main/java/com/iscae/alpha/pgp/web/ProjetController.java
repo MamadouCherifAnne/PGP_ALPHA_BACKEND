@@ -1,7 +1,5 @@
 package com.iscae.alpha.pgp.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
-import com.iscae.alpha.pgp.service.ProjetService;
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.service.ProjetServiceImp;
 
 @RestController
@@ -95,6 +93,12 @@ public class ProjetController {
 	@GetMapping("/AllphaseDeProjet/{idProjet}")
 	public List<Phase> AllPhaseProjet(@PathVariable Long idProjet){
 		return projetService.listPhaseProjet(idProjet);
+	}
+	
+	// Toutes les Taches d'un projet
+	@GetMapping("/projectAllTask/{idProjet}")
+	public List<Tache> allTaskForThisProject(@PathVariable Long idProjet){
+		return projetService.projectTasks(idProjet);
 	}
 
 }

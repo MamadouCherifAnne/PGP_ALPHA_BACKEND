@@ -1,16 +1,24 @@
 package com.iscae.alpha.pgp.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iscae.alpha.pgp.entities.Projet;
-import com.iscae.alpha.pgp.entities.Utilisateur;
+import com.iscae.alpha.pgp.entities.Tache;
 
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
 
 	Projet findByDebutProjet(Date date);
 
 	Projet findByFinProjet(Date dateFin);
+	
+	// Get tasks pour un projet
+	
+	@Query("Select task FROM Tache task, Projet p WHERE p.numProjet=?1 AND task.phase.projet.numProjet = p.numProjet")
+	public List<Tache> projectTasks(Long numProjet);
 
 }

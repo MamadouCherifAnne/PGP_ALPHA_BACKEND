@@ -1,15 +1,20 @@
 package com.iscae.alpha.pgp.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.TacheServiceImpl;
 
 @RestController
@@ -19,9 +24,13 @@ public class TacheController {
 	
 	@Autowired
 	private TacheServiceImpl tacheService;
+	@Autowired
+	TacheRepository tacheRepo;
+	
 	
 	@PostMapping("/add")
 	public Tache ajoutTache(@RequestBody Tache tache) {
+		System.out.println("############"+tache.getTachePrecedente());
 		return tacheService.addTache(tache);
 	}
 	
@@ -36,6 +45,12 @@ public class TacheController {
 		}
 	}
 	
+	
+	// ALL TASKS
+	@GetMapping(value="/all")
+	public List<Tache> findAllTask(){
+		return tacheRepo.findAll();
+	}
 	@DeleteMapping("/delete/{tacheId}")
 	public String deleteTahce(@PathVariable Long tacheId) {
 		try {
@@ -45,5 +60,11 @@ public class TacheController {
 		{
 			return e.getMessage() + "erreur de suppression";
 		}
+	}
+	
+	// Afficher toutes les ressources d'une tache
+	@GetMapping(value="/ressourcesForTache/{idTache}")
+	public List<Utilisateur> getRessourcesForThisTache(@PathVariable Long idTache){
+		return tacheService.getAllRessources(idTache);
 	}
 }
