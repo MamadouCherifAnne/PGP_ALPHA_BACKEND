@@ -25,8 +25,6 @@ public class TacheController {
 	
 	@PostMapping("/add")
 	public Tache ajoutTache(@RequestBody Tache tache) {
-		
-		System.out.println("##########"+tache.getPredecesseurs());
 		return tacheService.addTache(tache);
 	}
 	

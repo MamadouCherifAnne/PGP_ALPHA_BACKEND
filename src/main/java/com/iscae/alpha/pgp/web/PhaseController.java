@@ -26,8 +26,6 @@ public class PhaseController {
 	
 	@PostMapping("/add")
 	public Phase addPhase(@RequestBody Phase phase) {
-		
-		System.out.println("############"+phase.getProjet().getNumProjet());
 		return  phaseService.addPhase(phase);
 	}
 	

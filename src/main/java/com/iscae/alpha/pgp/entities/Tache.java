@@ -28,7 +28,7 @@ public class Tache implements Serializable {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long numTache;
 
 	private String nomTache;
@@ -56,37 +56,6 @@ public class Tache implements Serializable {
 	private List<Fichier> fichiers;
 	
 	
-	@JsonProperty("predecesseurs")
-	@OneToMany(cascade= CascadeType.MERGE ,fetch = FetchType.LAZY)
-	private List<Tache> predecesseurs;
-	
-	//relatives aux  sous taches
-	
-	
-	@JsonProperty("les_sous_taches")
-	@OneToMany(cascade= CascadeType.MERGE,fetch = FetchType.LAZY)
-	private List<Tache>  les_sous_taches;  
-	
-
-	public List<Tache> getPredecesseurs() {
-		return predecesseurs;
-	}
-
-
-	public void setPredecesseurs(List<Tache> predecesseurs) {
-		this.predecesseurs = predecesseurs;
-	}
-
-
-	public List<Tache> getLes_sous_taches() {
-		return les_sous_taches;
-	}
-
-
-	public void setLes_sous_taches(List<Tache> les_sous_taches) {
-		this.les_sous_taches = les_sous_taches;
-	}
-
 
 	public Tache() {
 		super();

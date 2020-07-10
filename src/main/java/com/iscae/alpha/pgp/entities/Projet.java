@@ -4,17 +4,27 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
+
 
 @Entity
+/*@JsonIdentityInfo(
+generator = ObjectIdGenerators.PropertyGenerator.class, 
+property = "numProjet") */ 
 public class Projet implements Serializable {
 	@Id
 	@GeneratedValue
@@ -35,13 +45,14 @@ public class Projet implements Serializable {
 	
 	// Jai eu des doutes concernant la relation entre projet et utilisateurs 
 	 @OneToMany(mappedBy = "projet")
-	private List<Utilisateur> responsables;
-	
+	 private List<Utilisateur> responsables;
+	 
 	 @OneToMany(mappedBy = "projet")
 	 private List<Risque> risques;
 	 
-	 @JsonBackReference 
-	 @OneToMany(mappedBy = "projet")
+	 @JsonBackReference
+	 @OneToMany(mappedBy = "projet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	 @JsonSetter
 	 private List<Phase> phases;
 
 	public Projet() {
