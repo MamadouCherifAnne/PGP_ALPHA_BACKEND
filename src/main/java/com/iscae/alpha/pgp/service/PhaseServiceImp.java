@@ -43,15 +43,21 @@ public class PhaseServiceImp implements PhaseService{
 	//....................................................................................................
 	@Override
 	public boolean  updatePhase(Phase phase) {
-		Optional<Phase> phase1 = phaseRepository.findById(phase.getNumPhase());
+		Optional<Phase> phase1 = phaseRepository.findById(phase.getNumTache());
 		if(phase1 != null) {
 		Phase phase2 = phase1.get();
-		phase2.setNumPhase(phase.getNumPhase());
+		/*phase2.setNumPhase(phase.getNumPhase());
 		phase2.setTitrePhase(phase.getTitrePhase());
 		phase2.setTache(phase.getTache());
 		phase2.setProjet(phase.getProjet());
-		phaseRepository.save(phase2);
+		phaseRepository.save(phase2);*/
+		phase2.setNomTache(phase.getNomTache());
+		phase2.setDebutTache(phase.getDebutTache());
+		phase2.setDescription(phase.getDescription());
+		phase2.setTache(phase.getTache());
+		
 		return true;
+		
 		}
 		return false;
 	}

@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Facture implements Serializable {
 	@Id
@@ -15,6 +17,7 @@ public class Facture implements Serializable {
 	private String codeFacture;
 	private double montantFacture;
 	
+	@JsonBackReference
 	@OneToOne(mappedBy = "facture")
 	private Tache tache;
 

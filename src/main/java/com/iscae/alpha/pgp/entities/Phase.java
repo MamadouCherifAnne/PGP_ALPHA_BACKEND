@@ -2,11 +2,10 @@ package com.iscae.alpha.pgp.entities;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,17 +15,16 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 
 
 @Entity
 public class Phase  implements Serializable {
 	@Id
 	@GeneratedValue
-	private Long numPhase;
-	private String titrePhase;
+	private Long numTache;
+	private String nomTache;
 	private String description;
+	private Date debutTache;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -42,37 +40,42 @@ public class Phase  implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Phase(String titrePhase, String description, Projet projet, List<Tache> tache) {
+	public Phase(String nomTache, String description, Projet projet, List<Tache> tache,Date debutTache) {
 		super();
-		this.titrePhase = titrePhase;
+		this.nomTache = nomTache;
 		this.description = description;
 		this.projet = projet;
 		this.taches = tache;
+		this.debutTache=debutTache;
 	}
-
 	
-	public Long getNumPhase() {
-		return numPhase;
+	
+
+	public Long getNumTache() {
+		return numTache;
 	}
 
-	public void setNumPhase(Long numPhase) {
-		this.numPhase = numPhase;
+
+	public void setNumTache(Long numTache) {
+		this.numTache = numTache;
 	}
 
-	public List<Tache> getTaches() {
-		return taches;
+	public Date getDebutTache() {
+		return debutTache;
 	}
 
-	public void setTaches(List<Tache> taches) {
-		this.taches = taches;
+	public void setDebutTache(Date debutTache) {
+		this.debutTache = debutTache;
 	}
 
-	public String getTitrePhase() {
-		return titrePhase;
+
+
+	public String getNomTache() {
+		return nomTache;
 	}
 
-	public void setTitrePhase(String titrePhase) {
-		this.titrePhase = titrePhase;
+	public void setNomTache(String nomTache) {
+		this.nomTache = nomTache;
 	}
 
 	public String getDescription() {

@@ -63,8 +63,15 @@ public class ProjetServiceImp implements ProjetService{
 
 	@Override
 	public Projet findProjetById(Long projetId) {
+		
+		//Verification de l'existance d'un projet si oui on le retourne sinon on retourne null;
+		if (projetRepository.findById(projetId).isPresent()) {
 		Projet projet = projetRepository.findById(projetId).get();
+		
 		return projet;
+		}
+		
+		return null;
 	}
 
 	@Override

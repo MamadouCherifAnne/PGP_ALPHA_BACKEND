@@ -28,6 +28,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -48,6 +49,7 @@ public class Utilisateur implements Serializable {
 	private boolean actif;
 	private String telephone;
 	
+	
 	@ManyToOne
 	private Role role;
 	
@@ -63,26 +65,26 @@ public class Utilisateur implements Serializable {
 	private Projet projet;
 	
 
-
 	@OneToMany(mappedBy = "user")
 	private List<Rapport> rapports;
 
 	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Commentaire> commentaires;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Entreprise> entreprises;
+	
+	// Les entreprises dedier a un utilisateur
+	@JsonBackReference
+	@ManyToOne
+	private Entreprise entreprise;
 
 	public Utilisateur() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
-			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapport,
-			List<Commentaire> commentaire, List<Entreprise> entreprise, List<Rapport> rapports,
-			List<Commentaire> commentaires, List<Entreprise> entreprises) {
+			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapports,
+			List<Commentaire> commentaires, Entreprise entreprise) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -94,12 +96,14 @@ public class Utilisateur implements Serializable {
 		this.role = role;
 		this.professions = professions;
 		this.projet = projet;
-
-		this.rapports = rapport;
-		this.commentaires = commentaire;
-		this.entreprises = entreprise;
+		this.rapports = rapports;
+		this.commentaires = commentaires;
+		this.entreprise = entreprise;
 	}
 
+	// GETTERS AND SETTERS ......................................................................................................
+	
+	
 	public Long getIdUser() {
 		return idUser;
 	}
@@ -188,9 +192,6 @@ public class Utilisateur implements Serializable {
 		this.projet = projet;
 	}
 
-
-
-
 	public List<Rapport> getRapports() {
 		return rapports;
 	}
@@ -207,14 +208,13 @@ public class Utilisateur implements Serializable {
 		this.commentaires = commentaires;
 	}
 
-	public List<Entreprise> getEntreprises() {
-		return entreprises;
+	public Entreprise getEntreprise() {
+		return entreprise;
 	}
 
-	public void setEntreprises(List<Entreprise> entreprises) {
-		this.entreprises = entreprises;
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
 	}
 	
-
+	
 }
-	

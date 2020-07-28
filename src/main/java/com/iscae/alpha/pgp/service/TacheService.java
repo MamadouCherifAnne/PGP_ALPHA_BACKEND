@@ -21,4 +21,10 @@ public interface TacheService {
 	//liste des ressources affecter a la tache
 	public List<Utilisateur> getAllRessources(Long idTache);
 	
+	// La liste des predecesseur
+	public List<Tache> getPredecesseursTask(Long idTache);
+	//Ajouter jalon
+	
+	public Tache addJalon(Tache tache);
+	
 }

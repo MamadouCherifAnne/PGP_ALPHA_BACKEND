@@ -42,7 +42,7 @@ public class PhaseController {
 	@PostMapping("/update/{phaseId}")
 	public String updatePhase(@PathVariable Long phaseId, @RequestBody Phase phase) {
 		try {
-			phase.setNumPhase(phaseId);
+			phase.setNumTache(phaseId);
 			phaseService.updatePhase(phase);
 			return "Modifiée avec succes"; 
 		}catch(Exception e){
