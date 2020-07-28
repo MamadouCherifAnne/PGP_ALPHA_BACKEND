@@ -104,7 +104,7 @@ public class UtilisateurServiceTest {
 		user.setPrenom("Samba");
 		user.setTelephone("454566");
 		user.setCommentaires(null);
-		user.setEntreprises(null);
+		user.setEntreprise(null);
 		user.setEmail("pgp@gamil.com");
 		return user;
 	}

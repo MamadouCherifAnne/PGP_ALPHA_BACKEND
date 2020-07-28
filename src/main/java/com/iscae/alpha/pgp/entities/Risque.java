@@ -1,12 +1,13 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Risque implements Serializable {
@@ -23,6 +24,7 @@ public class Risque implements Serializable {
 	private String etat;
 	private String source;
 	
+	@JsonBackReference
 	@ManyToOne
 	private Projet projet;
 

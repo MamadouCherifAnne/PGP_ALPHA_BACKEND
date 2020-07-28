@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Depense implements Serializable {
 	@Id
@@ -18,6 +20,7 @@ public class Depense implements Serializable {
 	private double coutDepense;
 	private String description;
 	
+	@JsonBackReference
 	@ManyToOne()
 	private Tache tache;
 

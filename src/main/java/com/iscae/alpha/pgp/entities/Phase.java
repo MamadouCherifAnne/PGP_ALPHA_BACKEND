@@ -2,11 +2,10 @@ package com.iscae.alpha.pgp.entities;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -14,16 +13,15 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 public class Phase  implements Serializable {
 	@Id
 	@GeneratedValue
-	private Long NumPhase;
-	private String titrePhase;
+	private Long numTache;
+	private String nomTache;
 	private String description;
+	private Date debutTache;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -39,28 +37,41 @@ public class Phase  implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Phase(String titrePhase, String description, Projet projet, List<Tache> tache) {
+	public Phase(String nomTache, String description, Projet projet, List<Tache> tache,Date debutTache) {
 		super();
-		this.titrePhase = titrePhase;
+		this.nomTache = nomTache;
 		this.description = description;
 		this.projet = projet;
 		this.taches = tache;
+		this.debutTache=debutTache;
+	}
+	
+	
+
+	public Long getNumTache() {
+		return numTache;
 	}
 
-	public Long getNumPhase() {
-		return NumPhase;
+	public void setNumTache(Long numTache) {
+		this.numTache = numTache;
 	}
 
-	public void setNumPhase(Long numPhase) {
-		NumPhase = numPhase;
+	public Date getDebutTache() {
+		return debutTache;
 	}
 
-	public String getTitrePhase() {
-		return titrePhase;
+	public void setDebutTache(Date debutTache) {
+		this.debutTache = debutTache;
 	}
 
-	public void setTitrePhase(String titrePhase) {
-		this.titrePhase = titrePhase;
+
+
+	public String getNomTache() {
+		return nomTache;
+	}
+
+	public void setNomTache(String nomTache) {
+		this.nomTache = nomTache;
 	}
 
 	public String getDescription() {

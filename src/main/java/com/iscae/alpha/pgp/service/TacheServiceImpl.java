@@ -38,6 +38,7 @@ public class TacheServiceImpl implements TacheService{
 			tache2.setDebutTache(tache.getDebutTache());
 			tache2.setFinTache(tache.getFinTache());
 			tache2.setDepenses(tache.getDepenses());
+			tache2.setDuree(tache.getDuree());
 			tache2.setFacture(tache.getFacture());
 			tache2.setNiveauPriorite(tache.getNiveauPriorite());
 			tache2.setFichiers(tache.getFichiers());
@@ -58,8 +59,10 @@ public class TacheServiceImpl implements TacheService{
 
 	@Override
 	public Tache findTache(Long idTache) {
+		if( tacheRepository.findById(idTache).isPresent()) {
 		Tache tache = tacheRepository.findById(idTache).get();
-		return tache;
+		return tache;}
+		return null;
 	}
 
 	@Override
@@ -98,6 +101,29 @@ public class TacheServiceImpl implements TacheService{
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public List<Tache> getPredecesseursTask(Long idTache) {
+		// TODO Auto-generated method stub
+		Tache tache= this.findTache(idTache);
+		if(tache.getTachePrecedente()!=null) {
+			System.out.println("############"+ tache.getTachePrecedente());
+			return tache.getTachePrecedente();
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public Tache addJalon(Tache tache) {
+		// TODO Auto-generated method stub
+		Tache jalon=new Tache();
+		jalon=tache;
+		jalon.setDuree(0);
+		jalon.setFinTache(null);
+		
+		return tacheRepository.save(jalon);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,12 +56,17 @@ public class Tache implements Serializable {
 	
 	private List<Fichier> fichiers;
 	
-	//les tqches precedentes
+	/*les tqches precedentes
 
 	@ManyToOne
 	@JoinColumn(name="Predecesseur_ID")
 	private Tache tachePrecedente;
-	
+	*/
+	@JoinTable(name = "Tache_Predecesseurs", joinColumns = {
+		    @JoinColumn(name = "tache", referencedColumnName = "numTache", nullable =   false)}, inverseJoinColumns = {
+		    @JoinColumn(name = "Predecesseur", referencedColumnName = "numTache", nullable = false)})
+		    @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.DETACH)
+		    private List<Tache> tachePrecedente;
 
 	public Tache() {
 		super();
@@ -73,7 +79,7 @@ public class Tache implements Serializable {
 
 	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
 			String niveauPriorite, int duree, Phase phase, Facture facture, List<Depense> depenses,
-			List<Fichier> fichiers, Tache tachePrecedente) {
+			List<Fichier> fichiers, List<Tache> tachePrecedente) {
 		super();
 		this.nomTache = nomTache;
 		this.debutTache = debutTache;
@@ -234,12 +240,12 @@ public class Tache implements Serializable {
 	}
 
 
-	public Tache getTachePrecedente() {
+	public List<Tache> getTachePrecedente() {
 		return tachePrecedente;
 	}
 
 
-	public void setTachePrecedente(Tache tachePrecedente) {
+	public void setTachePrecedente(List<Tache> tachePrecedente) {
 		this.tachePrecedente = tachePrecedente;
 	}
 	

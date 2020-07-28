@@ -1,14 +1,18 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Entreprise implements Serializable{
@@ -19,13 +23,43 @@ public class Entreprise implements Serializable{
 	private String domaine_Entreprise;
 	private String adresse;
 	
-	@ManyToOne
-	private Utilisateur user;
-
+	@JsonBackReference
+	@OneToMany(mappedBy="entreprise", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<Utilisateur> users;
+	
+	// Les projets d' une entreprise
+	@JsonManagedReference
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="workSpace")
+	private List<Projet> projets;
+	
 	public Entreprise() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public Entreprise(String nameEntreprise, String domaine_Entreprise, String adresse,List <Utilisateur> users,
+			List<Projet> projets) {
+		super();
+		this.nameEntreprise = nameEntreprise;
+		this.domaine_Entreprise = domaine_Entreprise;
+		this.adresse = adresse;
+		this.users = users;
+		this.projets = projets;
+	}
+	
+	
+
+
+	public List<Projet> getProjets() {
+		return projets;
+	}
+
+
+	public void setProjets(List<Projet> projets) {
+		this.projets = projets;
+	}
+
 
 	public Long getIdEntreprise() {
 		return idEntreprise;
@@ -59,12 +93,12 @@ public class Entreprise implements Serializable{
 		this.adresse = adresse;
 	}
 
-	public Utilisateur getUser() {
-		return user;
+	public List <Utilisateur> getUsers() {
+		return users;
 	}
 
-	public void setUser(Utilisateur user) {
-		this.user = user;
+	public void setUsers(List<Utilisateur> users) {
+		this.users = users;
 	}
 
 	

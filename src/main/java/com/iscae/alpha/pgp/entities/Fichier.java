@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Fichier implements Serializable {
 	@Id
@@ -18,6 +20,7 @@ public class Fichier implements Serializable {
 	private File file;
 	private String descriptionFile;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Tache tacheConcerne;
 

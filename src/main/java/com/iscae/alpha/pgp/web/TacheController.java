@@ -34,6 +34,13 @@ public class TacheController {
 		return tacheService.addTache(tache);
 	}
 	
+	
+	@PostMapping("/addJalon")
+	public Tache ajoutJalon(@RequestBody Tache tache) {
+		System.out.println("############"+tache.getTachePrecedente());
+		return tacheService.addJalon(tache);
+	}
+	
 	@PostMapping("/update/{tacheId}")
 	public String updateTache(@PathVariable Long tacheId, @RequestBody Tache tache) {
 		try {
@@ -49,6 +56,7 @@ public class TacheController {
 	// ALL TASKS
 	@GetMapping(value="/all")
 	public List<Tache> findAllTask(){
+		System.out.println("####################"+ tacheService.findTache(10L).getTachePrecedente());
 		return tacheRepo.findAll();
 	}
 	@DeleteMapping("/delete/{tacheId}")
@@ -65,6 +73,13 @@ public class TacheController {
 	// Afficher toutes les ressources d'une tache
 	@GetMapping(value="/ressourcesForTache/{idTache}")
 	public List<Utilisateur> getRessourcesForThisTache(@PathVariable Long idTache){
+
 		return tacheService.getAllRessources(idTache);
+	}
+	
+	//  Retourner la liste des tache precedentes d'une tache
+	@GetMapping(value="/predecesseurs/{idTache}")
+	public List<Tache> getPredecesseurs(@PathVariable Long idTache){
+		return tacheService.getPredecesseursTask(idTache);
 	}
 }
