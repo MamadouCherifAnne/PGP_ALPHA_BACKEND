@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Risque implements Serializable {
 	@Id
@@ -23,6 +25,7 @@ public class Risque implements Serializable {
 	private String etat;
 	private String source;
 	
+	@JsonBackReference
 	@ManyToOne
 	private Projet projet;
 

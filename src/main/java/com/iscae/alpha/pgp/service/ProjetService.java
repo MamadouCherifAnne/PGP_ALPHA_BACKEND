@@ -29,6 +29,8 @@ public interface ProjetService {
 	Projet export(Projet projet);
 	//tous les phase d'un projet 
 	List<Phase> listPhaseProjet(Long idProjet);
-	//tous les taches d'une phase d'un projet
-	List<Tache> listTache(Long idProjet);
+
+	// Liste des taches d'un projet
+	List<Tache> projectTasks(Long numProjet);
+	
 }

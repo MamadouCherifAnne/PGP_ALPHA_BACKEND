@@ -13,8 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
-@Entity 
+@Entity
 public class Projet implements Serializable {
 	@Id
 	@GeneratedValue
@@ -35,12 +38,14 @@ public class Projet implements Serializable {
 	
 	// Jai eu des doutes concernant la relation entre projet et utilisateurs 
 	 @OneToMany(mappedBy = "projet")
-	 private List<Utilisateur> responsables;
-	 
+
+	private List<Utilisateur> responsables;
+	
+	 @JsonManagedReference
 	 @OneToMany(mappedBy = "projet")
 	 private List<Risque> risques;
 	 
-	 //......................................................................................
+	 @JsonManagedReference
 	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
 

@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.iscae.alpha.pgp.dao.ProjetRepository;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
@@ -21,6 +21,7 @@ public class ProjetServiceImp implements ProjetService{
 	
 	@Autowired
 	ProjetRepository projetRepository;
+
 	
 	@Override
 	public Projet AddProjet(Projet projet) {
@@ -103,9 +104,10 @@ public class ProjetServiceImp implements ProjetService{
 	}
 
 	@Override
-	public List<Tache> listTache(Long idProjet) {
-		
-		return null;
+	public List<Tache> projectTasks(Long numProjet) {
+		// TODO Auto-generated method stub
+		return projetRepository.projectTasks(numProjet);
 	}
+
 
 }

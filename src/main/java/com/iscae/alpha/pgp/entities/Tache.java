@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,18 +19,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 public class Tache implements Serializable {
-
-	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy =GenerationType.AUTO )
 	private Long numTache;
 
 	private String nomTache;
@@ -42,7 +39,8 @@ public class Tache implements Serializable {
 	private String niveauPriorite;
 	private int duree;
 	
-	@ManyToOne()
+	@ManyToOne
+	@JsonBackReference
 	private Phase phase;
 	
 	@OneToOne
@@ -50,17 +48,44 @@ public class Tache implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "tache" )
+	@JsonManagedReference
 	private List<Depense> depenses;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "tacheConcerne")
 	private List<Fichier> fichiers;
 	
+	//les tqches precedentes
+
+	@ManyToOne
+	@JoinColumn(name="Predecesseur_ID")
+	private Tache tachePrecedente;
 	
 
 	public Tache() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
+	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
+			String niveauPriorite, int duree, Phase phase, Facture facture, List<Depense> depenses,
+			List<Fichier> fichiers, Tache tachePrecedente) {
+		super();
+		this.nomTache = nomTache;
+		this.debutTache = debutTache;
+		this.finTache = finTache;
+		this.tauxAvancement = tauxAvancement;
+		this.chargeTache = chargeTache;
+		this.niveauPriorite = niveauPriorite;
+		this.duree = duree;
+		this.phase = phase;
+		this.facture = facture;
+		this.depenses = depenses;
+		this.fichiers = fichiers;
+		this.tachePrecedente = tachePrecedente;
+	}
+
 
 	public String getNomTache() {
 		return nomTache;
@@ -201,6 +226,7 @@ public class Tache implements Serializable {
 
 
 
+
 	public String getDescription() {
 		return description;
 	}
@@ -213,10 +239,15 @@ public class Tache implements Serializable {
 
 
 
+	public Tache getTachePrecedente() {
+		return tachePrecedente;
+	}
 
+
+	public void setTachePrecedente(Tache tachePrecedente) {
+		this.tachePrecedente = tachePrecedente;
+	}
 
 	
 	
-	
-
 }

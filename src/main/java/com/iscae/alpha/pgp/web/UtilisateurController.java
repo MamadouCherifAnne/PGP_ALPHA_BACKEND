@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.RoleRepository;
+import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.UtilisateurService;
@@ -34,6 +35,10 @@ public class UtilisateurController {
 	UtilisateurService userService;
 	@Autowired
 	RoleRepository roleRepo;
+	
+	@Autowired
+	TacheRepository tacheRepo;
+	
 	@Autowired
 	ProfessionRepository profRepo;;
 
@@ -99,7 +104,8 @@ public class UtilisateurController {
 	// Afficher les taches a realiser par un seul utilisateur
 	@GetMapping(value="/tacheToRealise/{idUser}")
 	public List<Tache> getTacheToRealiseForUser(@PathVariable Long idUser){
-		return userService.TacheToRealise(idUser);
+		List<Tache> taches = userService.TacheToRealise(idUser);
+		return taches;
 	}
 
 }
