@@ -1,4 +1,4 @@
-package com.iscae.alpha.pgp.service;
+ package com.iscae.alpha.pgp.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 public class Tache implements Serializable {
@@ -29,8 +29,8 @@ public class Tache implements Serializable {
 	@GeneratedValue(strategy =GenerationType.AUTO )
 	private Long numTache;
 
-
 	private String nomTache;
+	private String description;
 	@Temporal(TemporalType.DATE)
 	private Date debutTache;
 	@Temporal(TemporalType.DATE)
@@ -48,13 +48,13 @@ public class Tache implements Serializable {
 	@OneToOne
 	private Facture facture;
 	
+	
 	@OneToMany(mappedBy = "tache" )
 	@JsonManagedReference
 	private List<Depense> depenses;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "tacheConcerne")
-	
 	private List<Fichier> fichiers;
 	
 	/*les tqches precedentes
@@ -63,6 +63,7 @@ public class Tache implements Serializable {
 	@JoinColumn(name="Predecesseur_ID")
 	private Tache tachePrecedente;
 	*/
+	
 	@JoinTable(name = "Tache_Predecesseurs", joinColumns = {
 		    @JoinColumn(name = "tache", referencedColumnName = "numTache", nullable =   false)}, inverseJoinColumns = {
 		    @JoinColumn(name = "Predecesseur", referencedColumnName = "numTache", nullable = false)})
@@ -73,9 +74,6 @@ public class Tache implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
-	
 
 
 	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
@@ -98,9 +96,6 @@ public class Tache implements Serializable {
 	}
 
 
-
-
-
 	public String getNomTache() {
 		return nomTache;
 	}
@@ -116,6 +111,7 @@ public class Tache implements Serializable {
 	public Date getDebutTache() {
 		return debutTache;
 	}
+
 
 
 
@@ -237,7 +233,6 @@ public class Tache implements Serializable {
 
 
 
-
 	public int getDuree() {
 		return duree;
 	}
@@ -245,9 +240,6 @@ public class Tache implements Serializable {
 		return numTache;
 
 	}
-
-
-
 
 	public void setDuree(int duree) {
 		this.duree = duree;
@@ -258,6 +250,20 @@ public class Tache implements Serializable {
 	}
 
 
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+
 	public List<Tache> getTachePrecedente() {
 		return tachePrecedente;
 	}
@@ -266,6 +272,7 @@ public class Tache implements Serializable {
 	public void setTachePrecedente(List<Tache> tachePrecedente) {
 		this.tachePrecedente = tachePrecedente;
 	}
+
 	
 	
 }

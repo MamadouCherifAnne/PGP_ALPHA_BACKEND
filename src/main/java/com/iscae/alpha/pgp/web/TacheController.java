@@ -28,11 +28,10 @@ public class TacheController {
 	TacheRepository tacheRepo;
 	
 	
-	@PostMapping("/add")
+	@PostMapping(value="/add", consumes={"application/json"})
 	public Tache ajoutTache(@RequestBody Tache tache) {
-		System.out.println("############"+tache.getTachePrecedente());
 		return tacheService.addTache(tache);
-	}
+	} 
 	
 	
 	@PostMapping("/addJalon")
@@ -53,12 +52,14 @@ public class TacheController {
 	}
 	
 	
+
 	// ALL TASKS
 	@GetMapping(value="/all")
 	public List<Tache> findAllTask(){
 		System.out.println("####################"+ tacheService.findTache(10L).getTachePrecedente());
 		return tacheRepo.findAll();
 	}
+
 	@DeleteMapping("/delete/{tacheId}")
 	public String deleteTahce(@PathVariable Long tacheId) {
 		try {
@@ -68,6 +69,16 @@ public class TacheController {
 		{
 			return e.getMessage() + "erreur de suppression";
 		}
+	}
+	
+	@GetMapping("/findTache/{tacheId}")
+	public Tache findTacheById(@PathVariable Long tacheId) {
+		return tacheService.findTache(tacheId);
+	}
+
+	@GetMapping("/allTache")
+	public List<Tache> findAllTache(){
+		return tacheService.findAllTache();
 	}
 	
 	// Afficher toutes les ressources d'une tache

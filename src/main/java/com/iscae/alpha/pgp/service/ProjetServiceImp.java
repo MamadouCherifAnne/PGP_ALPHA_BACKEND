@@ -110,7 +110,6 @@ public class ProjetServiceImp implements ProjetService{
 	}
 
 	@Override
-	
 	public List<Tache> projectTasks(Long numProjet) {
 		// TODO Auto-generated method stub
 		return projetRepository.projectTasks(numProjet);

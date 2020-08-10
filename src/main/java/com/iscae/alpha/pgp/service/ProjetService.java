@@ -26,11 +26,12 @@ public interface ProjetService {
 	//importer un projet 
 	Projet importer(Projet projet);
 	//exporter un projet 
-
 	Projet export(Projet projet);
-	
+	//tous les phase d'un projet 
 	List<Phase> listPhaseProjet(Long idProjet);
+
 	// Liste des taches d'un projet
+
 	public List<Tache> projectTasks(Long numProjet);
 	// Afficher tout les jalons
 		public List<Tache> getAllJalons(Long numProjet);

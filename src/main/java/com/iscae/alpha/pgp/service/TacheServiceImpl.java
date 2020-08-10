@@ -34,15 +34,18 @@ public class TacheServiceImpl implements TacheService{
 			Tache tache2 = tache1.get();
 			tache2.setNumTache(tache.getNumTache());
 			tache2.setNomTache(tache.getNomTache());
+			tache2.setDescription(tache.getDescription());
 			tache2.setChargeTache(tache.getChargeTache());
 			tache2.setDebutTache(tache.getDebutTache());
 			tache2.setFinTache(tache.getFinTache());
+			tache2.setDuree(tache.getDuree());
 			tache2.setDepenses(tache.getDepenses());
 			tache2.setDuree(tache.getDuree());
 			tache2.setFacture(tache.getFacture());
 			tache2.setNiveauPriorite(tache.getNiveauPriorite());
 			tache2.setFichiers(tache.getFichiers());
 			tache2.setTauxAvancement(tache.getTauxAvancement());
+			tache2.setTachePrecedente(tache.getTachePrecedente());
 			tacheRepository.save(tache2);
 			
 			return true;

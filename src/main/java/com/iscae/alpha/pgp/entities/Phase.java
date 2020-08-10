@@ -7,12 +7,15 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 public class Phase  implements Serializable {
@@ -27,9 +30,9 @@ public class Phase  implements Serializable {
 	@ManyToOne
 	private Projet projet;
 
+
 	@JsonManagedReference
 	@OneToMany(mappedBy = "phase")
-
 	private List<Tache> taches;
 
 	public Phase() {
@@ -51,6 +54,7 @@ public class Phase  implements Serializable {
 	public Long getNumTache() {
 		return numTache;
 	}
+
 
 	public void setNumTache(Long numTache) {
 		this.numTache = numTache;
