@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -7,8 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.iscae.alpha.pgp.dao.ProjetRepository;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
@@ -115,6 +114,20 @@ public class ProjetServiceImp implements ProjetService{
 	public List<Tache> projectTasks(Long numProjet) {
 		// TODO Auto-generated method stub
 		return projetRepository.projectTasks(numProjet);
+	}
+
+	@Override
+	public List<Tache> getAllJalons(Long numProjet) {
+		// TODO Auto-generated method stub
+		return projetRepository.allProjectJalons(numProjet);
+	}
+
+	@Override
+	public List<Tache> getRetardJalon(Long numProjet) {
+		// TODO Auto-generated method stub
+		List<Tache> jalons = new ArrayList<>();
+		jalons = this.getAllJalons(numProjet);
+		return null;
 	}
 
 

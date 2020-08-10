@@ -15,6 +15,7 @@ public interface TacheRepository extends JpaRepository<Tache, Long> {
 	Tache findTahceByDebutTache(Date dateDebut);
 	Tache findTacheByfinTache(Date dateFin);
 	
+	
 
 
 }

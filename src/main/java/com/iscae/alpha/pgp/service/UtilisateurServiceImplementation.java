@@ -145,9 +145,9 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	public Utilisateur getUserById(Long id) {
 		Utilisateur user = new Utilisateur();
 		Optional<Utilisateur> verifUser = userRepository.findByIdUser(id);
-		if(verifUser != null) {
-			 user = userRepository.getOne(id);
-			 return user;
+		if(verifUser.isPresent()) {
+			 
+			 return verifUser.get();
 		}else {
 			return null;
 		}

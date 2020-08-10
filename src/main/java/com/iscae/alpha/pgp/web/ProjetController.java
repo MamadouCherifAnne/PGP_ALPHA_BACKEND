@@ -100,5 +100,12 @@ public class ProjetController {
 	public List<Tache> allTaskForThisProject(@PathVariable Long idProjet){
 		return projetService.projectTasks(idProjet);
 	}
+	
+	// Toutes les jalons d'un projet
+		@GetMapping("/projectJalons/{idProjet}")
+		public List<Tache> allJalonsProject(@PathVariable Long idProjet){
+			
+			return projetService.getAllJalons(idProjet);
+		}
 
 }

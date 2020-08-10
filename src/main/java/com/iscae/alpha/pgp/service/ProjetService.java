@@ -32,6 +32,10 @@ public interface ProjetService {
 	List<Phase> listPhaseProjet(Long idProjet);
 	// Liste des taches d'un projet
 	public List<Tache> projectTasks(Long numProjet);
-	
+	// Afficher tout les jalons
+		public List<Tache> getAllJalons(Long numProjet);
+		
+	// Afficher les jalons en retard
+		public List<Tache> getRetardJalon(Long numProjet);
 
 }

@@ -122,6 +122,7 @@ public class TacheServiceImpl implements TacheService{
 		jalon=tache;
 		jalon.setDuree(0);
 		jalon.setFinTache(null);
+		jalon.setType("Jalon");
 		
 		return tacheRepository.save(jalon);
 	}

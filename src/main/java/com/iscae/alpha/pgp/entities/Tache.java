@@ -39,6 +39,7 @@ public class Tache implements Serializable {
 	private double chargeTache;
 	private String niveauPriorite;
 	private int duree;
+	private String type;
 	
 	@ManyToOne
 	@JsonBackReference
@@ -78,7 +79,7 @@ public class Tache implements Serializable {
 
 
 	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
-			String niveauPriorite, int duree, Phase phase, Facture facture, List<Depense> depenses,
+			String niveauPriorite, int duree, String type,Phase phase, Facture facture, List<Depense> depenses,
 			List<Fichier> fichiers, List<Tache> tachePrecedente) {
 		super();
 		this.nomTache = nomTache;
@@ -88,6 +89,7 @@ public class Tache implements Serializable {
 		this.chargeTache = chargeTache;
 		this.niveauPriorite = niveauPriorite;
 		this.duree = duree;
+		this.type=type;
 		this.phase = phase;
 		this.facture = facture;
 		this.depenses = depenses;
@@ -114,6 +116,22 @@ public class Tache implements Serializable {
 	public Date getDebutTache() {
 		return debutTache;
 	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
 
 
 
