@@ -45,6 +45,7 @@ public class TacheServiceImpl implements TacheService{
 			tache2.setNiveauPriorite(tache.getNiveauPriorite());
 			tache2.setFichiers(tache.getFichiers());
 			tache2.setTauxAvancement(tache.getTauxAvancement());
+			tache2.setTachePrecedente(tache.getTachePrecedente());
 			tacheRepository.save(tache2);
 			
 			return true;
@@ -124,6 +125,7 @@ public class TacheServiceImpl implements TacheService{
 		jalon=tache;
 		jalon.setDuree(0);
 		jalon.setFinTache(null);
+		jalon.setType("Jalon");
 		
 		return tacheRepository.save(jalon);
 	}
