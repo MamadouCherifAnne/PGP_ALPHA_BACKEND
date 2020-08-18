@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Commentaire;
+import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 @Service 
@@ -21,6 +23,10 @@ public class TacheServiceImpl implements TacheService{
 	 AffectationUtilisateurService affectService;
 	@Autowired
 	UtilisateurService userService;
+	@Autowired
+	ProjetService projetService;
+	@Autowired
+	CommentaireService commentService;
 	
 	@Override
 	public Tache addTache(Tache tache) {
@@ -110,12 +116,15 @@ public class TacheServiceImpl implements TacheService{
 	public List<Tache> getPredecesseursTask(Long idTache) {
 		// TODO Auto-generated method stub
 		Tache tache= this.findTache(idTache);
+		if(tache!=null) {
 		if(tache.getTachePrecedente()!=null) {
 			System.out.println("############"+ tache.getTachePrecedente());
 			return tache.getTachePrecedente();
 		}else {
 			return null;
 		}
+		}
+		return null;
 	}
 
 	@Override
@@ -129,5 +138,42 @@ public class TacheServiceImpl implements TacheService{
 		
 		return tacheRepository.save(jalon);
 	}
+
+	@Override
+	public List<Tache> potentielPredecesseurs(Long idTache) {
+		// TODO Auto-generated method stub
+		List<Tache> potentiel = new ArrayList<>();
+		Tache tache= this.findTache(idTache);
+		if(tache!=null) {
+			potentiel = tacheRepository.getPotentielPredecessor(tache.getPhase().getProjet().getNumProjet(), idTache);
+			System.out.println(potentiel);
+			return potentiel;
+		}
+		return null;
+	}
+
+	@Override
+	public Tache addCommentToTask(List<Commentaire> comments) {
+		Tache task=new Tache();
+		// TODO Auto-generated method stub
+		for(Commentaire com:comments) {
+			
+				Commentaire comen=	commentService.addCommentaireToTask(com);
+			
+		}
+		return task;
+	}
+
+	@Override
+	public List<Depense> getDepensesOfTask(Long idTache) {
+		// TODO Auto-generated method stub
+		Tache tache = this.findTache(idTache);
+		if(tache!=null) {
+			tache.getDepenses();
+		}
+		return null;
+	}
+
+
 
 }

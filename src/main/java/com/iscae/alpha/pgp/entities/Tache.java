@@ -42,7 +42,7 @@ public class Tache implements Serializable {
 	private String type;
 	
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="tache-phase")
 	private Phase phase;
 	
 	@OneToOne
@@ -50,7 +50,7 @@ public class Tache implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "tache" )
-	@JsonManagedReference
+	@JsonManagedReference(value="depense-tache")
 	private List<Depense> depenses;
 	
 	@JsonManagedReference

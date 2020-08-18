@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.entities.Commentaire;
+import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
+import com.iscae.alpha.pgp.service.CommentaireService;
 import com.iscae.alpha.pgp.service.TacheServiceImpl;
 
 @RestController
@@ -26,6 +29,8 @@ public class TacheController {
 	private TacheServiceImpl tacheService;
 	@Autowired
 	TacheRepository tacheRepo;
+	@Autowired
+	CommentaireService commentService;
 	
 	
 	@PostMapping(value="/add", consumes={"application/json"})
@@ -92,5 +97,31 @@ public class TacheController {
 	@GetMapping(value="/predecesseurs/{idTache}")
 	public List<Tache> getPredecesseurs(@PathVariable Long idTache){
 		return tacheService.getPredecesseursTask(idTache);
+	}
+	
+//  Retourner la liste des potentilles tache precedentes d'une tache
+	@GetMapping(value="/potentielPredecesseurs/{idTache}")
+	public List<Tache> getPotentielPredecesseurs(@PathVariable Long idTache){
+		return tacheService.potentielPredecesseurs(idTache);
+	}
+	
+	// Service d'ajou des commentaires a une tache
+	
+	@PostMapping(value="/addCommentsToTask")
+	public Tache addComments(@RequestBody List<Commentaire> comments) {
+		return tacheService.addCommentToTask(comments);
+	}
+	
+	// Afficher les commentaires effectuer sur une tache
+	@GetMapping(value="commentsOfTask/{idTache}")
+	public List<Commentaire> getCommentOfTask(@PathVariable Long idTache){
+		
+		return commentService.getCommentsOfTask(idTache);
+	}
+	
+	// Afficher les depense d'une tache
+	@GetMapping(value="/depenseOfTask{idTache}")
+	public List<Depense> getDepenseOfTask(@PathVariable Long idTache){
+		return tacheService.getDepensesOfTask(idTache);
 	}
 }

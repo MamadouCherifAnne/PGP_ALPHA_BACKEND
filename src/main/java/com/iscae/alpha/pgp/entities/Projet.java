@@ -42,16 +42,16 @@ public class Projet implements Serializable {
 	private List<Utilisateur> responsables;
 	 
 	 //L' entreprise dont appartient ce projet
-	 @JsonBackReference
+	 @JsonBackReference(value="entreprise-projet")
 	 @ManyToOne
 	 private Entreprise workSpace;
 	 
 	 
-	 @JsonManagedReference
+	 @JsonManagedReference(value="risque-projet")
 	 @OneToMany(mappedBy = "projet")
 	 private List<Risque> risques;
 	 
-	 @JsonManagedReference
+	 @JsonManagedReference(value="phase-projet")
 	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
 
