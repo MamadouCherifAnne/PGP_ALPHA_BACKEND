@@ -24,7 +24,7 @@ public class Risque implements Serializable {
 	private String etat;
 	private String source;
 	
-	@JsonBackReference
+	@JsonBackReference(value="risque-projet")
 	@ManyToOne
 	private Projet projet;
 

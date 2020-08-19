@@ -26,12 +26,13 @@ public class Phase  implements Serializable {
 	private String description;
 	private Date debutTache;
 	
-	@JsonBackReference
+	
+	@JsonBackReference(value="phase-projet")
 	@ManyToOne
 	private Projet projet;
 
 
-	@JsonManagedReference
+	@JsonManagedReference(value="tache-phase")
 	@OneToMany(mappedBy = "phase")
 	private List<Tache> taches;
 

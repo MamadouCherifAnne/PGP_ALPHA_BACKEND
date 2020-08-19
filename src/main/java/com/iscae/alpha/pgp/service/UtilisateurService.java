@@ -2,6 +2,7 @@ package com.iscae.alpha.pgp.service;
 
 import java.util.List;
 
+import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -27,5 +28,12 @@ public interface UtilisateurService {
 	
 	// Afficher la liste de toutes les tache dont il est affecter
 	public List<Tache> TacheToRealise(Long idUser);
+	
+	// Afficher tout les message Envoye par un utilisateur
+	public List<Message> getAllSendedMessageFromUser(Long idUser);
+	
+	// Afficher tout les message Reues par un utilisateur
+		public List<Message> getAllRecivedMessageFromUser(Long idUser);
+		
 
 }

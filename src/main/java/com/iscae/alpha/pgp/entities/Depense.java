@@ -20,8 +20,8 @@ public class Depense implements Serializable {
 	private double coutDepense;
 	private String description;
 	
-	@JsonBackReference
-	@ManyToOne()
+	@JsonBackReference(value="depense-tache")
+	@ManyToOne
 	private Tache tache;
 
 	public Depense() {
@@ -67,6 +67,14 @@ public class Depense implements Serializable {
 
 	public void setTache(Tache tache) {
 		this.tache = tache;
+	}
+
+	public Long getNumDepense() {
+		return NumDepense;
+	}
+
+	public void setNumDepense(Long numDepense) {
+		NumDepense = numDepense;
 	}
 	
 	

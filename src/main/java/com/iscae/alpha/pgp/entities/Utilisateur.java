@@ -67,15 +67,31 @@ public class Utilisateur implements Serializable {
 
 	@OneToMany(mappedBy = "user")
 	private List<Rapport> rapports;
-
-	@OneToMany(mappedBy = "user", fetch  = FetchType.EAGER, cascade = CascadeType.ALL)
+	
+	@JsonSetter
+	
+	@JsonBackReference(value="user-commentaire")
+	@OneToMany(mappedBy = "user", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Commentaire> commentaires;
 	
 	
 	// Les entreprises dedier a un utilisateur
-	@JsonBackReference
+	@JsonBackReference(value="user-entreprise")
 	@ManyToOne
 	private Entreprise entreprise;
+	
+	// Les Messages entre utilisateur
+	@JsonSetter
+	@JsonManagedReference(value="user-send")
+	@OneToMany(mappedBy = "editUser", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Message> sendMessages;
+	
+	//Message received
+	@JsonSetter
+	@JsonManagedReference(value="user-receive")
+	@OneToMany(mappedBy = "destinataire", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Message> messageReceived;
+	
 
 	public Utilisateur() {
 		super();
@@ -84,7 +100,7 @@ public class Utilisateur implements Serializable {
 
 	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
 			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapports,
-			List<Commentaire> commentaires, Entreprise entreprise) {
+			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -99,6 +115,8 @@ public class Utilisateur implements Serializable {
 		this.rapports = rapports;
 		this.commentaires = commentaires;
 		this.entreprise = entreprise;
+		this.sendMessages = sendMessages;
+		this.messageReceived = messageReceived;
 	}
 
 	// GETTERS AND SETTERS ......................................................................................................
@@ -215,6 +233,24 @@ public class Utilisateur implements Serializable {
 	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
+
+	public List<Message> getSendMessages() {
+		return sendMessages;
+	}
+
+	public void setSendMessages(List<Message> sendMessages) {
+		this.sendMessages = sendMessages;
+	}
+
+	public List<Message> getMessageReceived() {
+		return messageReceived;
+	}
+
+	public void setMessageReceived(List<Message> messageReceived) {
+		this.messageReceived = messageReceived;
+	}
+	
+	
 	
 	
 }

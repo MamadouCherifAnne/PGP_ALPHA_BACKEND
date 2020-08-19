@@ -3,6 +3,8 @@ package com.iscae.alpha.pgp.service;
 import java.util.Date;
 import java.util.List;
 
+import com.iscae.alpha.pgp.entities.Commentaire;
+import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -27,5 +29,13 @@ public interface TacheService {
 	
 	public Tache addJalon(Tache tache);
 	
+	// Les taches succeptibles de suivres une tache
+	public List<Tache> potentielPredecesseurs(Long idTache);
+	
+	// Ajouter des commentaires a une tache
+	public Tache addCommentToTask(List<Commentaire> comments);
+	
+	// Afficher la Liste des depenses d'une tache
+	public List<Depense> getDepensesOfTask(Long idTache);
 	
 }

@@ -28,7 +28,7 @@ public class Fichier implements Serializable {
 	 
 	private String nomFichier;
 	
-	@JsonBackReference
+	@JsonBackReference(value="fichier-tache")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Tache tacheConcerne;
 

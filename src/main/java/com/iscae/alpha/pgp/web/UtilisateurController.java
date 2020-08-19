@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.RoleRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.UtilisateurService;
@@ -107,5 +108,19 @@ public class UtilisateurController {
 		List<Tache> taches = userService.TacheToRealise(idUser);
 		return taches;
 	}
-
+	
+	
+	// Afficher les message envoyes  recu pour un utilisateur
+	@GetMapping(value="/boiteEnvoi/{idUser}")
+	public List<Message> getSenddeMessages(@PathVariable Long idUser){
+		return userService.getAllSendedMessageFromUser(idUser);
+	}
+	
+	// Afficher les message recu pour un utilisateur
+		@GetMapping(value="/boiteReception/{idUser}")
+		public List<Message> getRecivedMessages(@PathVariable Long idUser){
+			return userService.getAllRecivedMessageFromUser(idUser);
+		}
+	
+	
 }

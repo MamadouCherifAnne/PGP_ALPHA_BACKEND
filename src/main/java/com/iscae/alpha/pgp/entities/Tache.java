@@ -42,7 +42,7 @@ public class Tache implements Serializable {
 	private String type;
 	
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value="tache-phase")
 	private Phase phase;
 	
 	@OneToOne
@@ -50,12 +50,20 @@ public class Tache implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "tache" )
-	@JsonManagedReference
+	@JsonManagedReference(value="depense-tache")
 	private List<Depense> depenses;
 	
-	@JsonManagedReference
+	@JsonManagedReference(value="fichier-tache")
 	@OneToMany(mappedBy = "tacheConcerne")
 	private List<Fichier> fichiers;
+	
+	//Commnetaire de tache
+	@JsonSetter
+	@JsonManagedReference(value="tache-comment")
+	@OneToMany(mappedBy = "tacheComment", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Commentaire> commentaires;
+	
+	
 	
 	/*les tqches precedentes
 
@@ -78,7 +86,7 @@ public class Tache implements Serializable {
 
 	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
 			String niveauPriorite, int duree, String type,Phase phase, Facture facture, List<Depense> depenses,
-			List<Fichier> fichiers, List<Tache> tachePrecedente) {
+			List<Fichier> fichiers, List<Tache> tachePrecedente,List<Commentaire> commentaires) {
 		super();
 		this.nomTache = nomTache;
 		this.debutTache = debutTache;
@@ -93,6 +101,7 @@ public class Tache implements Serializable {
 		this.depenses = depenses;
 		this.fichiers = fichiers;
 		this.tachePrecedente = tachePrecedente;
+		this.commentaires=commentaires;
 	}
 
 
@@ -273,6 +282,17 @@ public class Tache implements Serializable {
 		this.tachePrecedente = tachePrecedente;
 	}
 
+
+	public List<Commentaire> getCommentaires() {
+		return commentaires;
+	}
+
+
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+	
+	
 	
 	
 }
