@@ -28,9 +28,9 @@ public class TacheServiceImpl implements TacheService{
 	}
 
 	@Override
-	public boolean updateTache(Tache tache) {
+	public Tache updateTache(Tache tache) {
 		Optional<Tache> tache1 = tacheRepository.findById(tache.getNumTache());
-		if(tache1 != null) {
+		if(tache1.isPresent()) {
 			Tache tache2 = tache1.get();
 			tache2.setNumTache(tache.getNumTache());
 			tache2.setNomTache(tache.getNomTache());
@@ -46,12 +46,13 @@ public class TacheServiceImpl implements TacheService{
 			tache2.setFichiers(tache.getFichiers());
 			tache2.setTauxAvancement(tache.getTauxAvancement());
 			tache2.setTachePrecedente(tache.getTachePrecedente());
-			tacheRepository.save(tache2);
 			
-			return true;
-			
+			return tacheRepository.save(tache2);
+		}else {
+			return null;
 		}
-		return false;
+	
+		
 	}
 
 	@Override

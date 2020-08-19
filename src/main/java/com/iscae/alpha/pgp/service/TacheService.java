@@ -11,7 +11,7 @@ public interface TacheService {
 	Tache addTache(Tache tache);
 
 
-	boolean updateTache( Tache tache);
+	Tache updateTache( Tache tache);
 
 	void deleateTache(Long idTache);
 	Tache findTache(Long idTache);

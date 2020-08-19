@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -17,8 +19,14 @@ public class Fichier implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long NumFichier;
-	private File file;
-	private String descriptionFile;
+    private String type;
+    
+
+    @Lob 
+    @Column(name = "logo", columnDefinition = "LONGBLOB")
+	private byte[] logo;
+	 
+	private String nomFichier;
 	
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -31,10 +39,11 @@ public class Fichier implements Serializable {
 	
 		
 	
-	public Fichier(File file, String descriptionFile, Tache tacheConcerne) {
+	public Fichier(String nomFichier,String type, byte[] data, Tache tacheConcerne) {
 		super();
-		this.file = file;
-		this.descriptionFile = descriptionFile;
+		this.nomFichier = nomFichier;
+		this.logo = data;
+		this.type = type;
 		this.tacheConcerne = tacheConcerne;
 	}
 
@@ -48,21 +57,40 @@ public class Fichier implements Serializable {
 		NumFichier = numFichier;
 	}
 
-	public File getFile() {
-		return file;
+	
+	public String getType() {
+		return type;
+	} 
+
+
+
+	public void setType(String type) {
+		this.type = type;
+	} 
+
+	public byte[] getLogo() {
+		return logo;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+
+
+	public void setLogo(byte[] logo) {
+		this.logo = logo;
 	}
 
-	public String getDescriptionFile() {
-		return descriptionFile;
+
+
+	public String getNomFichier() {
+		return nomFichier;
 	}
 
-	public void setDescriptionFile(String descriptionFile) {
-		this.descriptionFile = descriptionFile;
+
+
+	public void setNomFichier(String nomFichier) {
+		this.nomFichier = nomFichier;
 	}
+
+
 
 	public Tache getTacheConcerne() {
 		return tacheConcerne;
