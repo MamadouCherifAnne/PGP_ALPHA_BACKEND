@@ -20,7 +20,7 @@ public class Depense implements Serializable {
 	private double coutDepense;
 	private String description;
 	
-	@JsonBackReference(value="tache-depense")
+	@JsonBackReference(value="depense-tache")
 	@ManyToOne
 	private Tache tache;
 

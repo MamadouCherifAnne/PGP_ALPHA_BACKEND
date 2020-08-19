@@ -23,7 +23,7 @@ public class Profession implements Serializable {
 	private Long numProfession;
 	private String titreProfession;
 	
-	@JsonBackReference
+	@JsonBackReference(value="user-profession")
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Utilisateur_Profession",
 	joinColumns = @JoinColumn(name="numProfession"), inverseJoinColumns = @JoinColumn(name="id_user"))

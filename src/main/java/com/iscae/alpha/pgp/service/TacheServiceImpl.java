@@ -158,7 +158,7 @@ public class TacheServiceImpl implements TacheService{
 		// TODO Auto-generated method stub
 		for(Commentaire com:comments) {
 			
-				Commentaire comen=	commentService.addCommentaireToTask(com);
+				Commentaire comen=	commentService.addComment(com);
 			
 		}
 		return task;

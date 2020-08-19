@@ -23,12 +23,12 @@ public class Entreprise implements Serializable{
 	private String domaine_Entreprise;
 	private String adresse;
 	
-	@JsonBackReference
+	@JsonBackReference(value="user-entreprise")
 	@OneToMany(mappedBy="entreprise", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Utilisateur> users;
 	
 	// Les projets d' une entreprise
-	@JsonManagedReference
+	@JsonManagedReference(value="entreprise-projet")
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="workSpace")
 	private List<Projet> projets;
 	

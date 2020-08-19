@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -54,6 +52,11 @@ public class Projet implements Serializable {
 	 @JsonManagedReference(value="phase-projet")
 	 @OneToMany(mappedBy = "projet")
 	 private List<Phase> phases;
+	 
+	 // COmmentaire
+	 @JsonManagedReference(value="projet-comment")
+	 @OneToMany(mappedBy = "projetComment")
+	 private List<Commentaire> commentaires;
 
 	public Projet() {
 		super();
@@ -63,7 +66,8 @@ public class Projet implements Serializable {
 
 
 	public Projet(String nomProjet, String description, Date debutProjet, Date finProjet, String zoneRealisation,
-			List<Utilisateur> responsables, Entreprise workSpace, List<Risque> risques, List<Phase> phases) {
+			List<Utilisateur> responsables, Entreprise workSpace, List<Risque> risques, List<Phase> phases,
+			List<Commentaire> commentaires) {
 		super();
 		this.nomProjet = nomProjet;
 		this.description = description;
@@ -74,8 +78,10 @@ public class Projet implements Serializable {
 		this.workSpace = workSpace;
 		this.risques = risques;
 		this.phases = phases;
+		this.commentaires=commentaires;
 	}
-
+	
+	
 
 
 	public Long getNumProjet() {
@@ -197,6 +203,18 @@ public class Projet implements Serializable {
 	}
 
 
+
+	public List<Commentaire> getCommentaires() {
+		return commentaires;
+	}
+
+
+
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+
+	
 
 	 
 }

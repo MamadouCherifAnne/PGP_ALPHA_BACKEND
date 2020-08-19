@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Profession;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
@@ -177,5 +178,36 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		return null;
 	}
 
+
+
+	@Override
+	public List<Message> getAllSendedMessageFromUser(Long idUser) {
+		// toutrs sles message envoyer
+		Utilisateur user =this.getUserById(idUser);
+		List <Message> messages = new ArrayList<>();
+		if(user !=null) {
+			messages =user.getSendMessages();
+			//Ordonne les message par ordre croissant des date d'envoie
+			Collections.sort(messages, (x, y) -> x.getDateEnvoie().compareTo(y.getDateEnvoie()));
+			return messages;
+		}else {
+		return null;}
+	}
+
+
+
+	@Override
+	public List<Message> getAllRecivedMessageFromUser(Long idUser) {
+		// Afficher tout les essage recu
+		Utilisateur user =this.getUserById(idUser);
+		List <Message> messages = new ArrayList<>();
+		if(user !=null) {
+			messages =user.getMessageReceived();
+			//Ordonne les message par ordre croissant des date d'envoie
+			Collections.sort(messages, (x, y) -> x.getDateEnvoie().compareTo(y.getDateEnvoie()));
+			return messages;
+		}else {
+		return null;}
+	}
 }
    

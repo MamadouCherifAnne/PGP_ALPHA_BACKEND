@@ -20,7 +20,7 @@ public class Fichier implements Serializable {
 	private File file;
 	private String descriptionFile;
 	
-	@JsonBackReference
+	@JsonBackReference(value="fichier-tache")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Tache tacheConcerne;
 
