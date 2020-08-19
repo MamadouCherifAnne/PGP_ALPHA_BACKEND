@@ -54,4 +54,9 @@ public class PhaseController {
 	public List<Phase> findAllPhase(){
 		return phaseService.findAllPhase();
 	}
+	
+	@GetMapping("/find/{idPhase}")
+	public Phase getPhasById(@PathVariable Long idPhase) {
+		return phaseService.findPhaseById(idPhase);
+	}
 }

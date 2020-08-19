@@ -10,7 +10,7 @@ public interface PhaseService {
 	void deleatePhase(Long phaseId);
 
 	boolean updatePhase(Phase phase);
-	Phase findPHhaseById(Long phaseId);
+	Phase findPhaseById(Long phaseId);
 	List<Phase> findAllPhase();
 	
 }

@@ -65,7 +65,7 @@ public class PhaseServiceImp implements PhaseService{
 	//.................rechercher par 'l'id de la phase........................................................................
 	//....................................................................................................
 	@Override
-	public Phase findPHhaseById(Long phaseId) {
+	public Phase findPhaseById(Long phaseId) {
 		Phase phase = phaseRepository.findById(phaseId).get();
 		return phase;
 	}
