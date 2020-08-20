@@ -41,10 +41,12 @@ public class FichierController {
 	@Autowired 
 	private TacheServiceImpl tacheService;
 	
-	@PostMapping("/upload")
-	public  @ResponseBody ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+	@PostMapping("/upload/{tacheId}")
+	public  @ResponseBody ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,@PathVariable Long tacheId) throws IOException {
 		 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		 Tache tache1 = tacheService.findTache(tacheId);
 		 Fichier fichier = new Fichier();
+		 fichier.setTacheConcerne(tache1);
 		 fichier.setNomFichier(fileName); 
 		 fichier.setLogo(file.getBytes());
 		 fichier.setType(file.getContentType()); 
@@ -59,7 +61,7 @@ public class FichierController {
 	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
 	    }
 	  }
-	
+	 
 	 @GetMapping("/allfiles")
 	  public ResponseEntity<List<ResponseFile>> getListFiles() {
 	    List<ResponseFile> files = fichierservice.findAll().map(dbFile -> {
