@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.web;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
+import com.iscae.alpha.pgp.entities.Facture;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.CommentaireService;
+import com.iscae.alpha.pgp.service.DepenseService;
+import com.iscae.alpha.pgp.service.FactureService;
 import com.iscae.alpha.pgp.service.TacheServiceImpl;
 
 @RestController
@@ -31,6 +35,10 @@ public class TacheController {
 	TacheRepository tacheRepo;
 	@Autowired
 	CommentaireService commentService;
+	@Autowired
+	DepenseService depenseService;
+	@Autowired
+	FactureService factureService;
 	
 	
 	@PostMapping(value="/add", consumes={"application/json"})
@@ -123,5 +131,41 @@ public class TacheController {
 	@GetMapping(value="/depenseOfTask{idTache}")
 	public List<Depense> getDepenseOfTask(@PathVariable Long idTache){
 		return tacheService.getDepensesOfTask(idTache);
+	}
+	
+	// Ajouter une depense a une tache
+	@PostMapping(value="/addDepenseToTask")
+	public Depense addDepenseToTask(Depense depense) {
+		return depenseService.addDepense(depense);
+	}
+	
+	//Afficher la liste des depenses en fonction d'une date 
+	@GetMapping(value="/depenseOfDate")
+	public List<Depense> getDepensesByDate(@RequestBody Date date){
+		return depenseService.getDepenseByDate(date);
+	}
+	//Afficher la facture d'une tache
+	@GetMapping(value="/getFacture/{idTache}")
+	public Facture getFactureOfTache(@PathVariable Long idTache) {
+		return tacheService.getFactureOfTasK(idTache);
+	}
+	
+	// Ajouter une facture a une tache
+	@PostMapping(value="/addFactureToTache")
+	public Facture addFactureToTask(@RequestBody Facture facture){
+		return factureService.addFactureOfTask(facture);
+	}
+	
+	// Supprimer une facture
+	@PostMapping(value="/deleteFactureOfTask/{idFacture}")
+	public boolean deleteFactureOfTask(@PathVariable Long idFacture){
+		return factureService.deleteFacture(idFacture);
+	}
+	
+	// Afficher le cout totale des depense d'une tache
+	@GetMapping(value="/costOfTask/{idTache}")
+	public double getCostOfTache(@PathVariable Long idTache) {
+		
+		return (tacheService.calculCoutRessourcesOfTask(idTache)+tacheService.getCoutTotaleDepense(idTache));
 	}
 }

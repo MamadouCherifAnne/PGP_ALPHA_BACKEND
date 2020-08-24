@@ -20,6 +20,8 @@ public interface AffectationUtilisateurService {
 	
 	// Afficher La liste des Affectations concernant un utlisateur
 		public List<AffectationUtilisateur> getAffectationsForUser(Long idUser);
+		
+	
 	
 	
 

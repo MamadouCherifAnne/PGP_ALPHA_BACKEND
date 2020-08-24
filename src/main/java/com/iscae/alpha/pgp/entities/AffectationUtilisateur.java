@@ -15,16 +15,37 @@ public class AffectationUtilisateur implements Serializable {
 	private UserToTache user_task;
 	
 	private double tempsPasser;
-
+	private double tempsEffectuer;
+	private double coutParHeure;
 	public AffectationUtilisateur() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public AffectationUtilisateur(UserToTache user_task, double tempsPasser) {
+	public AffectationUtilisateur(UserToTache user_task, double tempsPasser, double tempsEffectuer, double coutParHeure) {
 		super();
 		this.user_task = user_task;
 		this.tempsPasser = tempsPasser;
+		this.tempsEffectuer =tempsEffectuer;
+		this.coutParHeure =coutParHeure;
+	}
+	
+	
+	
+	public double getCoutParHeure() {
+		return coutParHeure;
+	}
+
+	public void setCoutParHeure(double coutParHeure) {
+		this.coutParHeure = coutParHeure;
+	}
+
+	public double getTempsEffectuer() {
+		return tempsEffectuer;
+	}
+
+	public void setTempsEffectuer(double tempsEffectuer) {
+		this.tempsEffectuer = tempsEffectuer;
 	}
 
 	public UserToTache getUser_task() {

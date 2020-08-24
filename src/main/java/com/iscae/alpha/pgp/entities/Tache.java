@@ -45,7 +45,8 @@ public class Tache implements Serializable {
 	@JsonBackReference(value="tache-phase")
 	private Phase phase;
 	
-	@OneToOne
+	@JsonManagedReference(value="facture-tache")
+	@OneToOne(mappedBy = "tache")
 	private Facture facture;
 	
 	

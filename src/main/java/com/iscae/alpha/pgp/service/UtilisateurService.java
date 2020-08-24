@@ -34,6 +34,6 @@ public interface UtilisateurService {
 	
 	// Afficher tout les message Reues par un utilisateur
 		public List<Message> getAllRecivedMessageFromUser(Long idUser);
-		
-
+	
+	
 }
