@@ -173,7 +173,8 @@ public class TacheServiceImpl implements TacheService{
 		// TODO Auto-generated method stub
 		Tache tache = this.findTache(idTache);
 		if(tache!=null) {
-			tache.getDepenses();
+			
+			return tache.getDepenses();
 		}
 		return null;
 	}
@@ -193,7 +194,7 @@ public class TacheServiceImpl implements TacheService{
 		// Calcul du coup du cout d'une tache 
 		double totale=0;
 		List<AffectationUtilisateur> affectations =affectService.getAffectationsForTache(idTache);
-		if(!affectations.isEmpty()) {
+		if(affectations !=null) {
 			for(AffectationUtilisateur affect : affectations) {
 				totale = totale + (affect.getCoutParHeure() * affect.getTempsEffectuer());
 			}
@@ -206,7 +207,7 @@ public class TacheServiceImpl implements TacheService{
 		// Calcul du coup provisoire du cout d'une tache 
 		double estimation=0;
 		List<AffectationUtilisateur> affectations =affectService.getAffectationsForTache(idTache);
-		if(!affectations.isEmpty()) {
+		if(affectations != null) {
 			for(AffectationUtilisateur affect : affectations) {
 				estimation = estimation + (affect.getCoutParHeure() * affect.getTempsPasser());
 			}
@@ -219,12 +220,15 @@ public class TacheServiceImpl implements TacheService{
 		// TODO Auto-generated method stub
 		double totale =0;
 		List<Depense> depenses = this.getDepensesOfTask(idTache);
-		if(!depenses.isEmpty()) {
+		if(depenses  != null) {
 			for(Depense dep : depenses) {
 				totale = totale + dep.getCoutDepense();
+				System.out.println("########"+dep.getLibelle()+"||  "+ dep.getCoutDepense());
 			}
+			return totale;
 		}
-		return totale;
+		System.out.println("########");
+		return 0;
 	}
 
 

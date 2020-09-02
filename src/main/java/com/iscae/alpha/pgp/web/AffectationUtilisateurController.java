@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.UserToTache;
 import com.iscae.alpha.pgp.service.AffectationUtilisateurService;
 
 @RestController
@@ -30,6 +32,33 @@ public class AffectationUtilisateurController {
 		 return "Added";
 	}
 	
+	// Modification d'une Affectation
+	@PostMapping(value="/update", consumes="application/json")
+	public String updateAffectation(@RequestBody AffectationUtilisateur userForJob) {
+		AffectationUtilisateur userAffect = new AffectationUtilisateur();
+		userAffect = userToJobService.updateAffectationUser(userForJob);
+		if(userAffect != null) {
+			return "L'Affectation a été Modifié avec Succées";
+		}else {
+			return "La Modification a echoué";
+		}
+	}
+	
+	
+	// Service de Suppression d'Affectation 
+	@DeleteMapping(value="/deleteAffectation")
+	public boolean deleteAffectation(@RequestBody UserToTache idAffect) {
+		
+		return userToJobService.deleteAffectation(idAffect.getIdUser(), idAffect.getIdTache());
+	}
+	
+	
+	// Afficher une Affectation par son Idnetifiant
+	@GetMapping(value ="/getAffectationById/{idUser}/{idTache}")
+	public AffectationUtilisateur getAffectationById(@PathVariable(name="idUser") Long idUser, @PathVariable(name="idTache") Long idTache) {
+		return userToJobService.getAffectationById(idTache, idUser);
+	}
+		
 	// Service de recuperation des affectations concernant un utilisateur
 	@GetMapping(value="/tacheToRealise/{idUser}")
 	public List<AffectationUtilisateur> getAllUserAffectations(@PathVariable Long idUser){

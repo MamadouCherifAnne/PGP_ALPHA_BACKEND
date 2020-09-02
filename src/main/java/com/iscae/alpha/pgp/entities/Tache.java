@@ -50,7 +50,7 @@ public class Tache implements Serializable {
 	private Facture facture;
 	
 	
-	@OneToMany(mappedBy = "tache" )
+	@OneToMany(mappedBy = "tache", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference(value="depense-tache")
 	private List<Depense> depenses;
 	

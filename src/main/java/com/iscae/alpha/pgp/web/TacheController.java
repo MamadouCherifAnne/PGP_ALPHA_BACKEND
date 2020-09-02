@@ -128,14 +128,14 @@ public class TacheController {
 	}
 	
 	// Afficher les depense d'une tache
-	@GetMapping(value="/depenseOfTask{idTache}")
+	@GetMapping(value="/depenseOfTask/{idTache}")
 	public List<Depense> getDepenseOfTask(@PathVariable Long idTache){
 		return tacheService.getDepensesOfTask(idTache);
 	}
 	
 	// Ajouter une depense a une tache
 	@PostMapping(value="/addDepenseToTask")
-	public Depense addDepenseToTask(Depense depense) {
+	public Depense addDepenseToTask(@RequestBody Depense depense) {
 		return depenseService.addDepense(depense);
 	}
 	
@@ -166,6 +166,6 @@ public class TacheController {
 	@GetMapping(value="/costOfTask/{idTache}")
 	public double getCostOfTache(@PathVariable Long idTache) {
 		
-		return (tacheService.calculCoutRessourcesOfTask(idTache)+tacheService.getCoutTotaleDepense(idTache));
+		return (tacheService.getCoutTotaleDepense(idTache)+tacheService.calculCoutRessourcesOfTask(idTache));
 	}
 }

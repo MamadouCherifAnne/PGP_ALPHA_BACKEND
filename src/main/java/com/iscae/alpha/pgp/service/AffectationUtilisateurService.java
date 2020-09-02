@@ -3,6 +3,7 @@ package com.iscae.alpha.pgp.service;
 import java.util.List;
 
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.UserToTache;
 
 public interface AffectationUtilisateurService {
 	
@@ -20,6 +21,9 @@ public interface AffectationUtilisateurService {
 	
 	// Afficher La liste des Affectations concernant un utlisateur
 		public List<AffectationUtilisateur> getAffectationsForUser(Long idUser);
+		
+	// Recuperer un affectation par son id
+		public AffectationUtilisateur getAffectationById(Long idTache, long idUser);
 		
 	
 	

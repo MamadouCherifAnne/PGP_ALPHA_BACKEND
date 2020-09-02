@@ -110,19 +110,21 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			
 			// Supprimer l'utilisateur de la liste des utilisateur dans les profession avec lesquelles il etait liee
 			if(user.getProfessions()!= null) {
-			for (Profession p : user.getProfessions()) {
-				p.getUtilisateurs().remove(user);
-			}
+				user.setProfessions(null);
 			}
 			// Suppression de L'utilisateur dans la liste de role avec aui il est en relation
 			if(user.getRole() !=null) {
 				user.getRole().getUsers().remove(user);
 			}
+			// Verification si l'utilisateur n'est pas affecte dans une tache
+			List<AffectationUtilisateur> affectations =affectService.getAffectationsForUser(id);
+			if(affectations == null) {
 				userRepository.deleteById(id);
 				return true;
-				}else {
-					return false;
 				}
+		}
+			return false;
+				
 	}
 
 	@Override
