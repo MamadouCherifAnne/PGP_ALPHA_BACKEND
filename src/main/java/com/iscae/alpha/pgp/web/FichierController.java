@@ -1,8 +1,11 @@
 package com.iscae.alpha.pgp.web;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,11 +28,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.iscae.alpha.pgp.entities.Fichier;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.message.ResponseFile;
+import com.iscae.alpha.pgp.message.ResponseMessage;
 import com.iscae.alpha.pgp.service.FichierServiceImp;
+import com.iscae.alpha.pgp.service.ProjetService;
 import com.iscae.alpha.pgp.service.TacheServiceImpl;
 
-import message.ResponseFile;
-import message.ResponseMessage;
+
 
 @RestController
 @RequestMapping("/fichier")
@@ -40,6 +45,8 @@ public class FichierController {
 	
 	@Autowired 
 	private TacheServiceImpl tacheService;
+	
+	
 	
 	@PostMapping("/upload/{tacheId}")
 	public  @ResponseBody ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,@PathVariable Long tacheId) throws IOException {
@@ -62,7 +69,7 @@ public class FichierController {
 	    }
 	  }
 	 
-	 @GetMapping("/allfiles")
+	/* @GetMapping("/allfiles")
 	  public ResponseEntity<List<ResponseFile>> getListFiles() {
 	    List<ResponseFile> files = fichierservice.findAll().map(dbFile -> {
 	      String fileDownloadUri = ServletUriComponentsBuilder
@@ -79,7 +86,7 @@ public class FichierController {
 	    }).collect(Collectors.toList());
 
 	    return ResponseEntity.status(HttpStatus.OK).body(files);
-	  }
+	  } */
 
 	  @GetMapping("/findFileById/{id}")
 	  public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
@@ -89,4 +96,19 @@ public class FichierController {
 	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getNomFichier() + "\"")
 	        .body(file.getLogo());
 	  }
+	  
+	 /* @GetMapping(path = "getFile/{id}")
+		public ResponseEntity<Resource> getFichier(@PathVariable Long id) throws Exception {
+		  Fichier file = fichierservice.fidById(id);
+
+			Path path = Paths.get(System.getProperty("user.home") + "/media/Imraguen/Documents/" + document.getFileName());
+			byte[] fileByte = Files.readAllBytes(path);
+
+			ByteArrayResource ressource = new ByteArrayResource(fileByte);
+
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + document.getOriginalName())
+					.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(path.toFile().length()).body(ressource);
+		}*/
+
 }
