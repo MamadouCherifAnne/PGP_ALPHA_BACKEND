@@ -75,7 +75,10 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 	// Afficher les affectations par Tache
 	@Override
 	public List<AffectationUtilisateur> getAffectationsForTache(Long idTache) {
-		return userForJobRepo.getAffectationsForTache(idTache);
+		if(userForJobRepo.getAffectationsForTache(idTache)!=null) {
+			return userForJobRepo.getAffectationsForTache(idTache);
+		}
+		return null;
 	}
 
 	
@@ -84,6 +87,19 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 	public List<AffectationUtilisateur> getAffectationsForUser(Long idUser) {
 		// TODO Auto-generated method stub
 		return userForJobRepo.getAffectationsByUtilisateur(idUser);
+	}
+
+	@Override
+	public AffectationUtilisateur getAffectationById(Long idTache, long idUser) {
+		//Recherche par id Affectation
+		UserToTache idAffectation =new UserToTache();
+		idAffectation.setIdTache(idTache);
+		idAffectation.setIdUser(idUser);
+		Optional<AffectationUtilisateur> verif = userForJobRepo.findById(idAffectation);
+		if(verif.isPresent()) {
+			return verif.get();
+		}
+		return null;
 	}
 
 }

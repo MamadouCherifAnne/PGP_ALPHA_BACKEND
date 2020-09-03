@@ -12,6 +12,7 @@ import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
+import com.iscae.alpha.pgp.entities.Facture;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 @Service 
@@ -27,6 +28,7 @@ public class TacheServiceImpl implements TacheService{
 	ProjetService projetService;
 	@Autowired
 	CommentaireService commentService;
+	
 	
 	@Override
 	public Tache addTache(Tache tache) {
@@ -160,6 +162,7 @@ public class TacheServiceImpl implements TacheService{
 		for(Commentaire com:comments) {
 			
 				Commentaire comen=	commentService.addComment(com);
+				task = comen.getTacheComment();
 			
 		}
 		return task;
@@ -170,9 +173,62 @@ public class TacheServiceImpl implements TacheService{
 		// TODO Auto-generated method stub
 		Tache tache = this.findTache(idTache);
 		if(tache!=null) {
-			tache.getDepenses();
+			
+			return tache.getDepenses();
 		}
 		return null;
+	}
+
+	@Override
+	public Facture getFactureOfTasK(Long idTache) {
+		// TODO Auto-generated method stub
+		Tache tache =findTache(idTache);
+		if(tache != null) {
+			return tache.getFacture();
+		}
+		return null;
+	}
+
+	@Override
+	public double calculCoutRessourcesOfTask(Long idTache) {
+		// Calcul du coup du cout d'une tache 
+		double totale=0;
+		List<AffectationUtilisateur> affectations =affectService.getAffectationsForTache(idTache);
+		if(affectations !=null) {
+			for(AffectationUtilisateur affect : affectations) {
+				totale = totale + (affect.getCoutParHeure() * affect.getTempsEffectuer());
+			}
+		}
+		return totale;
+	}
+
+	@Override
+	public double calculEstimationCoutTache(Long idTache) {
+		// Calcul du coup provisoire du cout d'une tache 
+		double estimation=0;
+		List<AffectationUtilisateur> affectations =affectService.getAffectationsForTache(idTache);
+		if(affectations != null) {
+			for(AffectationUtilisateur affect : affectations) {
+				estimation = estimation + (affect.getCoutParHeure() * affect.getTempsPasser());
+			}
+		}
+		return estimation;
+	}
+
+	@Override
+	public double getCoutTotaleDepense(Long idTache) {
+		// TODO Auto-generated method stub
+		double totale =0;
+		List<Depense> depenses = this.getDepensesOfTask(idTache);
+		if(depenses  != null) {
+			for(Depense dep : depenses) {
+				totale = totale + dep.getCoutDepense();
+				System.out.println("########"+dep.getLibelle()+"||  "+ dep.getCoutDepense());
+			}
+			return totale;
+		}
+		System.out.println("########");
+		return 0;
 	}
 
 

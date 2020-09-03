@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
+import com.iscae.alpha.pgp.entities.Facture;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -38,4 +39,16 @@ public interface TacheService {
 	// Afficher la Liste des depenses d'une tache
 	public List<Depense> getDepensesOfTask(Long idTache);
 	
+	// Afficher la facture d'une Tache
+	public Facture getFactureOfTasK(Long idTache);
+	
+	// Cacul du cout  selon le temps reel effectuer des ressources humaines pour une tache
+	public double calculCoutRessourcesOfTask(Long idTache);
+	
+	// Cacul du cout Provisoires selon le temps normale a passer des ressources humaines pour une tache
+	public double calculEstimationCoutTache(Long idTache);
+	
+//  Le cout totales des depenses sur une tache
+		public double getCoutTotaleDepense(Long idTache);
+
 }

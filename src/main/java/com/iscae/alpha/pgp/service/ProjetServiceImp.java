@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.ProjetRepository;
+import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
@@ -20,6 +21,8 @@ public class ProjetServiceImp implements ProjetService{
 	
 	@Autowired
 	ProjetRepository projetRepository;
+	@Autowired 
+	CommentaireService commentService;
 
 	
 	@Override
@@ -65,9 +68,9 @@ public class ProjetServiceImp implements ProjetService{
 		
 		//Verification de l'existance d'un projet si oui on le retourne sinon on retourne null;
 		if (projetRepository.findById(projetId).isPresent()) {
-		Projet projet = projetRepository.findById(projetId).get();
-		
-		return projet;
+			Projet projet = projetRepository.findById(projetId).get();
+			
+			return projet;
 		}
 		
 		return null;
@@ -126,6 +129,31 @@ public class ProjetServiceImp implements ProjetService{
 		// TODO Auto-generated method stub
 		List<Tache> jalons = new ArrayList<>();
 		jalons = this.getAllJalons(numProjet);
+		return null;
+	}
+
+	@Override
+	public Projet addcommentsToProject(List<Commentaire> comments) {
+		// Ajout de plusieur commentaire a meme temps
+		if(!comments.isEmpty()) {
+			Projet projet=new Projet();
+			for(Commentaire com : comments) {
+				Commentaire coment = commentService.addComment(com);
+				projet = coment.getProjetComment();
+			}
+			return projet;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Commentaire> allCommentsOfProject(Long idProjet) {
+		// Afficher la liste des commentaires d'un projet
+		Projet projet =findProjetById(idProjet);
+		if(projet != null) {
+			return projet.getCommentaires();
+		}
+		
 		return null;
 	}
 

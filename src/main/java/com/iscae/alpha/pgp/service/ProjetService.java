@@ -3,6 +3,7 @@ package com.iscae.alpha.pgp.service;
 import java.util.Date;
 import java.util.List;
 
+import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
@@ -38,5 +39,11 @@ public interface ProjetService {
 		
 	// Afficher les jalons en retard
 		public List<Tache> getRetardJalon(Long numProjet);
+		
+	// Ajouter des commentaires au projet
+		public Projet addcommentsToProject(List<Commentaire> comments);
+	
+	// Afficher toutes les commentaires sur un projet
+		public List<Commentaire> allCommentsOfProject(Long idProjet);
 
 }

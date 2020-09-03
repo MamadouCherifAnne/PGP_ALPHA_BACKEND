@@ -1,10 +1,9 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -19,6 +18,7 @@ public class Depense implements Serializable {
 	private String libelle;
 	private double coutDepense;
 	private String description;
+	private Date dateEnregistrement;
 	
 	@JsonBackReference(value="depense-tache")
 	@ManyToOne
@@ -29,16 +29,27 @@ public class Depense implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Depense(String libelle, double coutDepense, String description, Tache tache) {
+	public Depense(String libelle, double coutDepense, String description, Date dateEnregistrement,Tache tache) {
 		super();
 		this.libelle = libelle;
 		this.coutDepense = coutDepense;
 		this.description = description;
 		this.tache = tache;
+		this.dateEnregistrement=dateEnregistrement;
 	}
 
+	// GETTERS AND SETTERS
+	
 	public String getLibelle() {
 		return libelle;
+	}
+
+	public Date getDateEnregistrement() {
+		return dateEnregistrement;
+	}
+
+	public void setDateEnregistrement(Date dateEnregistrement) {
+		this.dateEnregistrement = dateEnregistrement;
 	}
 
 	public void setLibelle(String libelle) {
@@ -74,7 +85,7 @@ public class Depense implements Serializable {
 	}
 
 	public void setNumDepense(Long numDepense) {
-		NumDepense = numDepense;
+		this.NumDepense = numDepense;
 	}
 	
 	

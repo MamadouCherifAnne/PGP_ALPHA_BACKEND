@@ -45,11 +45,12 @@ public class Tache implements Serializable {
 	@JsonBackReference(value="tache-phase")
 	private Phase phase;
 	
-	@OneToOne
+	@JsonManagedReference(value="facture-tache")
+	@OneToOne(mappedBy = "tache")
 	private Facture facture;
 	
 	
-	@OneToMany(mappedBy = "tache" )
+	@OneToMany(mappedBy = "tache", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference(value="depense-tache")
 	private List<Depense> depenses;
 	
