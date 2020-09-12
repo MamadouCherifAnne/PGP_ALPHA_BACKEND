@@ -20,7 +20,7 @@ public class Message {
 	private Long idMessage;
     private String messageContent;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnvoie;
     
     @JsonBackReference(value="user-send")

@@ -116,8 +116,8 @@ public class TacheController {
 	// Service d'ajou des commentaires a une tache
 	
 	@PostMapping(value="/addCommentsToTask")
-	public Tache addComments(@RequestBody List<Commentaire> comments) {
-		return tacheService.addCommentToTask(comments);
+	public Commentaire addComments(@RequestBody Commentaire  comments) {
+		return commentService.addComment(comments);
 	}
 	
 	// Afficher les commentaires effectuer sur une tache

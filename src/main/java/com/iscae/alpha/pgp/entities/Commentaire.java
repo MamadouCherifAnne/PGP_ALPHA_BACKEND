@@ -1,8 +1,11 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +15,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSetter;
 @Entity
 public class Commentaire implements Serializable{
@@ -21,8 +23,10 @@ public class Commentaire implements Serializable{
 
 	private Long idComment;
 	
-	@Temporal(TemporalType.DATE)
-	private java.util.Date dateComment;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+	private Date dateComment;
+
 	private String comment;
 	
 	//@JsonManagedReference(value="user-commentaire")
@@ -52,8 +56,8 @@ public class Commentaire implements Serializable{
 		this.tacheComment=tacheComment;
 		this.projetComment=projetComment;
 	}
-
-
+	
+	
 	public Long getIdComment() {
 		return idComment;
 	}
@@ -102,9 +106,5 @@ public class Commentaire implements Serializable{
 		this.projetComment = projetComment;
 	}
 
-	
-	
-
-	
 	
 }

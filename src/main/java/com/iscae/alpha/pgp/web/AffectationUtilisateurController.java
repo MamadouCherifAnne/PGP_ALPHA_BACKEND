@@ -34,14 +34,10 @@ public class AffectationUtilisateurController {
 	
 	// Modification d'une Affectation
 	@PostMapping(value="/update", consumes="application/json")
-	public String updateAffectation(@RequestBody AffectationUtilisateur userForJob) {
-		AffectationUtilisateur userAffect = new AffectationUtilisateur();
-		userAffect = userToJobService.updateAffectationUser(userForJob);
-		if(userAffect != null) {
-			return "L'Affectation a été Modifié avec Succées";
-		}else {
-			return "La Modification a echoué";
-		}
+	public AffectationUtilisateur updateAffectation(@RequestBody AffectationUtilisateur userForJob) {
+		
+		 return userToJobService.updateAffectationUser(userForJob);
+		
 	}
 	
 	
