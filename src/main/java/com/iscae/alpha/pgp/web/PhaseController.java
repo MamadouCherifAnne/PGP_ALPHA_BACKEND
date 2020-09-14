@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.service.PhaseServiceImp;
 
 @RestController
@@ -58,5 +59,11 @@ public class PhaseController {
 	@GetMapping("/find/{idPhase}")
 	public Phase getPhasById(@PathVariable Long idPhase) {
 		return phaseService.findPhaseById(idPhase);
+	}
+	
+	@GetMapping("/getProjet/{idPhase}")
+	public Projet getProjetOfPhase(@PathVariable Long idPhase) {
+		Phase phase = phaseService.findPhaseById(idPhase);
+		return phase.getProjet();
 	}
 }
