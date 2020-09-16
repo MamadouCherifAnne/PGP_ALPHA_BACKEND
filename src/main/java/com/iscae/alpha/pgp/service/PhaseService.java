@@ -1,4 +1,4 @@
-package com.iscae.alpha.pgp.service;
+ package com.iscae.alpha.pgp.service;
 
 import java.util.List;
 
@@ -12,5 +12,4 @@ public interface PhaseService {
 	boolean updatePhase(Phase phase);
 	Phase findPhaseById(Long phaseId);
 	List<Phase> findAllPhase();
-	
 }
