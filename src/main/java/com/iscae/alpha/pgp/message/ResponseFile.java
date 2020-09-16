@@ -1,4 +1,4 @@
-package message;
+package com.iscae.alpha.pgp.message;
 
 public class ResponseFile {
 	

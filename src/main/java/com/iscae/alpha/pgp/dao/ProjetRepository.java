@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iscae.alpha.pgp.entities.Fichier;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 

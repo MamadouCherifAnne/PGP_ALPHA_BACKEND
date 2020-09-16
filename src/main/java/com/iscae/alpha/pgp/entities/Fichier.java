@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Fichier implements Serializable {
 	@Id
 	@GeneratedValue
-	private Long NumFichier;
+	private Long numFichier;
     private String type;
     
 
@@ -49,15 +49,21 @@ public class Fichier implements Serializable {
 
 
 
-	public Long getNumFichier() {
-		return NumFichier;
-	}
-
-	public void setNumFichier(Long numFichier) {
-		NumFichier = numFichier;
-	}
+	
 
 	
+	public Long getNumFichier() {
+		return numFichier;
+	}
+
+
+
+	public void setNumFichier(Long numFichier) {
+		this.numFichier = numFichier;
+	}
+
+
+
 	public String getType() {
 		return type;
 	} 
