@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,22 +28,30 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class Tache implements Serializable {
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO )
+	@Column(name="num_tache")
 	private Long numTache;
-
+	
+	@Column(name="nom_tache")
 	private String nomTache;
 	private String description;
 	@Temporal(TemporalType.DATE)
+	@Column(name="debut_tache")
 	private Date debutTache;
 	@Temporal(TemporalType.DATE)
+	@Column(name="fin_tache")
 	private Date finTache;
+	@Column(name="taux_avancement")
 	private double tauxAvancement;
+	@Column(name="charge_tache")
 	private double chargeTache;
+	@Column(name="niveau_priorite")
 	private String niveauPriorite;
 	private int duree;
 	private String type;
 	
 	@ManyToOne
 	@JsonBackReference(value="tache-phase")
+	@JoinColumn(name ="phase_num_tache")
 	private Phase phase;
 	
 	@JsonManagedReference(value="facture-tache")
@@ -74,8 +83,8 @@ public class Tache implements Serializable {
 	*/
 	
 	@JoinTable(name = "Tache_Predecesseurs", joinColumns = {
-		    @JoinColumn(name = "tache", referencedColumnName = "numTache", nullable =   false)}, inverseJoinColumns = {
-		    @JoinColumn(name = "Predecesseur", referencedColumnName = "numTache", nullable = false)})
+		    @JoinColumn(name = "tache", referencedColumnName = "num_tache", nullable =   false)}, inverseJoinColumns = {
+		    @JoinColumn(name = "Predecesseur", referencedColumnName = "num_tache", nullable = false)})
 		    @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.DETACH)
 		    private List<Tache> tachePrecedente;
 

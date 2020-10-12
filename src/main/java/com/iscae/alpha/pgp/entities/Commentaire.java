@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,26 +21,31 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class Commentaire implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-
+	@Column(name="id_comment")
 	private Long idComment;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
+	@Column(name="date_comment",nullable = false)
 	private Date dateComment;
-
+	@Column(name="comment")
 	private String comment;
 	
 	//@JsonManagedReference(value="user-commentaire")
 	@JsonSetter
 	@ManyToOne
+	@JoinColumn(name = "user_id_user")
 	private Utilisateur user;
 	
 	@JsonBackReference(value="tache-comment")
+	
 	@ManyToOne
+	@JoinColumn(name="tache_comment_num_tache")
+	
 	private Tache tacheComment;
 	
 	@JsonBackReference(value="projet-comment")
 	@ManyToOne
+	@JoinColumn(name="")
 	private Projet projetComment;
 
 

@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -19,19 +21,23 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Projet implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name="num_projet")
 	private Long numProjet;
-	
+	@Column(name="nom_projet")
 	private String nomProjet;
 	
 
 	private String description;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name="debut_projet")
 	private Date debutProjet;
 	
 	@Temporal(TemporalType.DATE)
+	@Column(name="fin_projet")
 	private Date finProjet;
 	
+	@Column(name="zone_realisation")
 	private String zoneRealisation;
 	
 	// Jai eu des doutes concernant la relation entre projet et utilisateurs 
@@ -42,6 +48,7 @@ public class Projet implements Serializable {
 	 //L' entreprise dont appartient ce projet
 	 @JsonBackReference(value="entreprise-projet")
 	 @ManyToOne
+	 @JoinColumn(name="work_space_id_entreprise")
 	 private Entreprise workSpace;
 	 
 	 

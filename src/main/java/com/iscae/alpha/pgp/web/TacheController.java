@@ -69,7 +69,7 @@ public class TacheController {
 	// ALL TASKS
 	@GetMapping(value="/all")
 	public List<Tache> findAllTask(){
-		System.out.println("####################"+ tacheService.findTache(10L).getTachePrecedente());
+
 		return tacheRepo.findAll();
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +20,10 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 @Entity
 public class Profession implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="num_profession")
 	private Long numProfession;
+	@Column(name="titre_profession")
 	private String titreProfession;
 	
 	@JsonBackReference(value="user-profession")

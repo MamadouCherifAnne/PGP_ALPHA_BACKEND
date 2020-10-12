@@ -3,9 +3,11 @@ package com.iscae.alpha.pgp.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -14,14 +16,18 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Depense implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name="num_depense")
 	private Long NumDepense;
 	private String libelle;
+	@Column(name="cout_depense")
 	private double coutDepense;
 	private String description;
+	@Column(name="date_enregistrement")
 	private Date dateEnregistrement;
 	
 	@JsonBackReference(value="depense-tache")
 	@ManyToOne
+	@JoinColumn(name="tache_num_tache")
 	private Tache tache;
 
 	public Depense() {

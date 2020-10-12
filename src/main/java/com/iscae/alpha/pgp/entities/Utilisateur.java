@@ -37,20 +37,24 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class Utilisateur implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id_user")
 	private Long idUser;
-	@Column(unique = true)
 	private String nom;
+	@Column(unique = true)
+	private String username;
 	private String prenom;
 	private String email;
 	private String password;
 	private String adresse;
+	private String company;
 	private boolean actif;
 	private String telephone;
 	
 	
+	
 	@ManyToOne
+	@JoinColumn(name="role_id_role")
 	private Role role;
 	
 
@@ -62,6 +66,7 @@ public class Utilisateur implements Serializable {
 	private List<Profession> professions;
 	
 	@ManyToOne
+	@JoinColumn(name="projet_num_projet")
 	private Projet projet;
 	
 
@@ -78,6 +83,7 @@ public class Utilisateur implements Serializable {
 	// Les entreprises dedier a un utilisateur
 	@JsonBackReference(value="user-entreprise")
 	@ManyToOne
+	@JoinColumn(name="entreprise_id_entreprise")
 	private Entreprise entreprise;
 	
 	// Les Messages entre utilisateur
@@ -98,7 +104,7 @@ public class Utilisateur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
+	public Utilisateur(String nom, String prenom, String email, String username,String company,String password, String adresse, boolean actif,
 			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapports,
 			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived) {
 		super();
@@ -108,6 +114,8 @@ public class Utilisateur implements Serializable {
 		this.password = password;
 		this.adresse = adresse;
 		this.actif = actif;
+		this.username =username;
+		this.company =company;
 		this.telephone = telephone;
 		this.role = role;
 		this.professions = professions;
@@ -224,6 +232,24 @@ public class Utilisateur implements Serializable {
 
 	public void setCommentaires(List<Commentaire> commentaires) {
 		this.commentaires = commentaires;
+	}
+	
+	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public Entreprise getEntreprise() {

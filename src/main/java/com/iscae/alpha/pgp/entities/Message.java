@@ -2,10 +2,12 @@ package com.iscae.alpha.pgp.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,18 +19,23 @@ public class Message {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_message")
 	private Long idMessage;
+	@Column(name="message_content")
     private String messageContent;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_envoie")
     private Date dateEnvoie;
     
     @JsonBackReference(value="user-send")
     @ManyToOne
-    
+    @JoinColumn(name = "eddit_user_id_user")
+ 
     private Utilisateur editUser;
     @JsonBackReference(value="user-receive")
     @ManyToOne
+    @JoinColumn(name ="destinataire_id_user")
     private Utilisateur destinataire;
 	public Message() {
 		super();

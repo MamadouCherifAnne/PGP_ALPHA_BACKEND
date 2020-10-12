@@ -5,10 +5,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -21,14 +23,19 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Phase  implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name="num_tache")
 	private Long numTache;
+	@Column(name="nom_tache")
 	private String nomTache;
+	
 	private String description;
+	@Column(name="debut_tache")
 	private Date debutTache;
 	
 	
 	@JsonBackReference(value="phase-projet")
 	@ManyToOne
+	@JoinColumn(name ="projet_num_projet")
 	private Projet projet;
 
 

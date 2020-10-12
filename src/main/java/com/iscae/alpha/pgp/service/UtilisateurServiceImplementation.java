@@ -129,8 +129,12 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 
 	@Override
 	public List<Utilisateur> getAllUsers() {
-		
+		if(userRepository.findAll()!=null) {
 		return userRepository.findAll();
+		}else
+		{
+			return null;
+		}
 	}
 
 	
