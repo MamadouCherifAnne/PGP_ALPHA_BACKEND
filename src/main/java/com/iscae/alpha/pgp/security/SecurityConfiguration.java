@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// Les privileges sur l'accees aux services
 		http.authorizeRequests().antMatchers("/authenticate/login").permitAll();
 		http.authorizeRequests().antMatchers("/utilisateur/all/**").hasAuthority("USER");
-		http.authorizeRequests().antMatchers("/utilisateur/new/**").permitAll();
+		http.authorizeRequests().antMatchers("/utilisateur/new/**").hasAuthority("USER");
 		http.authorizeRequests().antMatchers("/utilisateur/update/**").hasAuthority("ADMIN");
 		http.authorizeRequests().antMatchers("/utilisateur/findUserserByUsername/**").hasAuthority("USER");
 		http.authorizeRequests().anyRequest().authenticated();

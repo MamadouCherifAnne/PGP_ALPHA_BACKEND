@@ -19,12 +19,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Entreprise implements Serializable{
 	@Id
 	@GeneratedValue
-	@Column(name="id_enteprise")
+	@Column(name="id_entreprise")
 	private Long idEntreprise;
-	@Column(name="name_enteprise")
+	@Column(name="name_entreprise")
 	private String nameEntreprise;
 	
-	@Column(name="domaine_enteprise")
+	@Column(name="domaine_entreprise")
 	private String domaine_Entreprise;
 	private String adresse;
 	

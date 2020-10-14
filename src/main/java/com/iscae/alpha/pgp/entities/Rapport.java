@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,10 +19,13 @@ import javax.persistence.TemporalType;
 public class Rapport implements Serializable{
 	@Id
 	@GeneratedValue
+	@Column(name="id_rapport")
 	private Long idRapport;
+	@Column(name="name_rapport")
 	private String nameRapport;
 	
 	@Temporal(TemporalType.DATE)
+	@Column(name="date_ajout")
 	private Date dateAjout;
 	private String description;
 	

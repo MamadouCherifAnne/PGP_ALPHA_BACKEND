@@ -30,7 +30,7 @@ public class Message {
     
     @JsonBackReference(value="user-send")
     @ManyToOne
-    @JoinColumn(name = "eddit_user_id_user")
+    @JoinColumn(name = "edit_user_id_user")
  
     private Utilisateur editUser;
     @JsonBackReference(value="user-receive")

@@ -60,7 +60,7 @@ public class Utilisateur implements Serializable {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Utilisateur_Profession",
-	joinColumns = @JoinColumn(name="id_user"), inverseJoinColumns = @JoinColumn(name="numProfession"))
+	joinColumns = @JoinColumn(name="id_user"), inverseJoinColumns = @JoinColumn(name="num_profession"))
 	@JsonSetter
 
 	private List<Profession> professions;

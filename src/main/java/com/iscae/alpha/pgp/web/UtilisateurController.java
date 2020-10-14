@@ -78,13 +78,14 @@ public class UtilisateurController {
 	}
 	
 	@PostMapping(value="/new", consumes={"application/json"})
-	public String addUser(@RequestBody Utilisateur user) {
+	public Utilisateur addUser(@RequestBody Utilisateur user) {
 		
 		Utilisateur us1=userService.addUser(user);
 		if(us1 != null) {
-		return "Successfuly";}
+		return us1;
+		}//"Successfuly";}
 	else {
-		return "Ajout a echoue";
+		return null;//"Ajout a echoue";
 	}
 
 	}

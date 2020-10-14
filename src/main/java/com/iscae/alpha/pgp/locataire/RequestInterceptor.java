@@ -52,6 +52,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         	 tenantID=tenant;
          }
          }
+        // tenantID= "alfaconseiltenantdb";
         Log.info("RequestURI::" + requestURI +" || Rcherche du  :: " + tenantID);
         System.out.println("____________________________________________");
         if (tenantID == null) {

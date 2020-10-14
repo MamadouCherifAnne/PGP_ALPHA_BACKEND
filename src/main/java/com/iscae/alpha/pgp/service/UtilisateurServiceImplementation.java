@@ -118,7 +118,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			}
 			// Verification si l'utilisateur n'est pas affecte dans une tache
 			List<AffectationUtilisateur> affectations =affectService.getAffectationsForUser(id);
-			if(affectations == null) {
+			if(affectations.isEmpty()) {
 				userRepository.deleteById(id);
 				return true;
 				}

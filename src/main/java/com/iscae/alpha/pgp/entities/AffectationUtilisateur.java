@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "affectation_utilisateur")
 public class AffectationUtilisateur implements Serializable {
 
 	private static final Long serialVersionUID =1L;

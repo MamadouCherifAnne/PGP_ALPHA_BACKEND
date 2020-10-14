@@ -45,7 +45,7 @@ public class Commentaire implements Serializable{
 	
 	@JsonBackReference(value="projet-comment")
 	@ManyToOne
-	@JoinColumn(name="")
+	@JoinColumn(name="projet_comment_num_projet")
 	private Projet projetComment;
 
 
