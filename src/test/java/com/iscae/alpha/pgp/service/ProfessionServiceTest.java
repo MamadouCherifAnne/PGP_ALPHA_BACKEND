@@ -16,7 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.entities.Profession;
-import com.iscae.alpha.pgp.entities.Role;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -37,7 +36,7 @@ public class ProfessionServiceTest {
 	}
 	
 	@Test
-	public void DeleteRoleTest() {
+	public void DeleteProfessionTest() {
 		
 		Profession prof=getProfession();
 		prof.setNumProfession(1L);

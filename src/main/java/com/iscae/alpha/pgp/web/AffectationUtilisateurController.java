@@ -19,17 +19,21 @@ import com.iscae.alpha.pgp.service.AffectationUtilisateurService;
 
 @RestController
 @RequestMapping("/affectation")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 
 public class AffectationUtilisateurController {
 	@Autowired
 	AffectationUtilisateurService userToJobService;
 	@PostMapping(value="/add", consumes="application/json")
-	public String addAffectationUser(@RequestBody AffectationUtilisateur userForJob) {
+	public boolean addAffectationUser(@RequestBody AffectationUtilisateur userForJob) {
 		
-			userToJobService.addAffectationUser(userForJob);
+			AffectationUtilisateur affect =userToJobService.addAffectationUser(userForJob);
 		 System.out.println("#######+"+ userForJob.getUser_task().getIdUser());
-		 return "Added";
+		 if(affect!=null) {
+		 return true;
+		 }else {
+			 return false;
+		 }
 	}
 	
 	// Modification d'une Affectation
@@ -42,9 +46,9 @@ public class AffectationUtilisateurController {
 	
 	
 	// Service de Suppression d'Affectation 
-	@DeleteMapping(value="/deleteAffectation")
+	@PostMapping(value="/deleteAffectation",consumes = {"application/json"})
 	public boolean deleteAffectation(@RequestBody UserToTache idAffect) {
-		
+		System.out.println("La Suppression dune affectatin ///////////////////**+++++++++++++++++");
 		return userToJobService.deleteAffectation(idAffect.getIdUser(), idAffect.getIdTache());
 	}
 	

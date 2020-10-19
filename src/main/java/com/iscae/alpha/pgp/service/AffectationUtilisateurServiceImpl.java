@@ -3,31 +3,38 @@ package com.iscae.alpha.pgp.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.AffectationUtilisateurRepository;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.UserToTache;
-import com.iscae.alpha.pgp.entities.Utilisateur;
 
 @Service
 public class AffectationUtilisateurServiceImpl implements AffectationUtilisateurService {
 	
 	@Autowired
 	AffectationUtilisateurRepository userForJobRepo;
+	
+	private static final Logger log =LoggerFactory.getLogger(AffectationUtilisateurServiceImpl.class);
 
 	@Override
 	public AffectationUtilisateur addAffectationUser(AffectationUtilisateur userJob) {
 		
 		
 		AffectationUtilisateur userForJob = new AffectationUtilisateur();
-		userForJob.setUser_task(new UserToTache(userJob.getUser_task().getIdUser(), userJob.getUser_task().getIdTache()));
+		// Reparation sur la maniere dajuter d affectations
+		UserToTache idAffect =  new UserToTache(userJob.getUser_task().getIdUser(), userJob.getUser_task().getIdTache());
+		userForJob.setUser_task(idAffect);
 		userForJob.setTempsPasser(userJob.getTempsPasser());
-		
-		
+		Optional<AffectationUtilisateur> verifExistance = userForJobRepo.findById(idAffect);
+		if(!verifExistance.isPresent()) {
 		return userForJobRepo.save(userForJob);
+		}else {
+			return null;
+		}
 	}
 
 	@Override
@@ -43,6 +50,9 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 			userForJob = userForJobRepo.getOne(idAffectation);
 			// Paasons a la modification des valeurs
 			userForJob.setTempsPasser(userJob.getTempsPasser());
+			userForJob.setCoutParHeure(userJob.getCoutParHeure());
+			userForJob.setTempsEffectuer(userJob.getTempsEffectuer());
+			
 			return userForJobRepo.save(userForJob);
 		}
 		else {
@@ -57,16 +67,18 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 		UserToTache idAffectation = new UserToTache();
 		idAffectation.setIdUser(idUser);
 		idAffectation.setIdTache(idTache);
-
+		 log.info("ENTRER DANS LA METHODE DE SUPPRESSION D'UNE  AFFECTATION ");
 		
 		Optional<AffectationUtilisateur> verif = userForJobRepo.findById(idAffectation);
 		if(verif.isPresent()) {
 			userForJob = userForJobRepo.getOne(idAffectation);
 			// Paasons a la suppression des valeurs
-				userForJobRepo.deleteById(idAffectation);
+			log.info("SUPPRESSION AVEC SUCCES");
+				userForJobRepo.delete(userForJob);
 			return true;
 		}
 		else {
+			log.info("ON ARRIVE PAS A SUPPRIMER CETTE AFFECTATION"+idAffectation.getIdTache()+"  "+idAffectation.getIdUser());
 			return false;
 		}
 	}

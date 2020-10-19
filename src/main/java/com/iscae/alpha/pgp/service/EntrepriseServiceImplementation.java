@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.EntreprisesRepository;
-import com.iscae.alpha.pgp.dao.RoleRepository;
 import com.iscae.alpha.pgp.entities.Entreprise;
-import com.iscae.alpha.pgp.entities.Role;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
@@ -19,23 +17,13 @@ public class EntrepriseServiceImplementation implements EntrepriseService {
 	EntreprisesRepository entrepriseRepo;
 	@Autowired
 	UtilisateurService userService;
-	@Autowired
-	RoleRepository roleRepo;
-	
+
 	@Override
 	public Entreprise addEntreprise(Utilisateur proprietaire) {
 		Entreprise espaceTravail=new Entreprise();
 		Utilisateur user=proprietaire;
 		
-		// On lui accorde le role SUPER ADMIN lors de la creation de son espace de travail
-		Role role=new Role();
-		if(roleRepo.findByRole("SUPER_ADMIN").isPresent()) {
-			role= roleRepo.findByRole("SUPER_ADMIN").get();
-		}else {
-			role.setRole("SUPER_ADMIN");
-			role=roleRepo.save(role);
-		}
-		user.setRole(role);
+		
 		 espaceTravail=new Entreprise();
 		espaceTravail=entrepriseRepo.save(user.getEntreprise());
 		user=userService.addUser(user);

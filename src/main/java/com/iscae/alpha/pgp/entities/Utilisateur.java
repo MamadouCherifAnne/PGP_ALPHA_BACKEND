@@ -1,28 +1,18 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Generated;
-
-import javax.persistence.Column;
-
 import javax.persistence.CascadeType;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -51,11 +41,6 @@ public class Utilisateur implements Serializable {
 	private boolean actif;
 	private String telephone;
 	
-	
-	
-	@ManyToOne
-	@JoinColumn(name="role_id_role")
-	private Role role;
 	
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -105,7 +90,7 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String email, String username,String company,String password, String adresse, boolean actif,
-			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapports,
+			String telephone, List<Profession> professions, Projet projet, List<Rapport> rapports,
 			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived) {
 		super();
 		this.nom = nom;
@@ -117,7 +102,7 @@ public class Utilisateur implements Serializable {
 		this.username =username;
 		this.company =company;
 		this.telephone = telephone;
-		this.role = role;
+		
 		this.professions = professions;
 		this.projet = projet;
 		this.rapports = rapports;
@@ -128,6 +113,7 @@ public class Utilisateur implements Serializable {
 	}
 
 	// GETTERS AND SETTERS ......................................................................................................
+	
 	
 	
 	public Long getIdUser() {
@@ -194,13 +180,6 @@ public class Utilisateur implements Serializable {
 		this.telephone = telephone;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public List<Profession> getProfessions() {
 		return professions;

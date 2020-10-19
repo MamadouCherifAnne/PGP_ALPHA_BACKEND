@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
@@ -27,14 +28,13 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	TacheService tacheService;
 	@Autowired
 	ProfessionRepository profRepo;
-
-		
+	
 	
 	@Override
 	public Utilisateur addUser(Utilisateur user) {
 		// Verification d'un utilisateur 
 
-		Utilisateur use=userRepository.findByNom(user.getNom());
+		Utilisateur use=userRepository.findByNom(user.getUsername());
 		
 		if(use==null) {
 			/*
@@ -69,7 +69,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			oldUser.setEmail(user.getEmail());
 			oldUser.setTelephone(user.getTelephone());
 			oldUser.setPrenom(user.getPrenom());
-			oldUser.setRole(user.getRole());
+			oldUser.setNom(user.getNom());
 			
 			// actualiser la profession
 			if(user.getProfessions() !=null) {
@@ -112,10 +112,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			if(user.getProfessions()!= null) {
 				user.setProfessions(null);
 			}
-			// Suppression de L'utilisateur dans la liste de role avec aui il est en relation
-			if(user.getRole() !=null) {
-				user.getRole().getUsers().remove(user);
-			}
+			
 			// Verification si l'utilisateur n'est pas affecte dans une tache
 			List<AffectationUtilisateur> affectations =affectService.getAffectationsForUser(id);
 			if(affectations.isEmpty()) {
@@ -215,5 +212,20 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		}else {
 		return null;}
 	}
+	
+	// Recherche par usrname
+	
+	@Override
+	public Utilisateur getUserByUsername(String username) {
+		Utilisateur user = null;
+		if(userRepository.findByUsername(username).isPresent()) {
+			user =userRepository.findByUsername(username).get();
+		}
+
+		return user;
+	}
+
+
+
 }
    

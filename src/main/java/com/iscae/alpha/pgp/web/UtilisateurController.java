@@ -4,6 +4,7 @@ package com.iscae.alpha.pgp.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
-import com.iscae.alpha.pgp.dao.RoleRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.dto.Role;
 import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
+import com.iscae.alpha.pgp.service.AuthResponse;
 import com.iscae.alpha.pgp.service.UtilisateurService;
 
 
@@ -34,14 +37,14 @@ public class UtilisateurController {
 	@Autowired
 
 	UtilisateurService userService;
-	@Autowired
-	RoleRepository roleRepo;
 	
 	@Autowired
 	TacheRepository tacheRepo;
 	
 	@Autowired
-	ProfessionRepository profRepo;;
+	ProfessionRepository profRepo;
+	@Autowired
+	RestTemplate restTemplate;
 
 	
 	@GetMapping("/all")
@@ -68,7 +71,13 @@ public class UtilisateurController {
 		return userService.getUserByName(prenom);
 		
 	}
-	
+	//Recherche par username
+	@GetMapping("/findUsername/{username}")
+	public Utilisateur getUserByUserName(@PathVariable String username){
+		
+		return userService.getUserByUsername(username);
+		
+	}
 
 	@GetMapping("/findUser/{id}")
 	public Utilisateur getUserById(@PathVariable Long id){
@@ -122,6 +131,18 @@ public class UtilisateurController {
 		public List<Message> getRecivedMessages(@PathVariable Long idUser){
 			return userService.getAllRecivedMessageFromUser(idUser);
 		}
+		
+	// Appeller l api de gestion de security pour ajouter des nouvelles Statut aux utilisateurs
+		
+		@PostMapping(value="/accordPrivillege/{username}",consumes= {"application/json"},produces= {"application/json"})
+		public ResponseEntity<?> accordNewRoleToUser(@PathVariable String username,@RequestBody List<Role> permissions) {
+			String url = "http://localhost:8090/utilisateur/addPrivilleges/"+username;
+			final String responseBody = restTemplate.postForObject(url, permissions, String.class);
+			
+			return  ResponseEntity.ok(responseBody);
+		
+		}
+	
 	
 	
 }

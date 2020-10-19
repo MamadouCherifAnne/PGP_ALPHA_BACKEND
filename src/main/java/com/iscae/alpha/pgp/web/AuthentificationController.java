@@ -21,10 +21,11 @@ public class AuthentificationController {
 	
 	// Utilisation du service login de l'api alfa gerant l'authentification
 	
-	@PostMapping("/login")
+	@PostMapping(value="/login", consumes = {"application/json"})
 	public AuthResponse authentification(@RequestBody Utilisateur user) {
 		String url = "http://localhost:8090/authenticate/login";
 		final AuthResponse responseBody = restTemplate.postForObject(url, user, AuthResponse.class);
+		
 		return responseBody;
 		
 		
