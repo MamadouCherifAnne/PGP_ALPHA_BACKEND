@@ -1,8 +1,6 @@
 package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -42,6 +40,11 @@ public class Utilisateur implements Serializable {
 	private String telephone;
 	
 	
+	// Liste des tache creer
+	/*@JsonManagedReference(value="tache-createur")
+	@OneToMany(mappedBy = "createur", fetch  = FetchType.LAZY, cascade = CascadeType.DETACH)
+	private List<Tache> tachesCreer;
+	*/
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Utilisateur_Profession",
@@ -50,16 +53,21 @@ public class Utilisateur implements Serializable {
 
 	private List<Profession> professions;
 	
-	@ManyToOne
-	@JoinColumn(name="projet_num_projet")
-	private Projet projet;
+	//Les projet don celui ci est responsable
+	@OneToMany(mappedBy = "responsable",  fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference(value="responsable-projet")
+	private List<Projet> projets;
+	
+	@OneToMany(mappedBy = "createur",  fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference(value="tache-user")
+	private List<Tache> taches;
+	
 	
 
 	@OneToMany(mappedBy = "user")
 	private List<Rapport> rapports;
 	
 	@JsonSetter
-	
 	@JsonBackReference(value="user-commentaire")
 	@OneToMany(mappedBy = "user", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Commentaire> commentaires;
@@ -90,8 +98,9 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String email, String username,String company,String password, String adresse, boolean actif,
-			String telephone, List<Profession> professions, Projet projet, List<Rapport> rapports,
-			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived) {
+			String telephone, List<Profession> professions,  List<Rapport> rapports, List<Projet> projets,
+			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived,
+			List<Tache> taches) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -102,14 +111,15 @@ public class Utilisateur implements Serializable {
 		this.username =username;
 		this.company =company;
 		this.telephone = telephone;
-		
+		this.taches =taches;
 		this.professions = professions;
-		this.projet = projet;
+		this.projets =projets;
 		this.rapports = rapports;
 		this.commentaires = commentaires;
 		this.entreprise = entreprise;
 		this.sendMessages = sendMessages;
 		this.messageReceived = messageReceived;
+		
 	}
 
 	// GETTERS AND SETTERS ......................................................................................................
@@ -189,13 +199,6 @@ public class Utilisateur implements Serializable {
 		this.professions = professions;
 	}
 
-	public Projet getProjet() {
-		return projet;
-	}
-
-	public void setProjet(Projet projet) {
-		this.projet = projet;
-	}
 
 	public List<Rapport> getRapports() {
 		return rapports;
@@ -253,6 +256,23 @@ public class Utilisateur implements Serializable {
 
 	public void setMessageReceived(List<Message> messageReceived) {
 		this.messageReceived = messageReceived;
+	}
+
+
+	public List<Projet> getProjets() {
+		return projets;
+	}
+
+	public void setProjets(List<Projet> projets) {
+		this.projets = projets;
+	}
+
+	public List<Tache> getTaches() {
+		return taches;
+	}
+
+	public void setTaches(List<Tache> taches) {
+		this.taches = taches;
 	}
 	
 	

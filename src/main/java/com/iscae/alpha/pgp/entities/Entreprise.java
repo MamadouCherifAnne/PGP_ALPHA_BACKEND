@@ -35,7 +35,7 @@ public class Entreprise implements Serializable{
 	
 	// Les projets d' une entreprise
 	@JsonManagedReference(value="entreprise-projet")
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="workSpace")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="entreprise")
 	private List<Projet> projets;
 	
 	public Entreprise() {

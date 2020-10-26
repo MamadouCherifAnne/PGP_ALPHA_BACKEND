@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSetter;
 @Entity
 public class Commentaire implements Serializable{
@@ -37,7 +38,6 @@ public class Commentaire implements Serializable{
 	private Utilisateur user;
 	
 	@JsonBackReference(value="tache-comment")
-	
 	@ManyToOne
 	@JoinColumn(name="tache_comment_num_tache")
 	

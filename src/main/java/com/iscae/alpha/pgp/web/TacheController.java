@@ -115,7 +115,7 @@ public class TacheController {
 	
 	// Service d'ajou des commentaires a une tache
 	
-	@PostMapping(value="/addCommentsToTask")
+	@PostMapping(value="/addCommentsToTask", consumes= {"application/json"})
 	public Commentaire addComments(@RequestBody Commentaire  comments) {
 		return commentService.addComment(comments);
 	}
@@ -167,5 +167,10 @@ public class TacheController {
 	public double getCostOfTache(@PathVariable Long idTache) {
 		
 		return (tacheService.getCoutTotaleDepense(idTache)+tacheService.calculCoutRessourcesOfTask(idTache));
+	}
+	
+	@GetMapping(value="/getOwner/{idTache}")
+	public String getTheOwner(@PathVariable Long idTache) {
+		return tacheService.getTheOwner(idTache);
 	}
 }

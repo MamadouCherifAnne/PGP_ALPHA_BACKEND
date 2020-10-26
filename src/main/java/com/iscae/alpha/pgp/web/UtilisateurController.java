@@ -17,10 +17,12 @@ import org.springframework.web.client.RestTemplate;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.dto.Role;
+import com.iscae.alpha.pgp.dto.UtilisateurDto;
+import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
-import com.iscae.alpha.pgp.service.AuthResponse;
 import com.iscae.alpha.pgp.service.UtilisateurService;
 
 
@@ -45,7 +47,8 @@ public class UtilisateurController {
 	ProfessionRepository profRepo;
 	@Autowired
 	RestTemplate restTemplate;
-
+	
+	private static final String urlToAlfaSecurityApp = "http://localhost:8090/utilisateur/";
 	
 	@GetMapping("/all")
 	public List<Utilisateur> getALlUser() {
@@ -88,14 +91,33 @@ public class UtilisateurController {
 	
 	@PostMapping(value="/new", consumes={"application/json"})
 	public Utilisateur addUser(@RequestBody Utilisateur user) {
+		// preparer l'ajout simultane dans l'api de gestion de l'authentification"
+		UtilisateurDto userDto = new UtilisateurDto();
+		userDto.setUsername(user.getUsername());
+		userDto.setNom(user.getNom());
+		userDto.setPrenom(user.getPrenom());
+		userDto.setActif(false);
+		userDto.setTelephone(user.getTelephone());
+		userDto.setEmail(user.getEmail());
+		userDto.setAdresse(user.getAdresse());
+		userDto.setCompany(user.getCompany());
+		userDto.setPassword(user.getPassword());
 		
+		String service ="new";
+		String url = urlToAlfaSecurityApp+service;
+		final Utilisateur responseBody = restTemplate.postForObject(url, userDto, Utilisateur.class);
+		if(responseBody !=null) {
+		 user.setPassword(responseBody.getPassword());
 		Utilisateur us1=userService.addUser(user);
 		if(us1 != null) {
+			
+			
+			
 		return us1;
-		}//"Successfuly";}
-	else {
+		}
+		}
 		return null;//"Ajout a echoue";
-	}
+	
 
 	}
 	
@@ -136,11 +158,26 @@ public class UtilisateurController {
 		
 		@PostMapping(value="/accordPrivillege/{username}",consumes= {"application/json"},produces= {"application/json"})
 		public ResponseEntity<?> accordNewRoleToUser(@PathVariable String username,@RequestBody List<Role> permissions) {
-			String url = "http://localhost:8090/utilisateur/addPrivilleges/"+username;
+			String service ="addPrivilleges/"+username;
+			
+			String url = urlToAlfaSecurityApp+service;
 			final String responseBody = restTemplate.postForObject(url, permissions, String.class);
 			
 			return  ResponseEntity.ok(responseBody);
 		
+		}
+		
+		
+		// Afficher l'entreprise dont est affecte L'utilisateur
+		@GetMapping(value="/userEntreprise/{idUser}")
+		public Entreprise getUserEntreprise(@PathVariable Long idUser) {
+			return userService.getUserEntreprise(idUser);
+		}
+		
+		//Afficher les Projets dont lutiliseur est concerne
+		@GetMapping(value="/myProjects/{username}")
+		public List<Projet> getThisUserProject(@PathVariable String username){
+			return userService.getMyProjects(username);
 		}
 	
 	

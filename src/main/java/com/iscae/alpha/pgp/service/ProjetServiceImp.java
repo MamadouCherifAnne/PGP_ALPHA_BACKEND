@@ -46,7 +46,7 @@ public class ProjetServiceImp implements ProjetService{
 			projet2.setZoneRealisation(projet.getZoneRealisation());
 			projet2.setFinProjet(projet.getFinProjet());
 			projet2.setPhases(projet.getPhases());
-			projet2.setResponsables(projet.getResponsables());
+			projet2.setResponsable(projet.getResponsable());
 			projet2.setRisques(projet.getRisques());
 			
 			projetRepository.save(projet2);
@@ -115,7 +115,20 @@ public class ProjetServiceImp implements ProjetService{
 	@Override
 	public List<Tache> projectTasks(Long numProjet) {
 		// TODO Auto-generated method stub
-		return projetRepository.projectTasks(numProjet);
+		if(this.findProjetById(numProjet)!=null) {
+			Projet p = this.findProjetById(numProjet);
+			List<Tache> taches = new ArrayList<>();
+			for(Phase ph:p.getPhases()) {
+				for(Tache tache:ph.getTache()) {
+					if(tache.getType()==null || !tache.getType().equals("Jalon") ) {
+						taches.add(tache);
+					}
+				}
+			}
+			
+		return taches;
+		}
+		return new ArrayList<>();
 	}
 
 	@Override

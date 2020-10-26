@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +31,14 @@ public class TacheServiceImpl implements TacheService{
 	@Autowired
 	CommentaireService commentService;
 	
+	private static final Logger Log =LoggerFactory.getLogger(TacheServiceImpl.class);
 	
 	@Override
 	public Tache addTache(Tache tache) {
+		tache.setLastUpdate(new Date());
+		Log.info("Voici le createur"+tache.getCreateur().getUsername());
+		Utilisateur user = userService.getUserById(tache.getCreateur().getIdUser());
+		tache.setCreateur(user);
 		return tacheRepository.save(tache);
 	}
 
@@ -54,7 +61,7 @@ public class TacheServiceImpl implements TacheService{
 			tache2.setFichiers(tache.getFichiers());
 			tache2.setTauxAvancement(tache.getTauxAvancement());
 			tache2.setTachePrecedente(tache.getTachePrecedente());
-			
+			tache2.setLastUpdate(new Date());			
 			return tacheRepository.save(tache2);
 		}else {
 			return null;
@@ -229,6 +236,20 @@ public class TacheServiceImpl implements TacheService{
 		}
 		System.out.println("########");
 		return 0;
+	}
+
+	@Override
+	public String getTheOwner(Long idTache) {
+		String owner =null;
+		if(this.findTache(idTache) !=  null) {
+			Tache tache = this.findTache(idTache);
+			Utilisateur u = tache.getCreateur();
+			if(u != null) {
+				owner = u.getUsername();
+			}
+			
+		}
+		return owner;
 	}
 
 

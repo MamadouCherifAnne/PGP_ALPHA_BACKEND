@@ -7,13 +7,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Profession;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -28,15 +29,17 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	TacheService tacheService;
 	@Autowired
 	ProfessionRepository profRepo;
+	/*@Autowired
+	PasswordEncoder bCryptPasswordEncoder;*/
 	
 	
 	@Override
 	public Utilisateur addUser(Utilisateur user) {
 		// Verification d'un utilisateur 
 
-		Utilisateur use=userRepository.findByNom(user.getUsername());
+		Optional<Utilisateur> use=userRepository.findByUsername(user.getUsername());
 		
-		if(use==null) {
+		if(!use.isPresent()) {
 			/*
 			 *  verification que la liste des profession nest pas null puis actualiser la liste des utilisateur
 			 *  de chacune de ces professions
@@ -49,6 +52,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 						}
 					user.setProfessions(listprof);	
 			}
+			//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			return userRepository.save(user) ;}
 		else {return null;}
 		
@@ -223,6 +227,36 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		}
 
 		return user;
+	}
+
+
+
+	@Override
+	public Entreprise getUserEntreprise(Long idUser) {
+		if(this.getUserById(idUser)!=null) {
+			return userRepository.getOne(idUser).getEntreprise();
+		}
+		return null;
+	}
+
+
+
+	@Override
+	public List<Projet> getMyProjects(String username) {
+		// TODO Auto-generated method stub
+		if(this.getUserByUsername(username)!=null) {
+			Utilisateur user= this.getUserByUsername(username);
+			List<Projet> projects = user.getProjets();
+			if(this.TacheToRealise(user.getIdUser())!=null) {
+				List<Tache> taches = this.TacheToRealise(user.getIdUser());
+				for (Tache tache : taches) {
+					if(!projects.contains(tache.getPhase().getProjet()))
+					projects.add(tache.getPhase().getProjet());
+				}
+			}
+			return projects;
+		}
+		return null;
 	}
 
 

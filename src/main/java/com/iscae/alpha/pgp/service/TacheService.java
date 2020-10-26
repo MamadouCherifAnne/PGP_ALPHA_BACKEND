@@ -51,4 +51,6 @@ public interface TacheService {
 //  Le cout totales des depenses sur une tache
 		public double getCoutTotaleDepense(Long idTache);
 
+		//  Get The OWner of the task
+		public String getTheOwner(Long idTache);
 }
