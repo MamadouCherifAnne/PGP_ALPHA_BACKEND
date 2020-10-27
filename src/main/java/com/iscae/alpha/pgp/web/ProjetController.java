@@ -20,7 +20,7 @@ import com.iscae.alpha.pgp.service.ProjetServiceImp;
 
 @RestController
 @RequestMapping("/projet")
-@CrossOrigin(origins= "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProjetController {
 	
 	@Autowired
