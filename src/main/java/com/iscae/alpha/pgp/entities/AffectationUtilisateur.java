@@ -2,10 +2,13 @@ package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "affectation_utilisateur")
 public class AffectationUtilisateur implements Serializable {
 
 	private static final Long serialVersionUID =1L;
@@ -13,9 +16,11 @@ public class AffectationUtilisateur implements Serializable {
 
 	@EmbeddedId
 	private UserToTache user_task;
-	
+	@Column(name="temps_passer")
 	private double tempsPasser;
+	@Column(name="temps_effectuer")
 	private double tempsEffectuer;
+	@Column(name ="cout_par_heure")
 	private double coutParHeure;
 	public AffectationUtilisateur() {
 		super();

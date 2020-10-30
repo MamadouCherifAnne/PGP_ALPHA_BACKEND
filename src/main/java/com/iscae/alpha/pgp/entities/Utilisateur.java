@@ -3,26 +3,14 @@ package com.iscae.alpha.pgp.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Generated;
-
-import javax.persistence.Column;
-
 import javax.persistence.CascadeType;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -37,39 +25,49 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class Utilisateur implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id_user")
 	private Long idUser;
-	@Column(unique = true)
 	private String nom;
+	@Column(unique = true)
+	private String username;
 	private String prenom;
 	private String email;
 	private String password;
 	private String adresse;
+	private String company;
 	private boolean actif;
 	private String telephone;
 	
 	
-	@ManyToOne
-	private Role role;
-	
+	// Liste des tache creer
+	/*@JsonManagedReference(value="tache-createur")
+	@OneToMany(mappedBy = "createur", fetch  = FetchType.LAZY, cascade = CascadeType.DETACH)
+	private List<Tache> tachesCreer;
+	*/
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Utilisateur_Profession",
-	joinColumns = @JoinColumn(name="id_user"), inverseJoinColumns = @JoinColumn(name="numProfession"))
+	joinColumns = @JoinColumn(name="id_user"), inverseJoinColumns = @JoinColumn(name="num_profession"))
 	@JsonSetter
 
 	private List<Profession> professions;
 	
-	@ManyToOne
-	private Projet projet;
+	//Les projet don celui ci est responsable
+	@OneToMany(mappedBy = "responsable",  fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference(value="responsable-projet")
+	private List<Projet> projets;
+	
+	@OneToMany(mappedBy = "createur",  fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference(value="tache-user")
+	private List<Tache> taches;
+	
 	
 
 	@OneToMany(mappedBy = "user")
 	private List<Rapport> rapports;
 	
 	@JsonSetter
-	
 	@JsonBackReference(value="user-commentaire")
 	@OneToMany(mappedBy = "user", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Commentaire> commentaires;
@@ -78,6 +76,7 @@ public class Utilisateur implements Serializable {
 	// Les entreprises dedier a un utilisateur
 	@JsonBackReference(value="user-entreprise")
 	@ManyToOne
+	@JoinColumn(name="entreprise_id_entreprise")
 	private Entreprise entreprise;
 	
 	// Les Messages entre utilisateur
@@ -98,9 +97,10 @@ public class Utilisateur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(String nom, String prenom, String email, String password, String adresse, boolean actif,
-			String telephone, Role role, List<Profession> professions, Projet projet, List<Rapport> rapports,
-			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived) {
+	public Utilisateur(String nom, String prenom, String email, String username,String company,String password, String adresse, boolean actif,
+			String telephone, List<Profession> professions,  List<Rapport> rapports, List<Projet> projets,
+			List<Commentaire> commentaires, Entreprise entreprise,List<Message> sendMessages, List<Message> messageReceived,
+			List<Tache> taches) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -108,18 +108,22 @@ public class Utilisateur implements Serializable {
 		this.password = password;
 		this.adresse = adresse;
 		this.actif = actif;
+		this.username =username;
+		this.company =company;
 		this.telephone = telephone;
-		this.role = role;
+		this.taches =taches;
 		this.professions = professions;
-		this.projet = projet;
+		this.projets =projets;
 		this.rapports = rapports;
 		this.commentaires = commentaires;
 		this.entreprise = entreprise;
 		this.sendMessages = sendMessages;
 		this.messageReceived = messageReceived;
+		
 	}
 
 	// GETTERS AND SETTERS ......................................................................................................
+	
 	
 	
 	public Long getIdUser() {
@@ -186,13 +190,6 @@ public class Utilisateur implements Serializable {
 		this.telephone = telephone;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public List<Profession> getProfessions() {
 		return professions;
@@ -202,13 +199,6 @@ public class Utilisateur implements Serializable {
 		this.professions = professions;
 	}
 
-	public Projet getProjet() {
-		return projet;
-	}
-
-	public void setProjet(Projet projet) {
-		this.projet = projet;
-	}
 
 	public List<Rapport> getRapports() {
 		return rapports;
@@ -224,6 +214,24 @@ public class Utilisateur implements Serializable {
 
 	public void setCommentaires(List<Commentaire> commentaires) {
 		this.commentaires = commentaires;
+	}
+	
+	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public Entreprise getEntreprise() {
@@ -248,6 +256,23 @@ public class Utilisateur implements Serializable {
 
 	public void setMessageReceived(List<Message> messageReceived) {
 		this.messageReceived = messageReceived;
+	}
+
+
+	public List<Projet> getProjets() {
+		return projets;
+	}
+
+	public void setProjets(List<Projet> projets) {
+		this.projets = projets;
+	}
+
+	public List<Tache> getTaches() {
+		return taches;
+	}
+
+	public void setTaches(List<Tache> taches) {
+		this.taches = taches;
 	}
 	
 	

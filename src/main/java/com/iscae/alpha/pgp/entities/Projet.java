@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -19,30 +21,36 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Projet implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name="num_projet")
 	private Long numProjet;
-	
+	@Column(name="nom_projet")
 	private String nomProjet;
 	
 
 	private String description;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name="debut_projet")
 	private Date debutProjet;
 	
 	@Temporal(TemporalType.DATE)
+	@Column(name="fin_projet")
 	private Date finProjet;
 	
+	@Column(name="zone_realisation")
 	private String zoneRealisation;
 	
-	// Jai eu des doutes concernant la relation entre projet et utilisateurs 
-	 @OneToMany(mappedBy = "projet")
-
-	private List<Utilisateur> responsables;
-	 
+	// la relation entre projet et utilisateurs 
+	 @ManyToOne
+	 @JsonBackReference(value="responsable-projet")
+	 @JoinColumn(name ="responsable_id_user")
+	 private Utilisateur responsable;
+	
 	 //L' entreprise dont appartient ce projet
 	 @JsonBackReference(value="entreprise-projet")
 	 @ManyToOne
-	 private Entreprise workSpace;
+	 @JoinColumn(name="entreprise_id_entreprise")
+	 private Entreprise entreprise;
 	 
 	 
 	 @JsonManagedReference(value="risque-projet")
@@ -66,7 +74,7 @@ public class Projet implements Serializable {
 
 
 	public Projet(String nomProjet, String description, Date debutProjet, Date finProjet, String zoneRealisation,
-			List<Utilisateur> responsables, Entreprise workSpace, List<Risque> risques, List<Phase> phases,
+			Utilisateur responsable, Entreprise entreprise, List<Risque> risques, List<Phase> phases,
 			List<Commentaire> commentaires) {
 		super();
 		this.nomProjet = nomProjet;
@@ -74,8 +82,8 @@ public class Projet implements Serializable {
 		this.debutProjet = debutProjet;
 		this.finProjet = finProjet;
 		this.zoneRealisation = zoneRealisation;
-		this.responsables = responsables;
-		this.workSpace = workSpace;
+		this.responsable = responsable;
+		this.entreprise = entreprise;
 		this.risques = risques;
 		this.phases = phases;
 		this.commentaires=commentaires;
@@ -156,26 +164,26 @@ public class Projet implements Serializable {
 
 
 
-	public List<Utilisateur> getResponsables() {
-		return responsables;
+	public Utilisateur getResponsable() {
+		return responsable;
 	}
 
 
 
-	public void setResponsables(List<Utilisateur> responsables) {
-		this.responsables = responsables;
+	public void setResponsable(Utilisateur responsable) {
+		this.responsable = responsable;
 	}
 
 
 
-	public Entreprise getWorkSpace() {
-		return workSpace;
+	public Entreprise getEntreprise() {
+		return entreprise;
 	}
 
 
 
-	public void setWorkSpace(Entreprise workSpace) {
-		this.workSpace = workSpace;
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
 	}
 
 

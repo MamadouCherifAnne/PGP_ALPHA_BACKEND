@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class CommentaireServiceImpl implements CommentaireService {
 	@Override
 	public Commentaire addComment(Commentaire comment) {
 		// TODO Auto-generated method stub
+		//Renseigner l'heure actuelle du commentaire
+		System.out.println("La date actuelle ########:"+comment.getDateComment());
+		//comment.setDateComment(new Date());
 		return commentRepo.save(comment);
 	}
 

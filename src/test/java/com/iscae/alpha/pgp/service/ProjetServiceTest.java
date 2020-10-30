@@ -35,7 +35,7 @@ class ProjetServiceTest {
 		projet.setFinProjet(null);
 		projet.setNomProjet("first projet");
 		projet.setPhases(null);
-		projet.setResponsables(null);
+		projet.setResponsable(null);
 		projet.setRisques(null);
 		projet.setZoneRealisation("Kaedi");
 		
@@ -51,7 +51,7 @@ class ProjetServiceTest {
 		projet.setFinProjet(null);
 		projet.setNomProjet("first projet");
 		projet.setPhases(null);
-		projet.setResponsables(null);
+		projet.setResponsable(null);
 		projet.setRisques(null);
 		projet.setZoneRealisation("Kaedi");
 		

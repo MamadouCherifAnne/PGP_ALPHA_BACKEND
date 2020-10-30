@@ -2,11 +2,14 @@ package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class UserToTache implements Serializable {
+	@Column(name="id_user")
 	private Long idUser;
+	@Column(name="id_tache")
 	private Long idTache;
 	
 	

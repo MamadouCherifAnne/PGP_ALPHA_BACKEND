@@ -69,7 +69,7 @@ public class TacheController {
 	// ALL TASKS
 	@GetMapping(value="/all")
 	public List<Tache> findAllTask(){
-		System.out.println("####################"+ tacheService.findTache(10L).getTachePrecedente());
+
 		return tacheRepo.findAll();
 	}
 
@@ -115,9 +115,9 @@ public class TacheController {
 	
 	// Service d'ajou des commentaires a une tache
 	
-	@PostMapping(value="/addCommentsToTask")
-	public Tache addComments(@RequestBody List<Commentaire> comments) {
-		return tacheService.addCommentToTask(comments);
+	@PostMapping(value="/addCommentsToTask", consumes= {"application/json"})
+	public Commentaire addComments(@RequestBody Commentaire  comments) {
+		return commentService.addComment(comments);
 	}
 	
 	// Afficher les commentaires effectuer sur une tache
@@ -167,5 +167,10 @@ public class TacheController {
 	public double getCostOfTache(@PathVariable Long idTache) {
 		
 		return (tacheService.getCoutTotaleDepense(idTache)+tacheService.calculCoutRessourcesOfTask(idTache));
+	}
+	
+	@GetMapping(value="/getOwner/{idTache}")
+	public String getTheOwner(@PathVariable Long idTache) {
+		return tacheService.getTheOwner(idTache);
 	}
 }

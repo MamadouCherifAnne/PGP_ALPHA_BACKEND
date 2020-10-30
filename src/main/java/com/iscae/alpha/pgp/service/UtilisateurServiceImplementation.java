@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Profession;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -27,16 +29,17 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	TacheService tacheService;
 	@Autowired
 	ProfessionRepository profRepo;
-
-		
+	/*@Autowired
+	PasswordEncoder bCryptPasswordEncoder;*/
+	
 	
 	@Override
 	public Utilisateur addUser(Utilisateur user) {
 		// Verification d'un utilisateur 
 
-		Utilisateur use=userRepository.findByNom(user.getNom());
+		Optional<Utilisateur> use=userRepository.findByUsername(user.getUsername());
 		
-		if(use==null) {
+		if(!use.isPresent()) {
 			/*
 			 *  verification que la liste des profession nest pas null puis actualiser la liste des utilisateur
 			 *  de chacune de ces professions
@@ -49,6 +52,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 						}
 					user.setProfessions(listprof);	
 			}
+			//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			return userRepository.save(user) ;}
 		else {return null;}
 		
@@ -69,7 +73,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			oldUser.setEmail(user.getEmail());
 			oldUser.setTelephone(user.getTelephone());
 			oldUser.setPrenom(user.getPrenom());
-			oldUser.setRole(user.getRole());
+			oldUser.setNom(user.getNom());
 			
 			// actualiser la profession
 			if(user.getProfessions() !=null) {
@@ -112,13 +116,10 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			if(user.getProfessions()!= null) {
 				user.setProfessions(null);
 			}
-			// Suppression de L'utilisateur dans la liste de role avec aui il est en relation
-			if(user.getRole() !=null) {
-				user.getRole().getUsers().remove(user);
-			}
+			
 			// Verification si l'utilisateur n'est pas affecte dans une tache
 			List<AffectationUtilisateur> affectations =affectService.getAffectationsForUser(id);
-			if(affectations == null) {
+			if(affectations.isEmpty()) {
 				userRepository.deleteById(id);
 				return true;
 				}
@@ -129,8 +130,12 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 
 	@Override
 	public List<Utilisateur> getAllUsers() {
-		
+		if(userRepository.findAll()!=null) {
 		return userRepository.findAll();
+		}else
+		{
+			return null;
+		}
 	}
 
 	
@@ -211,5 +216,50 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		}else {
 		return null;}
 	}
+	
+	// Recherche par usrname
+	
+	@Override
+	public Utilisateur getUserByUsername(String username) {
+		Utilisateur user = null;
+		if(userRepository.findByUsername(username).isPresent()) {
+			user =userRepository.findByUsername(username).get();
+		}
+
+		return user;
+	}
+
+
+
+	@Override
+	public Entreprise getUserEntreprise(Long idUser) {
+		if(this.getUserById(idUser)!=null) {
+			return userRepository.getOne(idUser).getEntreprise();
+		}
+		return null;
+	}
+
+
+
+	@Override
+	public List<Projet> getMyProjects(String username) {
+		// TODO Auto-generated method stub
+		if(this.getUserByUsername(username)!=null) {
+			Utilisateur user= this.getUserByUsername(username);
+			List<Projet> projects = user.getProjets();
+			if(this.TacheToRealise(user.getIdUser())!=null) {
+				List<Tache> taches = this.TacheToRealise(user.getIdUser());
+				for (Tache tache : taches) {
+					if(!projects.contains(tache.getPhase().getProjet()))
+					projects.add(tache.getPhase().getProjet());
+				}
+			}
+			return projects;
+		}
+		return null;
+	}
+
+
+
 }
    

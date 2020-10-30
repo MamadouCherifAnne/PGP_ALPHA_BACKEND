@@ -20,7 +20,7 @@ public interface TacheRepository extends JpaRepository<Tache, Long> {
 			+ " t.numTache =?2 AND task.numTache != t.numTache AND"
 			+ " task.phase.projet.numProjet = proj.numProjet"
 			+ " AND t.phase.projet.numProjet =  task.phase.projet.numProjet"
-			+ "  AND task.debutTache < t.debutTache")
+			)
 	public List<Tache> getPotentielPredecessor(Long idProjet, Long idTache);
 	
 	

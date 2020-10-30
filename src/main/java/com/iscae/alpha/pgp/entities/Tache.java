@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -27,22 +29,35 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class Tache implements Serializable {
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO )
+	@Column(name="num_tache")
 	private Long numTache;
-
+	
+	@Column(name="nom_tache")
 	private String nomTache;
 	private String description;
 	@Temporal(TemporalType.DATE)
+	@Column(name="debut_tache")
 	private Date debutTache;
 	@Temporal(TemporalType.DATE)
+	@Column(name="fin_tache")
 	private Date finTache;
+	@Column(name="taux_avancement")
 	private double tauxAvancement;
+	@Column(name="charge_tache")
 	private double chargeTache;
+	@Column(name="niveau_priorite")
 	private String niveauPriorite;
 	private int duree;
 	private String type;
 	
+	// Derniere modification effecuter sur la tache
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="last_update")
+	private Date lastUpdate;
+	
 	@ManyToOne
 	@JsonBackReference(value="tache-phase")
+	@JoinColumn(name ="phase_num_tache")
 	private Phase phase;
 	
 	@JsonManagedReference(value="facture-tache")
@@ -60,22 +75,23 @@ public class Tache implements Serializable {
 	
 	//Commnetaire de tache
 	@JsonSetter
-	@JsonManagedReference(value="tache-comment")
+	//@JsonManagedReference(value="tache-comment")
+	@JsonIgnore
 	@OneToMany(mappedBy = "tacheComment", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Commentaire> commentaires;
 	
 	
 	
-	/*les tqches precedentes
-
+	/*le createur d'une tache */
 	@ManyToOne
-	@JoinColumn(name="Predecesseur_ID")
-	private Tache tachePrecedente;
-	*/
+	@JsonBackReference(value="tache-user")
+	@JoinColumn(name ="createur_id_user")
+	private Utilisateur createur;
+	
 	
 	@JoinTable(name = "Tache_Predecesseurs", joinColumns = {
-		    @JoinColumn(name = "tache", referencedColumnName = "numTache", nullable =   false)}, inverseJoinColumns = {
-		    @JoinColumn(name = "Predecesseur", referencedColumnName = "numTache", nullable = false)})
+		    @JoinColumn(name = "tache", referencedColumnName = "num_tache", nullable =   false)}, inverseJoinColumns = {
+		    @JoinColumn(name = "Predecesseur", referencedColumnName = "num_tache", nullable = false)})
 		    @ManyToMany(fetch = FetchType.EAGER,cascade=CascadeType.DETACH)
 		    private List<Tache> tachePrecedente;
 
@@ -87,7 +103,8 @@ public class Tache implements Serializable {
 
 	public Tache(String nomTache, Date debutTache, Date finTache, double tauxAvancement, double chargeTache,
 			String niveauPriorite, int duree, String type,Phase phase, Facture facture, List<Depense> depenses,
-			List<Fichier> fichiers, List<Tache> tachePrecedente,List<Commentaire> commentaires) {
+			List<Fichier> fichiers, List<Tache> tachePrecedente,List<Commentaire> commentaires,Utilisateur createur,
+			 Date lastUpdate) {
 		super();
 		this.nomTache = nomTache;
 		this.debutTache = debutTache;
@@ -96,6 +113,7 @@ public class Tache implements Serializable {
 		this.chargeTache = chargeTache;
 		this.niveauPriorite = niveauPriorite;
 		this.duree = duree;
+		this.lastUpdate = lastUpdate;
 		this.type=type;
 		this.phase = phase;
 		this.facture = facture;
@@ -103,6 +121,8 @@ public class Tache implements Serializable {
 		this.fichiers = fichiers;
 		this.tachePrecedente = tachePrecedente;
 		this.commentaires=commentaires;
+		this.createur = createur;
+		
 	}
 
 
@@ -291,6 +311,26 @@ public class Tache implements Serializable {
 
 	public void setCommentaires(List<Commentaire> commentaires) {
 		this.commentaires = commentaires;
+	}
+
+
+	public Utilisateur getCreateur() {
+		return createur;
+	}
+
+
+	public void setCreateur(Utilisateur createur) {
+		this.createur = createur;
+	}
+
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 	
 	

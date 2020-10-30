@@ -2,9 +2,11 @@ package com.iscae.alpha.pgp.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -13,12 +15,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Risque implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name ="num_risque")
 	private Long numRisque;
-	
+	@Column(name ="probablite_risque")
 	private int probabliteRisque;
+	@Column(name ="taux_impact")
 	private int tauxImpact;
 
-
+	@Column(name ="domaine_impacte")
 	private  String  domaineImpacte;
 
 	private String etat;
@@ -26,6 +30,7 @@ public class Risque implements Serializable {
 	
 	@JsonBackReference(value="risque-projet")
 	@ManyToOne
+	@JoinColumn(name ="projet_num_projet")
 	private Projet projet;
 
 	public Risque() {

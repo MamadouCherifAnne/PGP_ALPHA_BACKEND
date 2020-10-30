@@ -1,6 +1,5 @@
 package com.iscae.alpha.pgp.entities;
 
-import java.io.File;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
@@ -9,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Fichier implements Serializable {
 	@Id
 	@GeneratedValue
+	@Column(name ="num_fichier")
 	private Long numFichier;
     private String type;
     
@@ -25,11 +26,12 @@ public class Fichier implements Serializable {
     @Lob 
     @Column(name = "logo", columnDefinition = "LONGBLOB")
 	private byte[] logo;
-	 
+	@Column(name = "nom_fichier")
 	private String nomFichier;
 	
 	@JsonBackReference(value="fichier-tache")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name ="tache_concerne_num_tache")
 	private Tache tacheConcerne;
 
 	public Fichier() {

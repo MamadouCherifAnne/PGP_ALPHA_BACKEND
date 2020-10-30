@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,18 +19,23 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Entreprise implements Serializable{
 	@Id
 	@GeneratedValue
+	@Column(name="id_entreprise")
 	private Long idEntreprise;
+	@Column(name="name_entreprise")
 	private String nameEntreprise;
+	
+	@Column(name="domaine_entreprise")
 	private String domaine_Entreprise;
 	private String adresse;
 	
 	@JsonBackReference(value="user-entreprise")
 	@OneToMany(mappedBy="entreprise", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	
 	private List<Utilisateur> users;
 	
 	// Les projets d' une entreprise
 	@JsonManagedReference(value="entreprise-projet")
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="workSpace")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="entreprise")
 	private List<Projet> projets;
 	
 	public Entreprise() {

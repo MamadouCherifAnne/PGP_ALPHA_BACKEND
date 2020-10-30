@@ -19,7 +19,7 @@ public class MessageController {
 	MessageService msgService;
 	
 	// ENvoyer un message a un utilisateur
-	@PostMapping(value="/sendMessage/")
+	@PostMapping(value="/sendMessage")
 	public Message sendMessage(@RequestBody Message message) {
 		return msgService.addMessage(message);
 	}

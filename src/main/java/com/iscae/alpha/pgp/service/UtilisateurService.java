@@ -2,7 +2,9 @@ package com.iscae.alpha.pgp.service;
 
 import java.util.List;
 
+import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -21,7 +23,8 @@ public interface UtilisateurService {
 	
 	// Rechercher Un utilisateur par son Nom
 	public Utilisateur getUserByName(String nom);
-
+	
+	public Utilisateur getUserByUsername(String username);
 	
 	// Recherche par identifiant
 	public Utilisateur getUserById(Long id);
@@ -34,6 +37,13 @@ public interface UtilisateurService {
 	
 	// Afficher tout les message Reues par un utilisateur
 		public List<Message> getAllRecivedMessageFromUser(Long idUser);
-	
+		
+	// Afficher l' entreprise dont l'utilisateur est affecte
+		public Entreprise getUserEntreprise(Long idUser);
+		
+	// Afficher les projets dont l'utilisateur est affecte a travers ces taches
+		public List<Projet> getMyProjects(String username);
+		
+
 	
 }
