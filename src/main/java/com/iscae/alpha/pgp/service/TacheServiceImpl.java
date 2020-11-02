@@ -252,6 +252,18 @@ public class TacheServiceImpl implements TacheService{
 		return owner;
 	}
 
+	@Override
+	public Long getProject(Long idTache) {
+		// TODO Auto-generated method stub
+		
+		if(this.findTache(idTache)!=null) {
+			Tache tache = tacheRepository.getOne(idTache);
+			tache.getPhase().getProjet();
+			return tache.getPhase().getProjet().getNumProjet();
+		}
+		return -1L;
+	}
+
 
 
 }

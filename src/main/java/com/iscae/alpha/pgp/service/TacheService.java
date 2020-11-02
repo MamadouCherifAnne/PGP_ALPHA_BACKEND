@@ -53,4 +53,8 @@ public interface TacheService {
 
 		//  Get The OWner of the task
 		public String getTheOwner(Long idTache);
+		
+		// Has acces to the task
+		public Long getProject(Long idTache);
 }
+

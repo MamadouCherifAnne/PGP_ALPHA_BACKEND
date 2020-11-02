@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,8 +32,7 @@ public class Commentaire implements Serializable{
 	@Column(name="comment")
 	private String comment;
 	
-	//@JsonManagedReference(value="user-commentaire")
-	@JsonSetter
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id_user")
 	private Utilisateur user;

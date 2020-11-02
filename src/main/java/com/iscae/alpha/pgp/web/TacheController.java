@@ -173,4 +173,9 @@ public class TacheController {
 	public String getTheOwner(@PathVariable Long idTache) {
 		return tacheService.getTheOwner(idTache);
 	}
+	
+	@GetMapping(value="/getTacheProject/{idTache}")
+	public Long getTacheProject(@PathVariable Long idTache) {
+		return tacheService.getProject(idTache);
+	}
 }

@@ -1,6 +1,7 @@
 package com.iscae.alpha.pgp.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -162,12 +163,16 @@ public class ProjetServiceImp implements ProjetService{
 	@Override
 	public List<Commentaire> allCommentsOfProject(Long idProjet) {
 		// Afficher la liste des commentaires d'un projet
+		List<Commentaire> comments = new ArrayList<>();
 		Projet projet =findProjetById(idProjet);
 		if(projet != null) {
-			return projet.getCommentaires();
+			
+			comments = projet.getCommentaires();
+			Collections.sort(comments, (y, x) -> x.getDateComment().compareTo(y.getDateComment()));
+			return comments ;
 		}
 		
-		return null;
+		return comments;
 	}
 
 
