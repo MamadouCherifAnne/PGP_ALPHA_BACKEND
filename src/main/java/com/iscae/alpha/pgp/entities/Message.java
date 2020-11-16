@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Message {
@@ -23,20 +24,22 @@ public class Message {
 	private Long idMessage;
 	@Column(name="message_content")
     private String messageContent;
+	@Column(name ="message_lu")
+	private boolean messageLu;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_envoie")
     private Date dateEnvoie;
     
-    @JsonBackReference(value="user-send")
     @ManyToOne
     @JoinColumn(name = "edit_user_id_user")
  
     private Utilisateur editUser;
-    @JsonBackReference(value="user-receive")
     @ManyToOne
     @JoinColumn(name ="destinataire_id_user")
     private Utilisateur destinataire;
+    
+    
 	public Message() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -47,6 +50,7 @@ public class Message {
 		this.dateEnvoie = dateEnvoie;
 		this.editUser = editUser;
 		this.destinataire = destinataire;
+		this.messageLu = false;
 	}
 	public Long getIdMessage() {
 		return idMessage;
@@ -78,6 +82,14 @@ public class Message {
 	public void setDestinataire(Utilisateur destinataire) {
 		this.destinataire = destinataire;
 	}
+	public boolean isMessageLu() {
+		return messageLu;
+	}
+	public void setMessageLu(boolean messageLu) {
+		this.messageLu = messageLu;
+	}
+	
+	
     
     // Getters And Setters
 	

@@ -1,9 +1,10 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.Collection;
 import java.util.List;
 
+import com.iscae.alpha.pgp.dto.AffectationsTacheDto;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
-import com.iscae.alpha.pgp.entities.UserToTache;
 
 public interface AffectationUtilisateurService {
 	
@@ -18,6 +19,9 @@ public interface AffectationUtilisateurService {
 	
 	// Afficher La liste des Affectations concernant une tache
 	public List<AffectationUtilisateur> getAffectationsForTache(Long idTache);
+	
+	// Afficher La liste des Affectations concernant une tache avec une formatage des donnes
+		public Collection<AffectationsTacheDto> getAffectationsForTacheFormater(Long idTache);
 	
 	// Afficher La liste des Affectations concernant un utlisateur
 		public List<AffectationUtilisateur> getAffectationsForUser(Long idUser);

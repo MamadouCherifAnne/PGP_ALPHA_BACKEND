@@ -17,6 +17,8 @@ import com.iscae.alpha.pgp.entities.Profession;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
+import com.iscae.alpha.pgp.mail.ConstantEnvoiMail;
+import com.iscae.alpha.pgp.mail.Mail;
 
 
 @Service
@@ -28,7 +30,11 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	@Autowired
 	TacheService tacheService;
 	@Autowired
+	MessageService msgService;
+	@Autowired
 	ProfessionRepository profRepo;
+	@Autowired
+	MailServiceInterface mailService;
 	/*@Autowired
 	PasswordEncoder bCryptPasswordEncoder;*/
 	
@@ -53,7 +59,19 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 					user.setProfessions(listprof);	
 			}
 			//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			return userRepository.save(user) ;}
+			Utilisateur util = userRepository.save(user);
+			String [] to = new String [1];
+			to[0]=user.getEmail();
+			//to[0] = "mmdanne98@gmail.com";
+			Mail mail = new Mail();
+			mail.setTo(to);
+			mail.setSubject("Nouvel Invitation");
+			mail.setBody(ConstantEnvoiMail.notificationAJoutUser+" dans L'entreprise "+user.getCompany()+""
+					+ " avec le mot de passe :"+user.getPassword()+"\n\n vous êtes recommandé de changer de mot de passe "
+							+ " après la première connexion.\n On vous souhaite bienvenue dans le plateforme");
+			
+			mailService.SendMessage(mail);
+			return util ;}
 		else {return null;}
 		
 		}
@@ -85,15 +103,9 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			oldUser.setProfessions(listprof);	
 			}
 			
-			
-			////////////////////////////////////////////////////////////////////////////
-			oldUser.setRapports(user.getRapports());
-			oldUser.setCommentaires(user.getCommentaires());
-			
-			if(userRepository.findByNom(user.getNom())==null) {
-			oldUser.setNom(user.getNom());
+			oldUser.setUsername(user.getUsername());
 
-			}
+			
 		}
 		
 
@@ -208,13 +220,20 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		// Afficher tout les essage recu
 		Utilisateur user =this.getUserById(idUser);
 		List <Message> messages = new ArrayList<>();
-		if(user !=null) {
-			messages =user.getMessageReceived();
+		if(user !=null && !user.getMessageReceived().isEmpty()) {
+			for(Message msg : user.getMessageReceived()) {
+				if(msg.isMessageLu()==false) {
+				msgService.modifierEtat(msg.getIdMessage());
+				msg.setMessageLu(true);
+				}
+				messages.add(msg);
+				
+			}
 			//Ordonne les message par ordre croissant des date d'envoie
-			Collections.sort(messages, (x, y) -> x.getDateEnvoie().compareTo(y.getDateEnvoie()));
-			return messages;
-		}else {
-		return null;}
+			Collections.sort(messages, (y, x) -> x.getDateEnvoie().compareTo(y.getDateEnvoie()));
+			
+		}
+		return messages;
 	}
 	
 	// Recherche par usrname
@@ -258,6 +277,23 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		}
 		return null;
 	}
+
+
+
+	@Override
+	public int getMessageNonLu(String username) {
+		int cmpt = 0;
+		Utilisateur user =this.getUserByUsername(username);
+		List<Message> messagesNonLus = new ArrayList<>();
+		if(user !=null && !user.getSendMessages().isEmpty()) {
+		for(Message msg : user.getMessageReceived()) {
+			if(msg.isMessageLu() !=true) {
+				cmpt++;
+				}
+			}
+			}
+		return cmpt;
+		}
 
 
 

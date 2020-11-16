@@ -29,7 +29,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         String requestURI = request.getRequestURI();
          if( requestURI.equals("/authenticate/login")) {
         	 
-        	 tenantID="alfaconseiltenantdb";
+        	 tenantID="alfaconseiltenantbd";
          }
          if(!requestURI.equals("/authenticate/login")) {
         	// S'il s'agit d'une autre type de requete on essaye d'interpreter la Key jwt
@@ -50,6 +50,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 				String tenant= decodeJWT.getClaims().get("tenantID").asString();
 				System.out.println("Le TENANT ID "+tenant);
         	 tenantID=tenant;
+        	 Log.info("la requet solliciter::" + requestURI +" || Rcherche du  :: " + tenantID);
          }
          }
         // tenantID= "alfaconseiltenantdb";

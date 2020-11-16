@@ -35,6 +35,11 @@ public class MessageController {
 		}
 		}
 	
+	@PostMapping(value="/modifEatMessage/{idMessage}")
+	public void setEtatMessage(@PathVariable Long idMessage) {
+		msgService.modifierEtat(idMessage);
+	}
+	
 	
 
 }

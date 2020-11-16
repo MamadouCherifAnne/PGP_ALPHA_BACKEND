@@ -81,13 +81,13 @@ public class Utilisateur implements Serializable {
 	
 	// Les Messages entre utilisateur
 	@JsonSetter
-	@JsonManagedReference(value="user-send")
+	@JsonBackReference(value="user-send")
 	@OneToMany(mappedBy = "editUser", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Message> sendMessages;
 	
 	//Message received
 	@JsonSetter
-	@JsonManagedReference(value="user-receive")
+	@JsonBackReference(value="user-receive")
 	@OneToMany(mappedBy = "destinataire", fetch  = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Message> messageReceived;
 	

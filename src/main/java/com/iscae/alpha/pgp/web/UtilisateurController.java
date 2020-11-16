@@ -3,17 +3,23 @@ package com.iscae.alpha.pgp.web;
 
 import java.util.List;
 
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.iscae.alpha.pgp.ConstantWebApi;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.dto.Role;
@@ -48,7 +54,7 @@ public class UtilisateurController {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private static final String urlToAlfaSecurityApp = "http://localhost:8090/utilisateur/";
+	private static final String urlToAlfaSecurityApp = "utilisateur/";
 	
 	@GetMapping("/all")
 	public List<Utilisateur> getALlUser() {
@@ -58,14 +64,16 @@ public class UtilisateurController {
 	@PostMapping(value="/delete/{id}", consumes="application/json", produces="application/json")
 	public boolean deleteUser(@PathVariable Long id) {
 		boolean deleteResult=false;
+		String service ="delete/"+id;
+		// Supprimer l'utilisateur de l'autre cote
+		String url = ConstantWebApi.urlToSecurityApp+ urlToAlfaSecurityApp+service;
+		final boolean responseBody = restTemplate.getForObject(url, Boolean.class);
 		
-		 deleteResult=userService.deleteUser(id);
-		if(deleteResult==true) {
-		return true;
-	}else {
-		return false;
-
+		if(responseBody==true) {
+			 deleteResult=userService.deleteUser(id);
 		}
+			return deleteResult;
+	
 	}
 	
 	@GetMapping("/find/{nom}")
@@ -104,7 +112,7 @@ public class UtilisateurController {
 		userDto.setPassword(user.getPassword());
 		
 		String service ="new";
-		String url = urlToAlfaSecurityApp+service;
+		String url = ConstantWebApi.urlToSecurityApp + urlToAlfaSecurityApp + service;
 		final Utilisateur responseBody = restTemplate.postForObject(url, userDto, Utilisateur.class);
 		if(responseBody !=null) {
 		 user.setPassword(responseBody.getPassword());
@@ -122,14 +130,34 @@ public class UtilisateurController {
 	}
 	
 	@PostMapping("/update/{id}")
-	public String updateUser(@PathVariable Long id,@RequestBody Utilisateur user) {
-		try {
-
-		user.setIdUser(id);
-		userService.updateUser(user);
-		return "Succes";
+	public String updateUser(@PathVariable Long id,@RequestBody UtilisateurDto user, @RequestHeader(name="Authorization")String jwtKey) {
+		String message = "la Modification a échouée ";
+		try {	
+				
+				// Preparer les entete des requetes
+				HttpHeaders header = getHeader();
+				header.set("Authorization",jwtKey);
+				Utilisateur us1 = userService.getUserById(id);
+				if(us1 != null) {
+					
+				String service ="update/"+us1.getUsername();
+				String url = ConstantWebApi.urlToSecurityApp + urlToAlfaSecurityApp + service;
+				System.out.println("VOICI LA KEY JWT de la requete de la modification"+jwtKey);
+				HttpEntity<?> httpEntity= new HttpEntity<>(user,header);
+				final ResponseEntity<Utilisateur> responseBody = restTemplate.exchange(url, HttpMethod.POST,httpEntity, Utilisateur.class);
+				System.out.println("VOICI LA KEY JWT de la requete de la modification"+responseBody.getBody());
+				if(responseBody.getBody() != null) {
+					Utilisateur returnedUser= responseBody.getBody();
+					returnedUser.setIdUser(id);
+					Utilisateur user1= userService.updateUser(returnedUser);
+					System.out.println("VOICI LA KEY JWT"+jwtKey);
+					
+					message ="Modification réalisé avec succées";
+				}
+			}
+				return message;
 		}catch(Exception e) {
-			return e.getMessage()+"La modification n'a pa spu être effectués";
+			return e.getMessage()+"Echec";
 			
 		}
 	}
@@ -157,10 +185,10 @@ public class UtilisateurController {
 	// Appeller l api de gestion de security pour ajouter des nouvelles Statut aux utilisateurs
 		
 		@PostMapping(value="/accordPrivillege/{username}",consumes= {"application/json"},produces= {"application/json"})
-		public ResponseEntity<?> accordNewRoleToUser(@PathVariable String username,@RequestBody List<Role> permissions) {
+		public ResponseEntity<?> accordNewRoleToUser(@PathVariable String username,@RequestBody List<String> permissions) {
 			String service ="addPrivilleges/"+username;
 			
-			String url = urlToAlfaSecurityApp+service;
+			String url = ConstantWebApi.urlToSecurityApp+ urlToAlfaSecurityApp+service;
 			final String responseBody = restTemplate.postForObject(url, permissions, String.class);
 			
 			return  ResponseEntity.ok(responseBody);
@@ -179,7 +207,17 @@ public class UtilisateurController {
 		public List<Projet> getThisUserProject(@PathVariable String username){
 			return userService.getMyProjects(username);
 		}
+		
+		// Afficher les message recu pour un utilisateur
+		@GetMapping(value="/messageNonLus/{username}")
+		public int messageNonLu(@PathVariable String username){
+			return userService.getMessageNonLu(username);
+		}
 	
 	
-	
+	// Get Header
+		public HttpHeaders getHeader() {
+			HttpHeaders header = new HttpHeaders();
+			return header;
+		}
 }

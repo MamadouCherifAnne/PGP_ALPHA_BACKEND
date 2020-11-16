@@ -45,5 +45,7 @@ public interface UtilisateurService {
 		public List<Projet> getMyProjects(String username);
 		
 
-	
+// Afficher tout les message Reues par un utilisateur
+		public int getMessageNonLu(String username);
+		
 }

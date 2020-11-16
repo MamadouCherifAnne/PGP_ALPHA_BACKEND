@@ -30,4 +30,12 @@ public class MessageServiceImpl implements MessageService {
 		return false;
 	}
 
+	@Override
+	public void modifierEtat(Long idMessage) {
+		// TODO Auto-generated method stub
+		Message message = msgRepo.getOne(idMessage);
+		message.setMessageLu(true);
+		msgRepo.save(message);
+	}
+
 }
