@@ -25,7 +25,10 @@ public interface AffectationUtilisateurService {
 	
 	// Afficher La liste des Affectations concernant un utlisateur
 		public List<AffectationUtilisateur> getAffectationsForUser(Long idUser);
-		
+
+	// Afficher La liste des Affectations concernant un utlisateur
+		public Collection<AffectationsTacheDto> getLatestAffectationsForUser(String username);
+			
 	// Recuperer un affectation par son id
 		public AffectationUtilisateur getAffectationById(Long idTache, long idUser);
 		

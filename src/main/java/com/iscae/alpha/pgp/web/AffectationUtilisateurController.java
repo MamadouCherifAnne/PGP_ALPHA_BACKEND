@@ -82,5 +82,13 @@ public class AffectationUtilisateurController {
 					return userToJobService.getAffectationsForTacheFormater(idTache);
 					
 				}
+			
+			// Service de recuperation des affectations concernant une Tache avec appropriation du format avec le client
+			@GetMapping(value="/LatestTacheToRealise/{username}")
+			public Collection<AffectationsTacheDto> getAllLatestUserAffectations(@PathVariable String username){
+				
+				return userToJobService.getLatestAffectationsForUser(username);
+				
+			}
 
 }

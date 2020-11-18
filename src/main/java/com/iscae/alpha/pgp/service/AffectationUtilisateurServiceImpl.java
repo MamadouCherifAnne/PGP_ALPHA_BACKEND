@@ -2,6 +2,7 @@ package com.iscae.alpha.pgp.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -154,6 +155,35 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 					this.deleteAffectation(afectTache.getUser_task().getIdUser(), idTache);
 				}
 			}
+			return affectations;
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<AffectationsTacheDto> getLatestAffectationsForUser(String username) {
+		
+		Date limiteDate = new Date(System.currentTimeMillis()-24*60*60*1000*3);
+		Date today = new Date(System.currentTimeMillis());
+		log.info("La date d'hier"+limiteDate+" La date de today is"+today);
+		Utilisateur user = userService.getUserByUsername(username);
+		if(user!= null) {
+		 Collection<AffectationsTacheDto> affectations = new ArrayList<>();
+			if(userForJobRepo.getAffectationsByUtilisateur(user.getIdUser())!=null) {
+				List<AffectationUtilisateur> taskAffects = userForJobRepo.getAffectationsByUtilisateur(user.getIdUser());
+				// J'applique une sorte de formatage pour l'approprier a l'affichage
+				for (AffectationUtilisateur afectTache : taskAffects) {
+					
+					if(afectTache.getDateAffectation().after(limiteDate)) {
+						AffectationsTacheDto afectDto = new AffectationsTacheDto();
+						afectDto.setAffectation(afectTache);
+						afectDto.setRessources(user);
+						afectDto.setAffectation(afectTache);
+						affectations.add(afectDto);
+					}
+				}
+			}
+			log.info("Les taches dont il est affecter avant 23 jours sont "+affectations.size());
 			return affectations;
 		}
 		return null;

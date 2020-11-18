@@ -15,7 +15,7 @@ public interface AffectationUtilisateurRepository extends JpaRepository<Affectat
 	
 	@Query("Select a FROM AffectationUtilisateur a WHERE a.user_task.idUser = ?1")
 	public List<AffectationUtilisateur> getAffectationsByUtilisateur(Long idUser);
-	
+
 	// Tousd les uitliateurs affecter a une tache
 	
 	@Query("Select a FROM AffectationUtilisateur a WHERE a.user_task.idTache = ?1")
