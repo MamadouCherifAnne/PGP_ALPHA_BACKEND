@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 import com.iscae.alpha.pgp.TenantContexte;
 
 
-//@Component
+@Component
 public class CurrentTenantUser  implements CurrentTenantIdentifierResolver{ 
 
 
  
 
-	    private String defaultTenant ="alfaconseiltenantdb";
+	    private String defaultTenant ="alfaconseiltenantbd";
 
 		@Override
 		public String resolveCurrentTenantIdentifier() {

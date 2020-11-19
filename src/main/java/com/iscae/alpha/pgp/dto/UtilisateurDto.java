@@ -1,6 +1,6 @@
 package com.iscae.alpha.pgp.dto;
 
-import javax.persistence.Column;
+import java.util.List;
 
 public class UtilisateurDto {
 	
@@ -13,6 +13,7 @@ public class UtilisateurDto {
 	private String company;
 	private boolean actif;
 	private String telephone;
+	private List<String> roles;
 	
 	
 	
@@ -74,6 +75,12 @@ public class UtilisateurDto {
 	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+	public List<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 	
 	

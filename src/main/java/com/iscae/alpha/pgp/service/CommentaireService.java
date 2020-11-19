@@ -15,4 +15,6 @@ public interface CommentaireService {
 	// Afficher tout les commentaire sur un projet
 	public List<Commentaire> getCommentsOfProject(Long idProjet);
 
+	// Supprimer un commentaire
+	public boolean deleteComment(Long idComment);
 }

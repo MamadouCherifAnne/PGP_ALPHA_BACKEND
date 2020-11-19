@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.mail.Mail;
+import com.iscae.alpha.pgp.service.MailServiceInterface;
 
 @RestController
 @RequestMapping("/mail")
 @CrossOrigin(origins= "*")
 public class MailController {
-
+	
+		@Autowired
+		MailServiceInterface mailService;
 		@Autowired
 		private JavaMailSender javaMailSender;
 		
@@ -46,44 +49,13 @@ public class MailController {
 		
 		@PostMapping("/sendMail")
 		public String SendMessage(@RequestBody Mail email) {
-			
-			System.out.println(email.getTo()+email.getSubject()+email.getBody());
-			
-			try {
-				SimpleMailMessage message = new SimpleMailMessage();
-				message.setTo(email.getTo());
-				message.setSubject(email.getSubject());
-				message.setText(email.getBody());
-				javaMailSender.send(message);
-				
-				return "mail sended with succes";
-			}catch(Exception e) {
-				return e.getMessage() + "Sending Error";
-			}
-			
+			return mailService.SendMessage(email);
 		}
 		
 		@PostMapping("/sendMailAttachement")
 		public String SendMessageWithAttachement(@RequestBody Mail email) {
 			
-			System.out.println(email.getTo()+email.getSubject()+email.getBody());
-			
-			try {
-				MimeMessage message = javaMailSender.createMimeMessage();
-				MimeMessageHelper helper = new MimeMessageHelper(message, true);
-				helper.setTo(email.getTo());
-				helper.setSubject(email.getSubject());
-				helper.setText(email.getBody());
-				helper.setText(email.getBody(), true);
-				//ClassPathResource path = new ClassPathResource("image.png");
-				//helper.Attachement("image.png", path);
-				
-				javaMailSender.send(message);
-				
-				return "mail sended with succes";
-			}catch(Exception e) {
-				return e.getMessage() + "Sending Error";
-			}
-			
+			return mailService.SendMessageWithAttachement(email);
 		}
+
 }

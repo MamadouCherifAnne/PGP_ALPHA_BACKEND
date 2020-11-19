@@ -1,10 +1,10 @@
 package com.iscae.alpha.pgp.web;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iscae.alpha.pgp.dto.AffectationsTacheDto;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
-import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.UserToTache;
 import com.iscae.alpha.pgp.service.AffectationUtilisateurService;
 
@@ -74,5 +74,21 @@ public class AffectationUtilisateurController {
 			return userToJobService.getAffectationsForTache(idTache);
 			
 		}
+		
+		// Service de recuperation des affectations concernant une Tache avec appropriation du format avec le client
+				@GetMapping(value="/tacheAffectationsFormater/{idTache}")
+				public Collection<AffectationsTacheDto> getAllTacheAffectationsFormater(@PathVariable Long idTache){
+					
+					return userToJobService.getAffectationsForTacheFormater(idTache);
+					
+				}
+			
+			// Service de recuperation des affectations concernant une Tache avec appropriation du format avec le client
+			@GetMapping(value="/LatestTacheToRealise/{username}")
+			public Collection<AffectationsTacheDto> getAllLatestUserAffectations(@PathVariable String username){
+				
+				return userToJobService.getLatestAffectationsForUser(username);
+				
+			}
 
 }

@@ -192,6 +192,7 @@ public class TacheController {
 		return tacheService.getTheOwner(idTache);
 	}
 	
+<<<<<<< HEAD
 	@GetMapping("/TasksInformation/{projetId}")
 	public InfoTaches tasksInformation(@PathVariable Long projetId) {
 		return tacheService.TasksInformation(projetId);
@@ -200,4 +201,10 @@ public class TacheController {
 	
 
 
+=======
+	@GetMapping(value="/getTacheProject/{idTache}")
+	public Long getTacheProject(@PathVariable Long idTache) {
+		return tacheService.getProject(idTache);
+	}
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
 }

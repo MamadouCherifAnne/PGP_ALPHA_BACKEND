@@ -3,6 +3,8 @@ package com.iscae.alpha.pgp.web;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.service.CommentaireService;
+import com.iscae.alpha.pgp.service.CommentaireServiceImpl;
 import com.iscae.alpha.pgp.service.ProjetServiceImp;
 
 @RestController
@@ -25,6 +30,11 @@ public class ProjetController {
 	
 	@Autowired
 	private ProjetServiceImp projetService;
+	
+	@Autowired
+	private CommentaireService commentService;
+	
+	private static final Logger Log =LoggerFactory.getLogger(ProjetController.class);
 //.................Ajout d'un projet .....................................................................
 //................................................................................................
 	@PostMapping("/add")
@@ -107,6 +117,21 @@ public class ProjetController {
 			
 			return projetService.getAllJalons(idProjet);
 		}
+<<<<<<< HEAD
 	
 	
+=======
+	// Tout les commentaires du projets
+		@GetMapping(value ="/commentsOfProject/{numProjet}")
+		public List<Commentaire> getTheCommentsofProject(@PathVariable Long numProjet){
+			return projetService.allCommentsOfProject(numProjet);
+		}
+		
+	// Ajout de commentaires dans un projet
+		@PostMapping(value="/addCommentofProjet",consumes = {"application/json"})
+		public Commentaire addCommentOfProject(@RequestBody Commentaire comment) {
+			Log.info("Voici le createur"+comment.getUser().getUsername());
+			return commentService.addComment(comment);
+		}
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
 }

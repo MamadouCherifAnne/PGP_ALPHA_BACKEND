@@ -57,6 +57,7 @@ public interface TacheService {
 
 		//  Get The OWner of the task
 		public String getTheOwner(Long idTache);
+<<<<<<< HEAD
 	
 	// nbr de Taches EnCours
 	public	int nbrTachesEnCours( Long projetId);
@@ -70,4 +71,12 @@ public interface TacheService {
 	public InfoTaches TasksInformation(Long ProjetId);
 	
 	
+=======
+		
+		// Has acces to the task
+		public Long getProject(Long idTache);
+		
+
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
 }
+

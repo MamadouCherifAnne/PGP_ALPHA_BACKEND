@@ -37,6 +37,7 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 		 for(Phase phase: p.getPhases()) {
 			 item.put("phaseName", phase.getNomTache());
 			 for(Tache tache: phase.getTache()) {
+				 if(!(tache.getFinTache()==null)) {
 				 //String statut = "demarée";
 				 if(tache.getTauxAvancement() == 100) { statut = "Termée";}
 				 if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) { statut = "En retard";}
@@ -52,7 +53,7 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 				 item.put("priorite", tache.getNiveauPriorite()); 
 			 }
 			// result.add(item);
-			 
+			 }
 		 }
 		 result.add(item);
 		 

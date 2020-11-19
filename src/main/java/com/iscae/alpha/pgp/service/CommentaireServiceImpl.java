@@ -1,8 +1,10 @@
 package com.iscae.alpha.pgp.service;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.iscae.alpha.pgp.dao.CommentaireRepository;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 
 @Service
 public class CommentaireServiceImpl implements CommentaireService {
@@ -19,6 +22,10 @@ public class CommentaireServiceImpl implements CommentaireService {
 	TacheService tacheService;
 	@Autowired
 	ProjetService projetService;
+	@Autowired
+	UtilisateurService userService;
+	
+	private static final Logger Log =LoggerFactory.getLogger(CommentaireServiceImpl.class);
 
 	@Override
 	public Commentaire addComment(Commentaire comment) {
@@ -26,6 +33,10 @@ public class CommentaireServiceImpl implements CommentaireService {
 		//Renseigner l'heure actuelle du commentaire
 		System.out.println("La date actuelle ########:"+comment.getDateComment());
 		//comment.setDateComment(new Date());
+		Log.info("Voici le createur"+comment.getUser().getUsername());
+		Utilisateur user = userService.getUserById(comment.getUser().getIdUser());
+		Log.info("Voici le commentateur"+user);
+		comment.setUser(user);
 		return commentRepo.save(comment);
 	}
 
@@ -47,6 +58,18 @@ public class CommentaireServiceImpl implements CommentaireService {
 			return projet.getCommentaires();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean deleteComment(Long idComment) {
+		// TODO Auto-generated method stub
+		Optional<Commentaire> comment =commentRepo.findById(idComment);
+		if(comment.isPresent()) {
+			Commentaire com  = comment.get();
+			commentRepo.deleteById(idComment);
+			return true;
+		}
+		return false;
 	}
 
 }

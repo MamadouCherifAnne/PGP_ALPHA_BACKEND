@@ -1,5 +1,8 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,21 +12,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.AffectationUtilisateurRepository;
+import com.iscae.alpha.pgp.dto.AffectationsTacheDto;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.UserToTache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
+import com.iscae.alpha.pgp.mail.Mail;
 
 @Service
 public class AffectationUtilisateurServiceImpl implements AffectationUtilisateurService {
 	
 	@Autowired
 	AffectationUtilisateurRepository userForJobRepo;
+	@Autowired
+	UtilisateurService userService;
+	@Autowired
+	MailServiceInterface mailService;
 	
 	private static final Logger log =LoggerFactory.getLogger(AffectationUtilisateurServiceImpl.class);
 
 	@Override
 	public AffectationUtilisateur addAffectationUser(AffectationUtilisateur userJob) {
 		
-		
+		AffectationUtilisateur affect = new AffectationUtilisateur();
 		AffectationUtilisateur userForJob = new AffectationUtilisateur();
 		// Reparation sur la maniere dajuter d affectations
 		UserToTache idAffect =  new UserToTache(userJob.getUser_task().getIdUser(), userJob.getUser_task().getIdTache());
@@ -31,10 +41,22 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 		userForJob.setTempsPasser(userJob.getTempsPasser());
 		Optional<AffectationUtilisateur> verifExistance = userForJobRepo.findById(idAffect);
 		if(!verifExistance.isPresent()) {
-		return userForJobRepo.save(userForJob);
-		}else {
-			return null;
+			Utilisateur user =  userService.getUserById(idAffect.getIdUser());
+			
+			// ENvoyer un message a un a l utilisateur
+			String [] to = new String [1];
+			to[0]=user.getEmail();
+			//to[0] = "mmdanne98@gmail.com";
+			Mail mail = new Mail();
+			mail.setTo(to);
+			mail.setSubject("Affectation à une tache");
+			mail.setBody("Vous avez été affecter une  tache.\n Voici le Lien "+"http://localhost:4200/task/"+idAffect.getIdTache());
+			affect = userForJobRepo.save(userForJob); 
+			mailService.SendMessage(mail);
+			return affect;
 		}
+		return null;
+		
 	}
 
 	@Override
@@ -88,6 +110,7 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 	@Override
 	public List<AffectationUtilisateur> getAffectationsForTache(Long idTache) {
 		if(userForJobRepo.getAffectationsForTache(idTache)!=null) {
+		
 			return userForJobRepo.getAffectationsForTache(idTache);
 		}
 		return null;
@@ -110,6 +133,58 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 		Optional<AffectationUtilisateur> verif = userForJobRepo.findById(idAffectation);
 		if(verif.isPresent()) {
 			return verif.get();
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<AffectationsTacheDto> getAffectationsForTacheFormater(Long idTache) {
+		 Collection<AffectationsTacheDto> affectations = new ArrayList<>();
+		if(userForJobRepo.getAffectationsForTache(idTache)!=null) {
+			List<AffectationUtilisateur> taskAffects = userForJobRepo.getAffectationsForTache(idTache);
+			// J'applique une sorte de formatage pour l'approprier a l'affichage
+			for (AffectationUtilisateur afectTache : taskAffects) {
+				AffectationsTacheDto afectDto = new AffectationsTacheDto();
+				afectDto.setAffectation(afectTache);
+				Utilisateur user = userService.getUserById(afectTache.getUser_task().getIdUser());
+				if(user != null) {
+					afectDto.setRessources(user);
+					afectDto.setAffectation(afectTache);
+					affectations.add(afectDto);
+				}else {
+					this.deleteAffectation(afectTache.getUser_task().getIdUser(), idTache);
+				}
+			}
+			return affectations;
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<AffectationsTacheDto> getLatestAffectationsForUser(String username) {
+		
+		Date limiteDate = new Date(System.currentTimeMillis()-24*60*60*1000*3);
+		Date today = new Date(System.currentTimeMillis());
+		log.info("La date d'hier"+limiteDate+" La date de today is"+today);
+		Utilisateur user = userService.getUserByUsername(username);
+		if(user!= null) {
+		 Collection<AffectationsTacheDto> affectations = new ArrayList<>();
+			if(userForJobRepo.getAffectationsByUtilisateur(user.getIdUser())!=null) {
+				List<AffectationUtilisateur> taskAffects = userForJobRepo.getAffectationsByUtilisateur(user.getIdUser());
+				// J'applique une sorte de formatage pour l'approprier a l'affichage
+				for (AffectationUtilisateur afectTache : taskAffects) {
+					
+					if(afectTache.getDateAffectation().after(limiteDate)) {
+						AffectationsTacheDto afectDto = new AffectationsTacheDto();
+						afectDto.setAffectation(afectTache);
+						afectDto.setRessources(user);
+						afectDto.setAffectation(afectTache);
+						affectations.add(afectDto);
+					}
+				}
+			}
+			log.info("Les taches dont il est affecter avant 23 jours sont "+affectations.size());
+			return affectations;
 		}
 		return null;
 	}

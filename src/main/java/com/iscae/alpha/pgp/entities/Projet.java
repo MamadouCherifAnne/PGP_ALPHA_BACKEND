@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 public class Projet implements Serializable {
@@ -62,8 +65,8 @@ public class Projet implements Serializable {
 	 private List<Phase> phases;
 	 
 	 // COmmentaire
-	 @JsonManagedReference(value="projet-comment")
-	 @OneToMany(mappedBy = "projetComment")
+	 @JsonIgnore
+	 @OneToMany(mappedBy = "projetComment",cascade = CascadeType.ALL)
 	 private List<Commentaire> commentaires;
 
 	public Projet() {

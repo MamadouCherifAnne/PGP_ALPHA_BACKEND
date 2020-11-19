@@ -10,7 +10,7 @@ import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTen
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
-//@Configuration
+@Configuration
 
 public class MultiTenantDatabaseImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl  {
 	  @Autowired

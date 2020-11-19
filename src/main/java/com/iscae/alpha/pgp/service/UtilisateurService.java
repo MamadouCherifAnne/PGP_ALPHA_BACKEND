@@ -48,5 +48,7 @@ public interface UtilisateurService {
 	//
 	public List<MonTravail> tasksUser(Long idUser);
 
-	
+// Afficher tout les message Reues par un utilisateur
+		public int getMessageNonLu(String username);
+		
 }
