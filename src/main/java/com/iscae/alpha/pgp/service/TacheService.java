@@ -3,6 +3,10 @@ package com.iscae.alpha.pgp.service;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.iscae.alpha.pgp.dto.InfoTaches;
+import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
@@ -53,4 +57,17 @@ public interface TacheService {
 
 		//  Get The OWner of the task
 		public String getTheOwner(Long idTache);
+	
+	// nbr de Taches EnCours
+	public	int nbrTachesEnCours( Long projetId);
+	
+	// nbr de Taches Terminees
+	public int nbrTachesTerminees( Long projetId);
+	
+	// nbr de taches en retard
+	public int nbrTachesEnRetard( Long projetId);
+	
+	public InfoTaches TasksInformation(Long ProjetId);
+	
+	
 }

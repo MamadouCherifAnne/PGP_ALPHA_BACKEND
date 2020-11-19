@@ -9,19 +9,24 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.dto.InfoTaches;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
+import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.CommentaireService;
 import com.iscae.alpha.pgp.service.DepenseService;
 import com.iscae.alpha.pgp.service.FactureService;
+import com.iscae.alpha.pgp.service.ProjetService;
 import com.iscae.alpha.pgp.service.TacheServiceImpl;
 
 @RestController
@@ -39,6 +44,8 @@ public class TacheController {
 	DepenseService depenseService;
 	@Autowired
 	FactureService factureService;
+	@Autowired
+	ProjetService projetService;
 	
 	
 	@PostMapping(value="/add", consumes={"application/json"})
@@ -64,6 +71,17 @@ public class TacheController {
 		}
 	}
 	
+	
+	@PutMapping("/updateSecondaire/{tacheId}")
+	public String updateTacheSecondaire(@PathVariable Long tacheId, @RequestBody Tache tache) {
+		try {
+			tache.setNumTache(tacheId);
+			tacheService.updateTache(tache);
+			return "tache modifée";
+		}catch(Exception e) {
+			return e.getMessage() + "erreur de modification";
+		}
+	}
 	
 
 	// ALL TASKS
@@ -173,4 +191,13 @@ public class TacheController {
 	public String getTheOwner(@PathVariable Long idTache) {
 		return tacheService.getTheOwner(idTache);
 	}
+	
+	@GetMapping("/TasksInformation/{projetId}")
+	public InfoTaches tasksInformation(@PathVariable Long projetId) {
+		return tacheService.TasksInformation(projetId);
+				
+	}
+	
+
+
 }

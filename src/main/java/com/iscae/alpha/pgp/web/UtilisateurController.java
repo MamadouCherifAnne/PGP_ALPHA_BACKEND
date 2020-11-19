@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.dto.Role;
 import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Entreprise;
@@ -180,6 +181,9 @@ public class UtilisateurController {
 			return userService.getMyProjects(username);
 		}
 	
-	
+		@GetMapping(value="/tasksUser/{userId}")
+		public List<MonTravail> tasksUser(@PathVariable Long userId){
+			return userService.tasksUser(userId);
+		}
 	
 }
