@@ -117,6 +117,10 @@ public class ProjetController {
 			
 			return projetService.getAllJalons(idProjet);
 		}
+<<<<<<< HEAD
+	
+	
+=======
 	// Tout les commentaires du projets
 		@GetMapping(value ="/commentsOfProject/{numProjet}")
 		public List<Commentaire> getTheCommentsofProject(@PathVariable Long numProjet){
@@ -129,4 +133,5 @@ public class ProjetController {
 			Log.info("Voici le createur"+comment.getUser().getUsername());
 			return commentService.addComment(comment);
 		}
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
 }

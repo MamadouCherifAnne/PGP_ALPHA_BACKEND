@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import com.iscae.alpha.pgp.ConstantWebApi;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.dto.Role;
 import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Entreprise;
@@ -214,10 +215,18 @@ public class UtilisateurController {
 			return userService.getMessageNonLu(username);
 		}
 	
+<<<<<<< HEAD
+		@GetMapping(value="/tasksUser/{userId}")
+		public List<MonTravail> tasksUser(@PathVariable Long userId){
+			return userService.tasksUser(userId);
+		}
+	
+=======
 	
 	// Get Header
 		public HttpHeaders getHeader() {
 			HttpHeaders header = new HttpHeaders();
 			return header;
 		}
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
 }

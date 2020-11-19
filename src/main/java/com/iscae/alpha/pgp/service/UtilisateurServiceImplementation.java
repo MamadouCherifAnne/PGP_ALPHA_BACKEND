@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
+import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
@@ -281,6 +282,24 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 
 
 	@Override
+<<<<<<< HEAD
+	public List<MonTravail> tasksUser(Long idUser) {
+		List<Tache> userTasks= TacheToRealise(idUser);
+		List<MonTravail> mestaches = new ArrayList<MonTravail>();
+		MonTravail montravail = new MonTravail();
+		for(Tache tache: userTasks) {
+			montravail.setTache(tache);
+			montravail.setPhase(tache.getPhase());
+			montravail.setProjet(tache.getPhase().getProjet());
+			mestaches.add(montravail);
+		}
+		return mestaches;
+		
+	}
+		
+		
+		
+=======
 	public int getMessageNonLu(String username) {
 		int cmpt = 0;
 		Utilisateur user =this.getUserByUsername(username);
@@ -295,6 +314,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		return cmpt;
 		}
 
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
 
 
 }

@@ -11,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.dto.InfoTaches;
+import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
+import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 @Service 
@@ -30,6 +34,8 @@ public class TacheServiceImpl implements TacheService{
 	ProjetService projetService;
 	@Autowired
 	CommentaireService commentService;
+	
+
 	
 	private static final Logger Log =LoggerFactory.getLogger(TacheServiceImpl.class);
 	
@@ -253,6 +259,27 @@ public class TacheServiceImpl implements TacheService{
 	}
 
 	@Override
+<<<<<<< HEAD
+	public int nbrTachesEnCours(Long projetId) {
+		Projet p = projetService.findProjetById(projetId);
+		int cmpt = 0;
+		Date now = new Date();
+		for(Phase phase: p.getPhases()) {
+			System.err.println("La liste des phases"+phase);
+			for(Tache tache: phase.getTache()) {
+				Log.info("date de debut tache"+tache.getDebutTache());
+				Log.info("date de fin tache"+tache.getFinTache());
+				Log.info("taux d'avencement"+tache.getTauxAvancement());
+				
+				if((tache.getDebutTache().before(now) || tache.getDebutTache() == now) && tache.getFinTache().after(now) && tache.getTauxAvancement() != 100) {
+					cmpt = cmpt + 1;
+				}
+			}
+				
+		}
+		return cmpt;
+	}
+=======
 	public Long getProject(Long idTache) {
 		// TODO Auto-generated method stub
 		
@@ -264,6 +291,53 @@ public class TacheServiceImpl implements TacheService{
 		return -1L;
 	}
 
+>>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
+
+	@Override
+	public int nbrTachesTerminees(Long projetId) {
+		Projet p = projetService.findProjetById(projetId);
+		int cmpt = 0;
+		for(Phase phase: p.getPhases()) {
+			System.err.println("La liste des phases"+phase);
+			for(Tache tache: phase.getTache()) {
+				if(tache.getTauxAvancement() == 100) {
+					cmpt = cmpt + 1;
+				}
+			}
+				
+		}
+		return cmpt;
+	}
+
+	@Override
+	public int nbrTachesEnRetard(Long projetId) {
+		Projet p = projetService.findProjetById(projetId);
+		   int cmpt = 0;
+		   Date now = new Date();
+		   for(Phase phase: p.getPhases()) {
+				System.err.println("La liste des phases"+phase);
+				for(Tache tache: phase.getTache()) {
+					Log.info("date now"+now);
+					if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) {
+						cmpt = cmpt + 1;
+					}
+				}
+					
+			}
+			return cmpt;
+	}
+	
+	@Override
+	public InfoTaches TasksInformation(Long projetId) {
+		InfoTaches tacheInfo = new InfoTaches();
+		tacheInfo.setNbrTachesEnCours(nbrTachesEnCours(projetId));
+		tacheInfo.setNbrTacesTerminees(nbrTachesTerminees(projetId));
+		tacheInfo.setNbrTachesEnRetards(nbrTachesEnRetard(projetId));
+		
+		return tacheInfo;
+	}
 
 
+	
+	
 }
