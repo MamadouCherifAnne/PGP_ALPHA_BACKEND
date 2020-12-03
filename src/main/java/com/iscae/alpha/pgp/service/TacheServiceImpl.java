@@ -291,7 +291,6 @@ public class TacheServiceImpl implements TacheService{
 	}
 
 
-
 	@Override
 	public int nbrTachesTerminees(Long projetId) {
 		Projet p = projetService.findProjetById(projetId);

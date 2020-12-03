@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.iscae.alpha.pgp.dao.AffectationUtilisateurRepository;
 import com.iscae.alpha.pgp.dto.AffectationsTacheDto;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.UserToTache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.mail.Mail;
@@ -25,6 +26,9 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 	AffectationUtilisateurRepository userForJobRepo;
 	@Autowired
 	UtilisateurService userService;
+	
+	@Autowired
+	TacheService tacheService;
 	@Autowired
 	MailServiceInterface mailService;
 	
@@ -176,10 +180,14 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 					
 					if(afectTache.getDateAffectation().after(limiteDate)) {
 						AffectationsTacheDto afectDto = new AffectationsTacheDto();
+						Tache task = tacheService.findTache(afectTache.getUser_task().getIdTache());
+						if(task!=null) {
 						afectDto.setAffectation(afectTache);
 						afectDto.setRessources(user);
 						afectDto.setAffectation(afectTache);
+						afectDto.setTache(task);
 						affectations.add(afectDto);
+						}
 					}
 				}
 			}

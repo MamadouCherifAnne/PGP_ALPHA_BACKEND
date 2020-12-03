@@ -70,6 +70,7 @@ public interface TacheService {
 	public int nbrTachesEnRetard( Long projetId);
 	
 	public InfoTaches TasksInformation(Long ProjetId);
+
 	
 		
 	// Has acces to the task
@@ -77,5 +78,8 @@ public interface TacheService {
 	
 	// getting the of the tache 
 	public Phase getPhaseDuneTache(Long idTache);
+
+
+
 }
 

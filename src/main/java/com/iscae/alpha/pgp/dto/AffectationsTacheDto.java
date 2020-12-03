@@ -1,11 +1,13 @@
 package com.iscae.alpha.pgp.dto;
 
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
+import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
 public class AffectationsTacheDto {
 	private AffectationUtilisateur affectation;
 	private Utilisateur ressources;
+	private Tache tache;
 	
 	
 	
@@ -24,6 +26,12 @@ public class AffectationsTacheDto {
 	}
 	public void setRessources(Utilisateur ressources) {
 		this.ressources = ressources;
+	}
+	public Tache getTache() {
+		return tache;
+	}
+	public void setTache(Tache tache) {
+		this.tache = tache;
 	}
 	
 	

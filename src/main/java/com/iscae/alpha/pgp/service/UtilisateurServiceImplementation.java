@@ -295,7 +295,8 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		return mestaches;
 		
 	}
-			
+
+	@Override
 	public int getMessageNonLu(String username) {
 		int cmpt = 0;
 		Utilisateur user =this.getUserByUsername(username);
@@ -309,7 +310,6 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			}
 		return cmpt;
 		}
-
 
 
 }
