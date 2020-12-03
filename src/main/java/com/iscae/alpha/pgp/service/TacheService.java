@@ -10,6 +10,7 @@ import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
+import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
 
@@ -52,12 +53,12 @@ public interface TacheService {
 	// Cacul du cout Provisoires selon le temps normale a passer des ressources humaines pour une tache
 	public double calculEstimationCoutTache(Long idTache);
 	
-//  Le cout totales des depenses sur une tache
-		public double getCoutTotaleDepense(Long idTache);
+    //  Le cout totales des depenses sur une tache
+	public double getCoutTotaleDepense(Long idTache);
 
-		//  Get The OWner of the task
-		public String getTheOwner(Long idTache);
-<<<<<<< HEAD
+	//  Get The OWner of the task
+	public String getTheOwner(Long idTache);
+
 	
 	// nbr de Taches EnCours
 	public	int nbrTachesEnCours( Long projetId);
@@ -70,13 +71,11 @@ public interface TacheService {
 	
 	public InfoTaches TasksInformation(Long ProjetId);
 	
+		
+	// Has acces to the task
+	public Long getProject(Long idTache);
 	
-=======
-		
-		// Has acces to the task
-		public Long getProject(Long idTache);
-		
-
->>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
+	// getting the of the tache 
+	public Phase getPhaseDuneTache(Long idTache);
 }
 

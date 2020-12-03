@@ -259,7 +259,6 @@ public class TacheServiceImpl implements TacheService{
 	}
 
 	@Override
-<<<<<<< HEAD
 	public int nbrTachesEnCours(Long projetId) {
 		Projet p = projetService.findProjetById(projetId);
 		int cmpt = 0;
@@ -279,7 +278,7 @@ public class TacheServiceImpl implements TacheService{
 		}
 		return cmpt;
 	}
-=======
+
 	public Long getProject(Long idTache) {
 		// TODO Auto-generated method stub
 		
@@ -291,7 +290,7 @@ public class TacheServiceImpl implements TacheService{
 		return -1L;
 	}
 
->>>>>>> 38a87a1ffcca6a0db3c9eb3866a8e7ae7634dc90
+
 
 	@Override
 	public int nbrTachesTerminees(Long projetId) {
@@ -335,6 +334,14 @@ public class TacheServiceImpl implements TacheService{
 		tacheInfo.setNbrTachesEnRetards(nbrTachesEnRetard(projetId));
 		
 		return tacheInfo;
+	}
+
+	@Override
+	public Phase getPhaseDuneTache(Long idTache) {
+		Tache tache =findTache(idTache);
+		Phase phase = tache.getPhase();
+		
+		return phase;
 	}
 
 
