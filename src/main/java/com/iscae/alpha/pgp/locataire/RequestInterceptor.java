@@ -16,7 +16,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.iscae.alpha.pgp.ConstantDeSecurity;
 import com.iscae.alpha.pgp.TenantContexte;
 
-@Component
+//@Component
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 	private static Logger Log =LoggerFactory.getLogger(RequestInterceptor.class);
 	private static int exportCompt =1; 

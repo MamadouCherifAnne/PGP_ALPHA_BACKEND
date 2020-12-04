@@ -290,6 +290,7 @@ public class TacheServiceImpl implements TacheService{
 		return -1L;
 	}
 
+
 	@Override
 	public int nbrTachesTerminees(Long projetId) {
 		Projet p = projetService.findProjetById(projetId);
@@ -332,6 +333,14 @@ public class TacheServiceImpl implements TacheService{
 		tacheInfo.setNbrTachesEnRetards(nbrTachesEnRetard(projetId));
 		
 		return tacheInfo;
+	}
+
+	@Override
+	public Phase getPhaseDuneTache(Long idTache) {
+		Tache tache =findTache(idTache);
+		Phase phase = tache.getPhase();
+		
+		return phase;
 	}
 
 

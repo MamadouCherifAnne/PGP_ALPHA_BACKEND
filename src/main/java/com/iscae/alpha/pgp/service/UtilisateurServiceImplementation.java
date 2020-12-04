@@ -282,7 +282,6 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 
 
 	@Override
-
 	public List<MonTravail> tasksUser(Long idUser) {
 		List<Tache> userTasks= TacheToRealise(idUser);
 		List<MonTravail> mestaches = new ArrayList<MonTravail>();
@@ -296,9 +295,7 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		return mestaches;
 		
 	}
-		
-		
-		
+
 	@Override
 	public int getMessageNonLu(String username) {
 		int cmpt = 0;

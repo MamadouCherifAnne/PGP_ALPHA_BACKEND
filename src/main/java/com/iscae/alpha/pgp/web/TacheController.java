@@ -192,6 +192,7 @@ public class TacheController {
 		return tacheService.getTheOwner(idTache);
 	}
 	
+
 	@GetMapping("/TasksInformation/{projetId}")
 	public InfoTaches tasksInformation(@PathVariable Long projetId) {
 		return tacheService.TasksInformation(projetId);
@@ -202,5 +203,11 @@ public class TacheController {
 	@GetMapping(value="/getTacheProject/{idTache}")
 	public Long getTacheProject(@PathVariable Long idTache) {
 		return tacheService.getProject(idTache);
+	}
+
+	
+	@GetMapping(value="/getPhaseDuneTache/{idtache}")
+	public Phase getPhaseDuneTache(@PathVariable Long idtache) {
+		return tacheService.getPhaseDuneTache(idtache);
 	}
 }

@@ -215,13 +215,11 @@ public class UtilisateurController {
 			return userService.getMessageNonLu(username);
 		}
 	
-
 		@GetMapping(value="/tasksUser/{userId}")
 		public List<MonTravail> tasksUser(@PathVariable Long userId){
 			return userService.tasksUser(userId);
 		}
 
-	
 	// Get Header
 		public HttpHeaders getHeader() {
 			HttpHeaders header = new HttpHeaders();
