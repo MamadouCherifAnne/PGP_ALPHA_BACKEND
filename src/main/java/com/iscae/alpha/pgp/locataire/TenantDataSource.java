@@ -16,7 +16,7 @@ import com.iscae.alpha.pgp.dao.DataSourceConfigRepository;
 import com.iscae.alpha.pgp.entities.DataSourceConfig;
 
 
-//@Component
+@Component
 
 public class TenantDataSource implements Serializable {
 

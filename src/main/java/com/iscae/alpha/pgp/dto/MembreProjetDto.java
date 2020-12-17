@@ -2,7 +2,9 @@ package com.iscae.alpha.pgp.dto;
 
 import java.util.List;
 
-public class UtilisateurDto {
+public class MembreProjetDto {
+	
+	private Long idUser;
 	
 	private String nom;
 	private String username;
@@ -13,7 +15,7 @@ public class UtilisateurDto {
 	private String company;
 	private boolean actif;
 	private String telephone;
-	private List<String> roles;
+	//private List<String> roles;
 	
 	private String projectRole;
 	
@@ -24,7 +26,7 @@ public class UtilisateurDto {
 	public void setProjectRole(String projectRole) {
 		this.projectRole = projectRole;
 	}
-	public UtilisateurDto() {
+	public MembreProjetDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -82,13 +84,12 @@ public class UtilisateurDto {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public List<String> getRoles() {
-		return roles;
-	}
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
-	
-	
 
+	
+	public Long getIdUser() {
+		return idUser;
+	}
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
 }

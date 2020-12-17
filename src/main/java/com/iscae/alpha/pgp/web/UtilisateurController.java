@@ -206,9 +206,18 @@ public class UtilisateurController {
 		//Afficher les Projets dont lutiliseur est concerne
 		@GetMapping(value="/myProjects/{username}")
 		public List<Projet> getThisUserProject(@PathVariable String username){
+			// return userService.getMyProjects(username);
 			return userService.getMyProjects(username);
 		}
 		
+		// Afficher les projets dont il est membres  
+		
+			@GetMapping(value="/userProjects/{username}")
+			public List<Projet> getProjectsOfUser(@PathVariable String username){
+				
+				return userService.getProjectOfUser(username);
+			}
+			
 		// Afficher les message recu pour un utilisateur
 		@GetMapping(value="/messageNonLus/{username}")
 		public int messageNonLu(@PathVariable String username){

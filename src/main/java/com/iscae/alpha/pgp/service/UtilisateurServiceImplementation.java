@@ -1,6 +1,7 @@
 package com.iscae.alpha.pgp.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -9,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
+import com.iscae.alpha.pgp.dao.ProjectUtilisateursRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
 import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
 import com.iscae.alpha.pgp.entities.Profession;
+import com.iscae.alpha.pgp.entities.ProjectUtilisateurs;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
@@ -36,6 +39,10 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	ProfessionRepository profRepo;
 	@Autowired
 	MailServiceInterface mailService;
+	@Autowired
+	ProjectUtilisateursRepository projUserRepo;
+	@Autowired
+	ProjetService projService;
 	/*@Autowired
 	PasswordEncoder bCryptPasswordEncoder;*/
 	
@@ -310,6 +317,26 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			}
 		return cmpt;
 		}
+
+
+
+	@Override
+	public List<Projet> getProjectOfUser(String username) {
+		Utilisateur user= this.getUserByUsername(username);
+		
+		Collection<ProjectUtilisateurs> myProjectAffect = new ArrayList<>();
+		myProjectAffect = projUserRepo.getUserProjects(user.getIdUser());
+		List<Projet> mesProjets = new ArrayList<>();
+		if(!myProjectAffect.isEmpty()) {
+			for (ProjectUtilisateurs p : myProjectAffect) {
+				Projet projet = projService.findProjetById(p.getIdMembre().getIdProjet());
+				if(projet != null) {
+					mesProjets.add(projet);
+				}
+			}
+		}
+		return mesProjets;
+	}
 
 
 }
