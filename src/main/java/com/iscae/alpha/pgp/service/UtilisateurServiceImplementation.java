@@ -286,14 +286,15 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		List<Tache> userTasks= TacheToRealise(idUser);
 		List<MonTravail> mestaches = new ArrayList<MonTravail>();
 		MonTravail montravail = new MonTravail();
-		for(Tache tache: userTasks) {
-			montravail.setTache(tache);
-			montravail.setPhase(tache.getPhase());
-			montravail.setProjet(tache.getPhase().getProjet());
-			mestaches.add(montravail);
+		if(userTasks != null) {
+			for(Tache tache: userTasks) {
+				montravail.setTache(tache);
+				montravail.setPhase(tache.getPhase());
+				montravail.setProjet(tache.getPhase().getProjet());
+				mestaches.add(montravail);
+			}
 		}
 		return mestaches;
-		
 	}
 
 	@Override
