@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.dto.InfoTaches;
+import com.iscae.alpha.pgp.dto.infoDepenseTache;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
@@ -209,5 +210,10 @@ public class TacheController {
 	@GetMapping(value="/getPhaseDuneTache/{idtache}")
 	public Phase getPhaseDuneTache(@PathVariable Long idtache) {
 		return tacheService.getPhaseDuneTache(idtache);
+	}
+	
+	@GetMapping(value="gettachewithdepenses/{idTache}")
+	public infoDepenseTache gettacheWithDepenses(@PathVariable Long idTache) {
+		return tacheService.getTaskInformationWithDepenses(idTache);
 	}
 }

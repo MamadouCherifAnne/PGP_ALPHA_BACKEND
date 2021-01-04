@@ -39,7 +39,15 @@ public class ProjetServiceImp implements ProjetService{
 	
 	@Override
 	public Projet AddProjet(Projet projet) {
-		return projetRepository.save(projet);
+		Projet project = projetRepository.save(projet);
+		ProjectUtilisateurs membre = new ProjectUtilisateurs();
+		ProjectUserID  idMembre = new ProjectUserID();
+		idMembre.setIdProjet(project.getNumProjet());
+		idMembre.setIdUser(project.getResponsable().getIdUser());
+		membre.setIdMembre(idMembre);
+		membre.setRole("responsable");
+		this.addMembreToProject(membre);
+		return null;
 	}
 
 	@Override
@@ -230,15 +238,21 @@ public class ProjetServiceImp implements ProjetService{
 		}
 
 	@Override
-	public String verifRoleMembre(Long idProject, Long idUser) {
+	public int verifRoleMembre(Long idProject, Long idUser) {
 		//  Verification du role d'un utilisateur  sur un projet
-		String role="client";
+		int role=-1;
 		Collection<MembreProjetDto> membresProject= this.getMembreOfProject(idProject);
-		if(membresProject.size() > 0) {
+		if(membresProject != null && membresProject.size() > 0) {
 			for(MembreProjetDto membre : membresProject) {
-				if(membre.getIdUser() == idUser) {
-					role =membre.getProjectRole();
+				if(membre.getIdUser() == idUser && membre.getProjectRole() != null) {
+					if(membre.getProjectRole().equalsIgnoreCase("collaborateur") || membre.getProjectRole().equalsIgnoreCase("acteur")) {
+					role =1;
 					break;
+					}
+					else if( membre.getProjectRole().equalsIgnoreCase("responsable")){
+						role =2;
+						break;
+					}
 				}
 			}
 		}
@@ -270,6 +284,17 @@ public class ProjetServiceImp implements ProjetService{
 		}
 		return reponse;
 		
+	}
+
+	@Override
+	public Utilisateur getProjectOwner(Long IdProject) {
+		// Afficher le chef du projet 
+		Projet projet = this.findProjetById(IdProject);
+		if(projet != null) {
+			return projet.getResponsable();
+		}else {
+			return null;
+		}
 	}
 	
 

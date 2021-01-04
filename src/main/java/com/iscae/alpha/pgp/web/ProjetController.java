@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.dto.MembreProjetDto;
-import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.ProjectUserID;
 import com.iscae.alpha.pgp.entities.ProjectUtilisateurs;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.CommentaireService;
 import com.iscae.alpha.pgp.service.ProjetServiceImp;
 
@@ -151,8 +151,8 @@ public class ProjetController {
 		
 		// Get the of membre in a project
 		
-		@GetMapping(value="/getRoleInProject/{idProjet}/{idUser}",produces="application/text")
-		public String getRoleInthisProject(@PathVariable(name ="idProjet" ) Long idProjet, @PathVariable(name="idUser") Long idUser) {
+		@GetMapping(value="/getRoleInProject/{idProjet}/{idUser}")
+		public int getRoleInthisProject(@PathVariable(name ="idProjet" ) Long idProjet, @PathVariable(name="idUser") Long idUser) {
 		
 			return projetService.verifRoleMembre(idProjet, idUser);
 		}
@@ -161,6 +161,12 @@ public class ProjetController {
 		@PostMapping(value="/deleteMembre")
 		public boolean deleteMembreOfProject(@RequestBody ProjectUserID idMembre) {
 			return projetService.deleteMembreOfProject(idMembre);
+		}
+		
+		// Afficher le chef du projet par id du projet;
+		@GetMapping(value="/owner/{idProjet}")
+		public Utilisateur getProjectOwner(@PathVariable Long idProjet) {
+			return projetService.getProjectOwner(idProjet);
 		}
 
 }

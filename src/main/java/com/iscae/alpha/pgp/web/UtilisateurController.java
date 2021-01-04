@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import com.iscae.alpha.pgp.ConstantWebApi;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.TacheRepository;
+import com.iscae.alpha.pgp.dto.InfosMessageNonLu;
 import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.dto.Role;
 import com.iscae.alpha.pgp.dto.UtilisateurDto;
@@ -220,7 +221,7 @@ public class UtilisateurController {
 			
 		// Afficher les message recu pour un utilisateur
 		@GetMapping(value="/messageNonLus/{username}")
-		public int messageNonLu(@PathVariable String username){
+		public InfosMessageNonLu messageNonLu(@PathVariable String username){
 			return userService.getMessageNonLu(username);
 		}
 	

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.iscae.alpha.pgp.dto.InfoTaches;
 import com.iscae.alpha.pgp.dto.MonTravail;
+import com.iscae.alpha.pgp.dto.infoDepenseTache;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
@@ -78,8 +79,11 @@ public interface TacheService {
 	
 	// getting the of the tache 
 	public Phase getPhaseDuneTache(Long idTache);
-
+	
+	// afficher la tache avec sa liste d'informations 
+	public infoDepenseTache getTaskInformationWithDepenses(Long idTache);
 
 
 }
 
+	
