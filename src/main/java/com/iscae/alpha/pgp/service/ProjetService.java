@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.iscae.alpha.pgp.dto.MembreProjetDto;
-import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.ProjectUserID;
 import com.iscae.alpha.pgp.entities.ProjectUtilisateurs;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 
 public interface ProjetService {
 
@@ -58,9 +58,12 @@ public interface ProjetService {
 		public Collection<MembreProjetDto> getMembreOfProject(Long id);
 		
 		// Verfier le role d'un membre dans un projet
-		public String verifRoleMembre(Long idProject, Long idUser);
+		public int verifRoleMembre(Long idProject, Long idUser);
 		
 		// Deleting a membre from project
 		public boolean deleteMembreOfProject(ProjectUserID idMembre);
+		
+		// Verifier si c'est le chef de projet;
+		public Utilisateur getProjectOwner(Long IdProject);
 
 }

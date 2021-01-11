@@ -2,6 +2,7 @@ package com.iscae.alpha.pgp.service;
 
 import java.util.List;
 
+import com.iscae.alpha.pgp.dto.InfosMessageNonLu;
 import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.Entreprise;
 import com.iscae.alpha.pgp.entities.Message;
@@ -49,7 +50,7 @@ public interface UtilisateurService {
 	public List<MonTravail> tasksUser(Long idUser);
 
 // Afficher tout les message Reues par un utilisateur
-		public int getMessageNonLu(String username);
+		public InfosMessageNonLu getMessageNonLu(String username);
 
 		// Afficher les projets d'un utilisateur
 		public List<Projet> getProjectOfUser(String username );

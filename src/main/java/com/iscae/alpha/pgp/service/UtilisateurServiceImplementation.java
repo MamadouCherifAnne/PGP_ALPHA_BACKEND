@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.iscae.alpha.pgp.dao.ProfessionRepository;
 import com.iscae.alpha.pgp.dao.ProjectUtilisateursRepository;
 import com.iscae.alpha.pgp.dao.UtilisateurRepository;
+import com.iscae.alpha.pgp.dto.InfosMessageNonLu;
 import com.iscae.alpha.pgp.dto.MonTravail;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Entreprise;
@@ -309,18 +310,23 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	}
 
 	@Override
-	public int getMessageNonLu(String username) {
+	public InfosMessageNonLu getMessageNonLu(String username) {
 		int cmpt = 0;
+		InfosMessageNonLu msgNonLu = new InfosMessageNonLu();
 		Utilisateur user =this.getUserByUsername(username);
+		msgNonLu.setIdUser(user.getIdUser());
 		List<Message> messagesNonLus = new ArrayList<>();
 		if(user !=null && !user.getSendMessages().isEmpty()) {
 		for(Message msg : user.getMessageReceived()) {
 			if(msg.isMessageLu() !=true) {
+				
 				cmpt++;
 				}
 			}
+				msgNonLu.setMsgNonLu(cmpt);
 			}
-		return cmpt;
+		
+		return msgNonLu;
 		}
 
 

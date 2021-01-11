@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.iscae.alpha.pgp.dao.TacheRepository;
 import com.iscae.alpha.pgp.dto.InfoTaches;
 import com.iscae.alpha.pgp.dto.MonTravail;
+import com.iscae.alpha.pgp.dto.infoDepenseTache;
 import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
@@ -393,7 +394,24 @@ public class TacheServiceImpl implements TacheService{
 		return phase;
 	}
 
-	
+
+	@Override
+	public infoDepenseTache getTaskInformationWithDepenses(Long idTache) {
+			// TODO Auto-generated method stub
+			Tache tache = this.findTache(idTache);
+			infoDepenseTache taskInfo = new infoDepenseTache();
+			
+			if(tache!=null) {
+				
+				taskInfo.setIdProjet(tache.getPhase().getProjet().getNumProjet());
+				taskInfo.setTache(tache);
+				double cout = this.getCoutTotaleDepense(tache.getNumTache());
+				taskInfo.setCoutTotaleDepenses(cout);
+				taskInfo.setDepenses(tache.getDepenses());
+				return taskInfo;
+			}
+			return null;
+		}
 
 	
 	
