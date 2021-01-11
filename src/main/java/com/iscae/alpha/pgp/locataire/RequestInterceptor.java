@@ -19,7 +19,7 @@ import com.iscae.alpha.pgp.TenantContexte;
 //@Component
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 	private static Logger Log =LoggerFactory.getLogger(RequestInterceptor.class);
-	
+	private static int exportCompt =1; 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object object) throws Exception {

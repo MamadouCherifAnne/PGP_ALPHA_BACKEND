@@ -204,10 +204,10 @@ public class TacheController {
 	public Long getTacheProject(@PathVariable Long idTache) {
 		return tacheService.getProject(idTache);
 	}
+
 	
 	@GetMapping(value="/getPhaseDuneTache/{idtache}")
 	public Phase getPhaseDuneTache(@PathVariable Long idtache) {
 		return tacheService.getPhaseDuneTache(idtache);
 	}
-
 }

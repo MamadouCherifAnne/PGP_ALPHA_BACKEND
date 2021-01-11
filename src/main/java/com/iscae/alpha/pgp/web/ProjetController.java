@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.web;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iscae.alpha.pgp.dto.MembreProjetDto;
+import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.ProjectUserID;
+import com.iscae.alpha.pgp.entities.ProjectUtilisateurs;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.service.CommentaireService;
-import com.iscae.alpha.pgp.service.CommentaireServiceImpl;
 import com.iscae.alpha.pgp.service.ProjetServiceImp;
 
 @RestController
@@ -129,6 +133,34 @@ public class ProjetController {
 		public Commentaire addCommentOfProject(@RequestBody Commentaire comment) {
 			Log.info("Voici le createur"+comment.getUser().getUsername());
 			return commentService.addComment(comment);
+		}
+		
+		// add membre to project 
+		@PostMapping(value="/addMembreToProject")
+		public boolean addMemebreToProject(@RequestBody ProjectUtilisateurs membre) {
+			Log.info("Ajout d'un  membre avec success");
+			return  projetService.addMembreToProject(membre);
+		}
+		
+		// get the projects membres 
+		@GetMapping(value="/projectMembres/{idProjet}")
+		public Collection<MembreProjetDto> getProjectMembres(@PathVariable Long idProjet){
+			Log.info("Afficher les membres d'un projet");
+			return projetService.getMembreOfProject(idProjet);
+		}
+		
+		// Get the of membre in a project
+		
+		@GetMapping(value="/getRoleInProject/{idProjet}/{idUser}",produces="application/text")
+		public String getRoleInthisProject(@PathVariable(name ="idProjet" ) Long idProjet, @PathVariable(name="idUser") Long idUser) {
+		
+			return projetService.verifRoleMembre(idProjet, idUser);
+		}
+		
+		// Delete membre of the project 
+		@PostMapping(value="/deleteMembre")
+		public boolean deleteMembreOfProject(@RequestBody ProjectUserID idMembre) {
+			return projetService.deleteMembreOfProject(idMembre);
 		}
 
 }

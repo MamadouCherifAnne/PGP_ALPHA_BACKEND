@@ -1,6 +1,7 @@
 package com.iscae.alpha.pgp.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -9,11 +10,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iscae.alpha.pgp.dao.ProjectUtilisateursRepository;
 import com.iscae.alpha.pgp.dao.ProjetRepository;
+import com.iscae.alpha.pgp.dto.MembreProjetDto;
+import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.ProjectUserID;
+import com.iscae.alpha.pgp.entities.ProjectUtilisateurs;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 
 
 @Service 
@@ -24,6 +31,10 @@ public class ProjetServiceImp implements ProjetService{
 	ProjetRepository projetRepository;
 	@Autowired 
 	CommentaireService commentService;
+	@Autowired
+	UtilisateurService userService;
+	@Autowired
+	ProjectUtilisateursRepository projetMembreRepo;
 
 	
 	@Override
@@ -174,6 +185,93 @@ public class ProjetServiceImp implements ProjetService{
 		
 		return comments;
 	}
+
+	@Override
+	public boolean addMembreToProject(ProjectUtilisateurs membreProjet) {
+		// TODO Auto-generated method stub
+		ProjectUtilisateurs projetMembre = new ProjectUtilisateurs();
+		ProjectUserID projectMembreId = new ProjectUserID();
+		
+		if(membreProjet.getIdMembre().getIdProjet() != null && membreProjet.getIdMembre().getIdUser() != null) {
+			projetMembreRepo.save(membreProjet);
+			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public Collection<MembreProjetDto> getMembreOfProject(Long id) {
+		// TODO Auto-generated method stub
+		Collection<MembreProjetDto> membres = new ArrayList<>();
+		List<ProjectUtilisateurs> projetMembres = new ArrayList<>();
+		projetMembres = projetMembreRepo.getProjectsMembres(id);
+		if(projetMembres != null) {
+				for(ProjectUtilisateurs projetMembre : projetMembres ) {
+					Utilisateur user = userService.getUserById(projetMembre.getIdMembre().getIdUser());
+					MembreProjetDto userDto = new MembreProjetDto();
+					
+					userDto.setIdUser(user.getIdUser());
+					userDto.setUsername(user.getUsername());
+					userDto.setNom(user.getNom());
+					userDto.setPrenom(user.getPrenom());
+					userDto.setActif(false);
+					userDto.setTelephone(user.getTelephone());
+					userDto.setEmail(user.getEmail());
+					userDto.setAdresse(user.getAdresse());
+					userDto.setCompany(user.getCompany());
+					userDto.setProjectRole(projetMembre.getRole());
+					membres.add(userDto);
+				}
+				
+			}
+		
+			return membres;
+		}
+
+	@Override
+	public String verifRoleMembre(Long idProject, Long idUser) {
+		//  Verification du role d'un utilisateur  sur un projet
+		String role="client";
+		Collection<MembreProjetDto> membresProject= this.getMembreOfProject(idProject);
+		if(membresProject.size() > 0) {
+			for(MembreProjetDto membre : membresProject) {
+				if(membre.getIdUser() == idUser) {
+					role =membre.getProjectRole();
+					break;
+				}
+			}
+		}
+		return role;
+		
+	}
+
+	@Override
+	public boolean deleteMembreOfProject(ProjectUserID idMembre) {
+		boolean reponse = false;
+		boolean isAffectedToTach = false;
+		// suppression d'un membre dans le projet
+		Utilisateur user= userService.getUserById(idMembre.getIdUser());
+		if(user != null) {
+			List<Projet> projectsUser = userService.getMyProjects(user.getUsername());
+			if(projectsUser != null && !projectsUser.isEmpty()) {
+				for (Projet projet : projectsUser) {
+					if(projet.getNumProjet() == idMembre.getIdProjet()) {
+						isAffectedToTach = true;
+						break;
+					}
+				}
+			}
+			// Verifier si l'utilisateur  n'est pas lier a une tache dans ce projet
+			if(isAffectedToTach == false) {
+				projetMembreRepo.deleteById(idMembre);
+				reponse = true;
+			}
+		}
+		return reponse;
+		
+	}
+	
 
 
 }

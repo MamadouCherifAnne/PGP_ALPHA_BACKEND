@@ -50,5 +50,7 @@ public interface UtilisateurService {
 
 // Afficher tout les message Reues par un utilisateur
 		public int getMessageNonLu(String username);
-		
+
+		// Afficher les projets d'un utilisateur
+		public List<Projet> getProjectOfUser(String username );
 }

@@ -1,5 +1,7 @@
 package com.iscae.alpha.pgp.dto;
 
+import java.util.List;
+
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
@@ -22,7 +24,16 @@ public class MonTravail {
 		this.phase = phase;
 	}
 
-
+	public void listMontravail(List<MonTravail> malist){
+		
+		for(MonTravail el: malist) {
+			System.out.println("-------------------");
+			System.out.println("tache: "+el.tache+"numTache: "+el.tache.getNumTache()+",phase: "+el.phase+",projet: "+el.projet+"\n");
+			System.out.println("------------------");
+		}
+		
+	}
+	
 	public Tache getTache() {
 		return tache;
 	}

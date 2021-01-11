@@ -55,7 +55,7 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 			mail.setTo(to);
 			mail.setSubject("Affectation à une tache");
 			mail.setBody("Vous avez été affecter une  tache.\n Voici le Lien "+"http://localhost:4200/task/"+idAffect.getIdTache());
-			affect = userForJobRepo.save(userForJob); 
+			affect = userForJobRepo.save(userForJob);
 			mailService.SendMessage(mail);
 			return affect;
 		}
@@ -171,8 +171,9 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 		Date today = new Date(System.currentTimeMillis());
 		log.info("La date d'hier"+limiteDate+" La date de today is"+today);
 		Utilisateur user = userService.getUserByUsername(username);
+		Collection<AffectationsTacheDto> affectations = new ArrayList<>();
 		if(user!= null) {
-		 Collection<AffectationsTacheDto> affectations = new ArrayList<>();
+		 
 			if(userForJobRepo.getAffectationsByUtilisateur(user.getIdUser())!=null) {
 				List<AffectationUtilisateur> taskAffects = userForJobRepo.getAffectationsByUtilisateur(user.getIdUser());
 				// J'applique une sorte de formatage pour l'approprier a l'affichage
@@ -192,9 +193,9 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 				}
 			}
 			log.info("Les taches dont il est affecter avant 23 jours sont "+affectations.size());
-			return affectations;
+			
 		}
-		return null;
+		return affectations;
 	}
 
 }

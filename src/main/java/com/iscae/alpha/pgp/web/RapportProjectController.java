@@ -2,54 +2,33 @@ package com.iscae.alpha.pgp.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iscae.alpha.pgp.service.RapportProjectServiceImp;
 
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRTemplate;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.export.HtmlExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.engine.util.JRSaver;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.engine.xml.JRXmlTemplateLoader;
-import net.sf.jasperreports.export.ExporterInput;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-import net.sf.jasperreports.export.SimplePdfReportConfiguration;
 
 @RestController
 @RequestMapping("/rapport")
@@ -59,6 +38,8 @@ public class RapportProjectController {
 	@Autowired
 	private RapportProjectServiceImp rapportService;
 	private Path fileStorageLocation;
+	
+	private static final Logger log = LoggerFactory.getLogger(RapportProjectController.class);
 	
     
 	@GetMapping("/projet/{projetId}")
@@ -92,14 +73,16 @@ public class RapportProjectController {
 	@GetMapping("/export/{projetId}")
 	public void exportDailyOrders(@PathVariable  Long projetId, HttpServletResponse httpServletResponse) throws IOException, JRException {
 	    byte[] dailyOrdersBytes = exportDailyOrders(projetId);
+	    log.info("Fin DU CHARGEMENT DES TACHES DU PROJET PAR EXPORTDAILY");
 	    ByteArrayOutputStream out = new ByteArrayOutputStream(dailyOrdersBytes.length);
 	    out.write(dailyOrdersBytes, 0, dailyOrdersBytes.length);
-
+	    log.info("METTRE LE TYPE DE FICHIER EN PDF");
 	    httpServletResponse.setContentType("application/pdf");
 	    httpServletResponse.addHeader("Content-Disposition", "inline; filename=dailyOrdersReport.pdf");
 
 	    OutputStream os;
 	    try {
+	    	log.info("CONFIGURATION DU SYSTEME DE FICHIER OUTPUTSTREAM");
 	        os = httpServletResponse.getOutputStream();
 	        out.writeTo(os);
 	        os.flush();
@@ -114,8 +97,10 @@ public class RapportProjectController {
 	
 	public byte[] exportDailyOrders(Long projetId) throws IOException, JRException {
 	    
+		log.info("ENTRER DANS LA METHODE DE EXPORTDAILY DE RAPPORT");
 	    File file = ResourceUtils.getFile("classpath:rapportprotect.jrxml");
 	    JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+	    log.info("RECUPERATION DES TACHES DU PROJET RAPPORTSERVICE");
 	    final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.reportProjet(projetId));
 	    Map<String, Object> parameters = new HashMap<>();
 	    parameters.put("createdBy", "Nikola");

@@ -134,7 +134,7 @@
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Avansement de la tache]]></text>
+				<text><![CDATA[Avancement de la tache]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="0" width="60" height="20" uuid="1d318d7f-d45f-429b-b8d3-e7b1058aa83c"/>

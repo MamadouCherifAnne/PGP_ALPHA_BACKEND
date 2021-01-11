@@ -1,10 +1,15 @@
 package com.iscae.alpha.pgp.service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.iscae.alpha.pgp.dto.MembreProjetDto;
+import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
+import com.iscae.alpha.pgp.entities.ProjectUserID;
+import com.iscae.alpha.pgp.entities.ProjectUtilisateurs;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
 
@@ -45,5 +50,17 @@ public interface ProjetService {
 	
 	// Afficher toutes les commentaires sur un projet
 		public List<Commentaire> allCommentsOfProject(Long idProjet);
+		
+		// Add membre dans un projet
+		public boolean addMembreToProject(ProjectUtilisateurs membreProjet);
+		
+		// Get The membre of project 
+		public Collection<MembreProjetDto> getMembreOfProject(Long id);
+		
+		// Verfier le role d'un membre dans un projet
+		public String verifRoleMembre(Long idProject, Long idUser);
+		
+		// Deleting a membre from project
+		public boolean deleteMembreOfProject(ProjectUserID idMembre);
 
 }

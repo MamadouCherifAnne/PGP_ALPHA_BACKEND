@@ -263,19 +263,22 @@ public class TacheServiceImpl implements TacheService{
 		Projet p = projetService.findProjetById(projetId);
 		int cmpt = 0;
 		Date now = new Date();
-		for(Phase phase: p.getPhases()) {
-			System.err.println("La liste des phases"+phase);
-			for(Tache tache: phase.getTache()) {
-				Log.info("date de debut tache"+tache.getDebutTache());
-				Log.info("date de fin tache"+tache.getFinTache());
-				Log.info("taux d'avencement"+tache.getTauxAvancement());
-				
-				if((tache.getDebutTache().before(now) || tache.getDebutTache() == now) && tache.getFinTache().after(now) && tache.getTauxAvancement() != 100) {
-					cmpt = cmpt + 1;
+		if(p != null) {
+			for(Phase phase: p.getPhases()) {
+				System.err.println("La liste des phases"+phase);
+				for(Tache tache: phase.getTache()) {
+					Log.info("date de debut tache"+tache.getDebutTache());
+					Log.info("date de fin tache"+tache.getFinTache());
+					Log.info("taux d'avencement"+tache.getTauxAvancement());
+					
+					if((tache.getDebutTache().before(now) || tache.getDebutTache() == now) && tache.getFinTache().after(now) && tache.getTauxAvancement() != 100) {
+						cmpt = cmpt + 1;
+					}
 				}
+					
 			}
-				
 		}
+		
 		return cmpt;
 	}
 
@@ -290,40 +293,84 @@ public class TacheServiceImpl implements TacheService{
 		return -1L;
 	}
 
-
+	//nombres de taches terminés
 	@Override
 	public int nbrTachesTerminees(Long projetId) {
 		Projet p = projetService.findProjetById(projetId);
 		int cmpt = 0;
-		for(Phase phase: p.getPhases()) {
-			System.err.println("La liste des phases"+phase);
-			for(Tache tache: phase.getTache()) {
-				if(tache.getTauxAvancement() == 100) {
-					cmpt = cmpt + 1;
-				}
-			}
-				
-		}
-		return cmpt;
-	}
-
-	@Override
-	public int nbrTachesEnRetard(Long projetId) {
-		Projet p = projetService.findProjetById(projetId);
-		   int cmpt = 0;
-		   Date now = new Date();
-		   for(Phase phase: p.getPhases()) {
+		if(p != null) {
+			for(Phase phase: p.getPhases()) {
 				System.err.println("La liste des phases"+phase);
 				for(Tache tache: phase.getTache()) {
-					Log.info("date now"+now);
-					if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) {
+					if(tache.getTauxAvancement() == 100 && isFinished(tache) == 0) {
 						cmpt = cmpt + 1;
 					}
 				}
 					
 			}
+		}
+		
+		return cmpt;
+	}
+	
+	//...........................................
+	  public int isFinished(Tache tache){
+		    int find = 0;
+		    if(tache.getTachePrecedente() != null){
+		      for(Tache itache : tache.getTachePrecedente()){
+		        if(itache.getTauxAvancement() != 100){
+		          find = 1;
+		          break;
+		        }
+		      }
+		    }
+		    //System.out.println("-------------"+find);
+		    return find;
+		  }
+	//...........................................
+
+	//nombres de taches en retard
+	@Override
+	public int nbrTachesEnRetard(Long projetId) {
+		Projet p = projetService.findProjetById(projetId);
+		   int cmpt = 0;
+		   Date now = new Date();
+		   if(p != null) {
+			   for(Phase phase: p.getPhases()) {
+					System.err.println("La liste des phases"+phase);
+					for(Tache tache: phase.getTache()) {
+						Log.info("date now"+now);
+						if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) {
+							cmpt = cmpt + 1;
+						}
+					}
+						
+				}
+		   }
+		   
 			return cmpt;
 	}
+	
+	//nombres de taches A venir 
+	@Override
+	public int nbrTachesAvenir(Long projetId) {
+		Projet p = projetService.findProjetById(projetId);
+		int cmpt = 0;
+		Date now = new Date();
+		if(p != null) {
+			for(Phase phase: p.getPhases()) {
+				System.err.println("La liste des phases"+phase);
+				for(Tache tache: phase.getTache()) {
+					Log.info("date now"+now);
+					if(tache.getDebutTache().after(now)) {
+						cmpt = cmpt + 1;
+					}
+				}
+			}	
+		}
+		return cmpt;
+	}
+
 	
 	@Override
 	public InfoTaches TasksInformation(Long projetId) {
@@ -331,18 +378,22 @@ public class TacheServiceImpl implements TacheService{
 		tacheInfo.setNbrTachesEnCours(nbrTachesEnCours(projetId));
 		tacheInfo.setNbrTacesTerminees(nbrTachesTerminees(projetId));
 		tacheInfo.setNbrTachesEnRetards(nbrTachesEnRetard(projetId));
+		tacheInfo.setNbrTachesAvenir(nbrTachesAvenir(projetId)); 
 		
 		return tacheInfo;
 	}
 
 	@Override
 	public Phase getPhaseDuneTache(Long idTache) {
-		Tache tache =findTache(idTache);
-		Phase phase = tache.getPhase();
-		
+		Phase phase  = new Phase();
+		Tache tache = this.findTache(idTache);
+		if(tache != null) {
+			 phase = tache.getPhase();
+		}
 		return phase;
 	}
 
+	
 
 	
 	

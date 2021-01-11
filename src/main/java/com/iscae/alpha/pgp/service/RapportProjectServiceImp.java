@@ -23,6 +23,7 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 	
 	private PhaseServiceImp phaseService;
 
+	//raport des taches d'un projet 
 	@Override
 	public List<Map<String, Object>> reportProjet(Long projetId) {
 		 Projet p = projetService.findProjetById(projetId);
@@ -39,7 +40,7 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 			 for(Tache tache: phase.getTache()) {
 				 if(!(tache.getFinTache()==null)) {
 				 //String statut = "demarée";
-				 if(tache.getTauxAvancement() == 100) { statut = "Termée";}
+				 if(tache.getTauxAvancement() == 100 && isFinished(tache) == 0) { statut = "Termée";}
 				 if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) { statut = "En retard";}
 				 if(tache.getDebutTache().before(now) && tache.getFinTache().after(now) &&tache.getTauxAvancement() != 100) {
 					 statut = "En cours";
@@ -59,6 +60,20 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 		 
 		return result;
 	}
+	
+	 public int isFinished(Tache tache){
+		    int find = 0;
+		    if(tache.getTachePrecedente() != null){
+		      for(Tache itache : tache.getTachePrecedente()){
+		        if(itache.getTauxAvancement() != 100){
+		          find = 1;
+		          break;
+		        }
+		      }
+		    }
+		    System.out.println("-------------"+find);
+		    return find;
+		  }
 
 	@Override
 	public List<Map<String, Object>> rapportPhase(Long phaseId) {
