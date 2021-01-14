@@ -24,6 +24,7 @@ public class AuthentificationController {
 	@PostMapping(value="/login", consumes = {"application/json"})
 	public AuthResponse authentification(@RequestBody Utilisateur user) {
 		String url = "http://localhost:8090/authenticate/login";
+		System.out.println("Les DONNEES DE USER CONNECTED ####"+ user.getUsername()+" %%%"+user.getPassword());
 		final AuthResponse responseBody = restTemplate.postForObject(url, user, AuthResponse.class);
 		
 		return responseBody;

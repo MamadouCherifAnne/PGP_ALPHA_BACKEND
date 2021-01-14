@@ -26,8 +26,10 @@ public class MasterTenantController {
 		if(ds == null) {
 			return "Le compte n'a pas pu être créer! contactez le service Client";
 			
+		}else {
+			return "Votre espace de travail va être configurer. vous allez recevoir un mail de confirmation, merci de patienter!";
+	
 		}
-		return "Votre espace de travail va être configurer. vous allez recevoir un mail de confirmation, merci de patienter!";
 	}
 	
 }

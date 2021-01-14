@@ -289,19 +289,24 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 
 
 
+	// Afficher les taches a realiser par un seul utilisateur
 	@Override
 	public List<MonTravail> tasksUser(Long idUser) {
 		List<Tache> userTasks= TacheToRealise(idUser);
 		List<MonTravail> mestaches = new ArrayList<MonTravail>();
-		MonTravail montravail = new MonTravail();
-		for(Tache tache: userTasks) {
-			montravail.setTache(tache);
-			montravail.setPhase(tache.getPhase());
-			montravail.setProjet(tache.getPhase().getProjet());
-			mestaches.add(montravail);
-		}
-		return mestaches;
 		
+		MonTravail l = new MonTravail();
+		if(userTasks != null) {
+			for(Tache tache: userTasks) {
+				MonTravail montravail = new MonTravail();
+				montravail.setTache(tacheService.findTache(tache.getNumTache()));
+				montravail.setPhase(tache.getPhase());
+				montravail.setProjet(tache.getPhase().getProjet());
+				mestaches.add(montravail);
+			}
+		}
+		l.listMontravail(mestaches);
+		return mestaches;
 	}
 
 	@Override

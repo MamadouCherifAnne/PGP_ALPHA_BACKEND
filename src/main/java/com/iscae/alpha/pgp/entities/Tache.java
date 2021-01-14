@@ -30,7 +30,7 @@ public class Tache implements Serializable {
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO )
 	@Column(name="num_tache")
-	private Long numTache;
+	private Long numTache; 
 	
 	@Column(name="nom_tache")
 	private String nomTache;

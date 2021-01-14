@@ -225,6 +225,7 @@ public class UtilisateurController {
 			return userService.getMessageNonLu(username);
 		}
 	
+		//recupere le projet, la phase et la tache de toutes les taches d'un user
 		@GetMapping(value="/tasksUser/{userId}")
 		public List<MonTravail> tasksUser(@PathVariable Long userId){
 			return userService.tasksUser(userId);

@@ -70,6 +70,9 @@ public interface TacheService {
 	// nbr de taches en retard
 	public int nbrTachesEnRetard( Long projetId);
 	
+	//nombres de taches à venir 
+	public int nbrTachesAvenir(Long projetId);
+	
 	public InfoTaches TasksInformation(Long ProjetId);
 
 	

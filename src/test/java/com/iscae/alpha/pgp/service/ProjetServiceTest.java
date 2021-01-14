@@ -29,7 +29,7 @@ class ProjetServiceTest {
 	@Test
 	public void AddProjetTest() {
 		Projet projet = new Projet();
-
+  
 		projet.setNumProjet(1L);
 		projet.setDebutProjet(null);
 		projet.setFinProjet(null);
