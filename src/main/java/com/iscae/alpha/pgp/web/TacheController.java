@@ -212,8 +212,13 @@ public class TacheController {
 		return tacheService.getPhaseDuneTache(idtache);
 	}
 	
-	@GetMapping(value="gettachewithdepenses/{idTache}")
+	@GetMapping(value="/{idTache}")
 	public infoDepenseTache gettacheWithDepenses(@PathVariable Long idTache) {
 		return tacheService.getTaskInformationWithDepenses(idTache);
+	}
+	
+	@DeleteMapping(value="/deleteDepense/{idDepense}")
+	public boolean deleteDepenseOfTask(@PathVariable Long idDepense) {
+		return this.depenseService.deleteDepense(idDepense);
 	}
 }
