@@ -197,8 +197,7 @@ public class TacheController {
 
 	@GetMapping("/TasksInformation/{projetId}")
 	public InfoTaches tasksInformation(@PathVariable Long projetId) {
-		return tacheService.TasksInformation(projetId);
-				
+		return tacheService.TasksInformation(projetId);		
 	}
 	
 
@@ -213,13 +212,19 @@ public class TacheController {
 		return tacheService.getPhaseDuneTache(idtache);
 	}
 	
-	@GetMapping(value="gettachewithdepenses/{idTache}")
+	@GetMapping(value="/{idTache}")
 	public infoDepenseTache gettacheWithDepenses(@PathVariable Long idTache) {
 		return tacheService.getTaskInformationWithDepenses(idTache);
 	}
 	
+
 	@GetMapping(value="getFiles/{idTache}")
 	public List<Fichier> getFiles(@PathVariable Long idTache) {
 		return tacheService.getFiles(idTache);
+	}
+
+	@DeleteMapping(value="/deleteDepense/{idDepense}")
+	public boolean deleteDepenseOfTask(@PathVariable Long idDepense) {
+		return this.depenseService.deleteDepense(idDepense);
 	}
 }

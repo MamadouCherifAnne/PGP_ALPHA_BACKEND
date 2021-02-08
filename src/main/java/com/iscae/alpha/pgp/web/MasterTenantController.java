@@ -24,10 +24,12 @@ public class MasterTenantController {
 		ds =masterTenantservice.addNewLocataire(tenantDS.getName(), tenantDS.getUrl(), tenantDS.getDriverClassName(), 
 				tenantDS.getUrl(), tenantDS.getPassword());
 		if(ds == null) {
-			return "Le compte n'a pas pu etre creer verifier le service CLient";
+			return "Le compte n'a pas pu être créer! contactez le service Client";
 			
+		}else {
+			return "Votre espace de travail va être configurer. vous allez recevoir un mail de confirmation, merci de patienter!";
+	
 		}
-		return "Zone de Location a été creer avec succes contacter votre fournisseur";
 	}
 	
 }

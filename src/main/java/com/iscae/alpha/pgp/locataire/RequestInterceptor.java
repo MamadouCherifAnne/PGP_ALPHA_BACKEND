@@ -16,7 +16,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.iscae.alpha.pgp.ConstantDeSecurity;
 import com.iscae.alpha.pgp.TenantContexte;
 
-//@Component
+@Component
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 	private static Logger Log =LoggerFactory.getLogger(RequestInterceptor.class);
 	private static int exportCompt =1; 
@@ -27,10 +27,14 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         System.out.println("____________________________________________");
          String tenantID = request.getHeader("Authorization");
         String requestURI = request.getRequestURI();
-         if( requestURI.equals("/authenticate/login")) {
+        
+        Log.info("VOICI LE REQUEST URI DE LAUTHENTIFICATION "+requestURI);
+        // implementer en mode production :  if( requestURI.equals("/alfapgpcollaboratif/authenticate/login"))
+        if( requestURI.equals("/authenticate/login")) {
         	 
         	 tenantID="alfaconseiltenantbd";
          }
+        // implementer en mode production :  if(!requestURI.equals("/alfapgpcollaboratif/authenticate/login"))
          if(!requestURI.equals("/authenticate/login")) {
         	// S'il s'agit d'une autre type de requete on essaye d'interpreter la Key jwt
 				String jwtToken = request.getHeader(ConstantDeSecurity.HEADER_STRING);

@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 public class AuthResponse implements Serializable {
 	
 	@JsonSetter
@@ -23,7 +23,6 @@ public class AuthResponse implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	public AuthResponse(String userName, String token) {
         this.userName = userName;
         this.token = token;

@@ -16,7 +16,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 
-//@Configuration
+@Configuration
 public class HibernatePropertiesConfig {
 
     @Autowired
