@@ -230,7 +230,22 @@ public class UtilisateurController {
 		public List<MonTravail> tasksUser(@PathVariable Long userId){
 			return userService.tasksUser(userId);
 		}
+		
+		@GetMapping(value="/listOfprojetEncours/{username}")
+		public List<Projet> listOfprojetEncours(@PathVariable String username){
+			return userService.getProjetsEncours(username);
+		}
+		
+		@GetMapping(value="/listOfprojetEnRetard/{username}")
+		public List<Projet> listOfprojetEnRetard(@PathVariable String username){
+			return userService.getProjetEnretard(username);
+		}
 
+		@GetMapping(value="/listOfprojetTermines/{username}")
+		public List<Projet> listOfprojetTermines(@PathVariable String username){
+			return userService.getProjetTermines(username);
+		}
+		
 	// Get Header
 		public HttpHeaders getHeader() {
 			HttpHeaders header = new HttpHeaders();

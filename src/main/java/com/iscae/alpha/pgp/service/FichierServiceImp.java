@@ -2,6 +2,7 @@ package com.iscae.alpha.pgp.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.iscae.alpha.pgp.dao.FichierRepository;
 import com.iscae.alpha.pgp.entities.Fichier;
+import com.iscae.alpha.pgp.entities.Tache;
 
 @Service
 public class FichierServiceImp implements FichierService {
@@ -30,8 +32,22 @@ public class FichierServiceImp implements FichierService {
 
 	@Override
 	public Fichier fidById(Long idFichier) {
-		// TODO Auto-generated method stub
-		return fichierRepository.findById(idFichier).get();
+		Optional<Fichier> file = fichierRepository.findById(idFichier);
+		if(file.isPresent()) {
+			return file.get();
+		}else {
+			return null;
+		}
 	}
+
+	@Override
+	public boolean deleteFile(Long idFichier) {
+		Fichier file = fidById(idFichier);
+		if(file != null ) {
+			fichierRepository.delete(file);
+			return true;
+		}
+		return false;
+	}	
 
 }

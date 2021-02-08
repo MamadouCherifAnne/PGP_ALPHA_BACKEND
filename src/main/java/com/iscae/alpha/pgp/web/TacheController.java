@@ -20,6 +20,7 @@ import com.iscae.alpha.pgp.dto.infoDepenseTache;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
+import com.iscae.alpha.pgp.entities.Fichier;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
@@ -215,5 +216,10 @@ public class TacheController {
 	@GetMapping(value="gettachewithdepenses/{idTache}")
 	public infoDepenseTache gettacheWithDepenses(@PathVariable Long idTache) {
 		return tacheService.getTaskInformationWithDepenses(idTache);
+	}
+	
+	@GetMapping(value="getFiles/{idTache}")
+	public List<Fichier> getFiles(@PathVariable Long idTache) {
+		return tacheService.getFiles(idTache);
 	}
 }

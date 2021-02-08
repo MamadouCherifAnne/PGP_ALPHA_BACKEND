@@ -65,5 +65,11 @@ public interface ProjetService {
 		
 		// Verifier si c'est le chef de projet;
 		public Utilisateur getProjectOwner(Long IdProject);
+		
+		public int getMyProjectsActifs(String username);
+		
+		public int getMyProjectsEnretards(String username);
+		
+		public int getMyProjectsTermines(String username);
 
 }

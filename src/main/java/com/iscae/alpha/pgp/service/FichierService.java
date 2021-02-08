@@ -18,4 +18,7 @@ public interface FichierService {
 	//recuperer un fichier par son id
 	Fichier fidById(Long idFichier);
 	
+	//supprimer un fichier
+	boolean deleteFile(Long idFichier);
+	
 }

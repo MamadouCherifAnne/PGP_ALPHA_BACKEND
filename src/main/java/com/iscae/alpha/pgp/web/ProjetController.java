@@ -4,6 +4,19 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.compress.utils.IOUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,11 +175,46 @@ public class ProjetController {
 		public boolean deleteMembreOfProject(@RequestBody ProjectUserID idMembre) {
 			return projetService.deleteMembreOfProject(idMembre);
 		}
-		
+//.....................................................................................
+//..................................................................................
 		// Afficher le chef du projet par id du projet;
 		@GetMapping(value="/owner/{idProjet}")
 		public Utilisateur getProjectOwner(@PathVariable Long idProjet) {
 			return projetService.getProjectOwner(idProjet);
 		}
 
+		@GetMapping(value="/getprojetsActifs/{username}")
+		public int getprojetsActifs(@PathVariable String username) {
+			return  projetService.getMyProjectsActifs(username);
+		}
+		
+		@GetMapping(value="/getprojetsEnretard/{username}")
+		public int getprojetsEnretard(@PathVariable String username) {
+			return  projetService.getMyProjectsEnretards(username);
+		}
+		
+		@GetMapping(value="/getprojetTermines/{username}")
+		public int getprojetsTermines(@PathVariable String username) {
+			return projetService.getMyProjectsTermines(username);
+		}
+		
+		//exportation vers Excel
+		@GetMapping("/download/csv/{idProjet}")
+	    public void downloadCsv(HttpServletResponse response, @PathVariable Long idProjet) throws IOException {
+			Projet projet = projetService.findProjetById(idProjet);
+	        response.setContentType("application/octet-stream");
+	        response.setHeader("Content-Disposition", "attachment; filename=projet.xlsx");
+	        ByteArrayInputStream stream = projetService.exportProjet(projet);
+	        IOUtils.copy(stream, response.getOutputStream());
+	    }
+		
+		//exportation vers Excel
+		@GetMapping("/download/Excel/{idProjet}")
+		public void downloadExcel(HttpServletResponse response, @PathVariable Long idProjet) throws IOException {
+			Projet projet = projetService.findProjetById(idProjet);
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment; filename=projet.xlsx");
+			ByteArrayInputStream stream = projetService.exportProjet(projet);
+			IOUtils.copy(stream, response.getOutputStream());
+		}
 }

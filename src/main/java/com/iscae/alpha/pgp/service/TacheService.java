@@ -11,6 +11,7 @@ import com.iscae.alpha.pgp.dto.infoDepenseTache;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
+import com.iscae.alpha.pgp.entities.Fichier;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Tache;
 import com.iscae.alpha.pgp.entities.Utilisateur;
@@ -85,6 +86,9 @@ public interface TacheService {
 	
 	// afficher la tache avec sa liste d'informations 
 	public infoDepenseTache getTaskInformationWithDepenses(Long idTache);
+	
+	//liste des fichier d'une tache
+	public List<Fichier> getFiles(Long idTache);
 
 
 }
