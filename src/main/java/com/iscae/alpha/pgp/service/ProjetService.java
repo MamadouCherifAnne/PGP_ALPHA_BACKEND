@@ -65,5 +65,11 @@ public interface ProjetService {
 		
 		// Verifier si c'est le chef de projet;
 		public Utilisateur getProjectOwner(Long IdProject);
+		
+		// Afficher le cout  total d'un projet
+		public double coutTotalProject(Long idProject);
+		
+		// Afficher le cout total d'un projet dans les 6 derniers mois;
+		public double coutProjectLastMonth(Long idProject);
 
 }

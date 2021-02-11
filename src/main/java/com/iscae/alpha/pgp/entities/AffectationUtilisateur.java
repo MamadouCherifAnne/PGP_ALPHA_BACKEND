@@ -25,9 +25,9 @@ public class AffectationUtilisateur implements Serializable {
 	private double tempsEffectuer;
 	@Column(name ="cout_par_heure")
 	private double coutParHeure;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="date_affectation",nullable=false)
-	private Date dateAffectation;
+	//@Temporal(TemporalType.TIMESTAMP)
+	//@Column(name="date_affectation",nullable=false)
+	//private Date dateAffectation;
 	public AffectationUtilisateur() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -39,18 +39,18 @@ public class AffectationUtilisateur implements Serializable {
 		this.tempsPasser = tempsPasser;
 		this.tempsEffectuer =tempsEffectuer;
 		this.coutParHeure =coutParHeure;
-		this.dateAffectation =dateAffectation;
+		//this.dateAffectation =dateAffectation;
 	}
 	
 	
 	
-	public Date getDateAffectation() {
+	/*public Date getDateAffectation() {
 		return dateAffectation;
-	}
+	}*/
 
-	public void setDateAffectation(Date dateAffectation) {
+	/*public void setDateAffectation(Date dateAffectation) {
 		this.dateAffectation = dateAffectation;
-	}
+	}*/
 
 	public double getCoutParHeure() {
 		return coutParHeure;

@@ -413,6 +413,18 @@ public class TacheServiceImpl implements TacheService{
 			return null;
 		}
 
+	@Override
+	public double totalCoutTask(Long idTache) {
+		// Total de scout de la taches
+		double totale=0;
+		Tache tache = this.findTache(idTache);
+		if(tache != null) {
+			totale = this.calculCoutRessourcesOfTask(idTache) + this.getCoutTotaleDepense(idTache);
+		}
+
+		return totale;
+	}
+
 	
 	
 }

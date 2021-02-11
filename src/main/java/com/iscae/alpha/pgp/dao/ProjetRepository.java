@@ -26,6 +26,5 @@ public interface ProjetRepository extends JpaRepository<Projet, Long> {
 	@Query("Select task FROM Tache task, Projet p WHERE p.numProjet=?1 AND task.phase.projet.numProjet = p.numProjet AND task.type='Jalon'")
 	public List<Tache> allProjectJalons(Long numProjet);
 	
-	
 	// Tout les utilistaeur
 }
