@@ -70,7 +70,7 @@ public class Tache implements Serializable {
 	private List<Depense> depenses;
 	
 	@JsonManagedReference(value="fichier-tache")
-	@OneToMany(mappedBy = "tacheConcerne")
+	@OneToMany(mappedBy = "tacheConcerne", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Fichier> fichiers;
 	
 	//Commnetaire de tache

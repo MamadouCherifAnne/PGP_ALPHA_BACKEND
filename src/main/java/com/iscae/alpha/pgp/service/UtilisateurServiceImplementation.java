@@ -3,6 +3,7 @@ package com.iscae.alpha.pgp.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -347,6 +348,73 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 			}
 		}
 		return mesProjets;
+	}
+
+	public int existeTacheNotfinish(Long numProjet) {
+		//verifie s'il ya des taches en cours 
+		int val = 0;
+		Date now = new Date();
+		List<Tache> tasks = projService.projectTasks(numProjet);
+		if(tasks != null) {
+			for(Tache tache: tasks) {
+				if(tache.getTauxAvancement() != 100) {
+					val = val + 1;
+					break;
+				}
+			}
+		}
+		return val;
+	}
+
+	@Override
+	public List<Projet> getProjetsEncours(String username) {
+		// liste des projets en cours 
+		List<Projet> mesProjets = this.getProjectOfUser(username);
+		List<Projet> projetsEncours = new ArrayList<>();
+		Date now = new Date();
+		if(mesProjets != null) {
+			for(Projet p: mesProjets) {
+				if(p.getFinProjet().after(now) && existeTacheNotfinish(p.getNumProjet()) == 1) {
+					projetsEncours.add(p);
+				}
+			}
+		}
+		return projetsEncours;
+	}
+
+//......................................................................................................
+	@Override
+	public List<Projet> getProjetEnretard(String username) {
+		// liste des projets en retard
+		List<Projet> mesProjets = this.getProjectOfUser(username);
+		List<Projet> projetsEnRetard = new ArrayList<>();
+		Date now = new Date();
+		if(mesProjets != null) {
+			for(Projet p: mesProjets) {
+				if(p.getFinProjet().before(now) && existeTacheNotfinish(p.getNumProjet()) == 1) {
+					projetsEnRetard.add(p);
+				}
+			}
+		}
+		return projetsEnRetard;
+	}
+
+
+//.........................................................................................................
+	@Override
+	public List<Projet> getProjetTermines(String username) {
+		//liste des projets terminés
+		List<Projet> mesProjets = this.getProjectOfUser(username);
+		List<Projet> projetsTerminees = new ArrayList<>();
+		Date now = new Date();
+		if(mesProjets != null) {
+			for(Projet p: mesProjets) {
+				if(existeTacheNotfinish(p.getNumProjet()) == 0) {
+					projetsTerminees.add(p);
+				}
+			}
+		}
+		return projetsTerminees;
 	}
 
 

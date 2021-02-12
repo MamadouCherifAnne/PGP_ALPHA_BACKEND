@@ -30,7 +30,7 @@ public class Fichier implements Serializable {
 	private String nomFichier;
 	
 	@JsonBackReference(value="fichier-tache")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name ="tache_concerne_num_tache")
 	private Tache tacheConcerne;
 

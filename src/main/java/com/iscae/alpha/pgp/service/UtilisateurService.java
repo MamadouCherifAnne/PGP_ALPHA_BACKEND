@@ -54,4 +54,13 @@ public interface UtilisateurService {
 
 		// Afficher les projets d'un utilisateur
 		public List<Projet> getProjectOfUser(String username );
+		
+		// les projets en cours 
+		public List<Projet> getProjetsEncours(String username);
+		
+		// les projets en retard
+		public List<Projet> getProjetEnretard(String username);
+		
+		// les projets terminés
+		public List<Projet> getProjetTermines(String username);
 }

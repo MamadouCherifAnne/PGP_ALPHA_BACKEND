@@ -1,5 +1,6 @@
 package com.iscae.alpha.pgp.service;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,8 +8,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -120,10 +138,125 @@ public class ProjetServiceImp implements ProjetService{
 	}
 
 	@Override
-	public Projet export(Projet projet) {
+	public  Projet export(Projet projet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//exportation vers Excel
+	public  ByteArrayInputStream exportProjet(Projet projet) {
+		
+		try(Workbook workbook = new XSSFWorkbook()){
+			Sheet sheet = workbook.createSheet("Projet");
+			
+			Row row = sheet.createRow(0);
+	        CellStyle headerCellStyle = workbook.createCellStyle();
+	        headerCellStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+	        headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	        // Creating header
+	        Cell cell = row.createCell(0);
+	        cell.setCellValue("Nom Tache");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	        cell = row.createCell(1);
+	        cell.setCellValue("Durée");
+	        cell.setCellStyle(headerCellStyle);
+	
+	        cell = row.createCell(2);
+	        cell.setCellValue("Charge Tache");
+	        cell.setCellStyle(headerCellStyle);
+	
+	        cell = row.createCell(3);
+	        cell.setCellValue("Niveau priorite");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue("Taux d'avancement");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue("Statut");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	        cell = row.createCell(6);
+	        cell.setCellValue("Nom Phase");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	        cell = row.createCell(7);
+	        cell.setCellValue("Date debut");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	        cell = row.createCell(8);
+	        cell.setCellValue("Date fin");
+	        cell.setCellStyle(headerCellStyle);
+	        
+	      
+	     // Creating data rows for each customer
+	        List<Tache> taches = projectTasks(projet.getNumProjet());
+	       for(int i = 0; i < taches.size(); i++) {
+	        	Row dataRow = sheet.createRow(i + 1);
+	        	dataRow.createCell(0).setCellValue(taches.get(i).getNomTache());
+	        	dataRow.createCell(1).setCellValue(taches.get(i).getDuree());
+	        	dataRow.createCell(2).setCellValue(taches.get(i).getChargeTache());
+	        	dataRow.createCell(3).setCellValue(taches.get(i).getNiveauPriorite());
+	        	dataRow.createCell(4).setCellValue(taches.get(i).getTauxAvancement());
+	        	
+	        	dataRow.createCell(5).setCellValue(tacheStatut(taches.get(i)));
+	      
+	        	dataRow.createCell(6).setCellValue(taches.get(i).getPhase().getNomTache());
+	        	dataRow.createCell(7).setCellValue(taches.get(i).getDebutTache().toString());
+	        	dataRow.createCell(8).setCellValue(taches.get(i).getFinTache().toString());
+	        } 
+	        
+	        
+	        
+	        // Making size of column auto resize to fit with data
+	        sheet.autoSizeColumn(0);
+	        sheet.autoSizeColumn(1);
+	        sheet.autoSizeColumn(2);
+	        sheet.autoSizeColumn(3);
+	        sheet.autoSizeColumn(4);
+	        sheet.autoSizeColumn(5);
+	        sheet.autoSizeColumn(6);
+	        sheet.autoSizeColumn(7);
+	        sheet.autoSizeColumn(8);
+	        
+	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	        workbook.write(outputStream);
+	        return new ByteArrayInputStream(outputStream.toByteArray());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	public String tacheStatut(Tache tache) {
+		String statut = "";
+		Date now = new Date();	 
+		if(tache.getTauxAvancement() == 100 && isFinished(tache) == 0) { statut = "Termée";}
+		 if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) { statut = "En retard";}
+		 if(tache.getDebutTache().before(now) && tache.getFinTache().after(now) &&tache.getTauxAvancement() != 100) {
+			 statut = "En cours";
+		 }
+		 
+		 return statut;
+	}
+	
+	public int isFinished(Tache tache){
+	    int find = 0;
+	    if(tache.getTachePrecedente() != null){
+	      for(Tache itache : tache.getTachePrecedente()){
+	        if(itache.getTauxAvancement() != 100){
+	          find = 1;
+	          break;
+	        }
+	      }
+	    }
+	    System.out.println("-------------"+find);
+	    return find;
+	  }
+	
 
 	@Override
 	public Projet findByDateFin(Date dateFin) {
@@ -326,6 +459,71 @@ public class ProjetServiceImp implements ProjetService{
 		long timer =(today.getTime()-limiteDate.getTime())/(1000 *3600*24);
 		System.out.println("VOICI LA DATE DE 6 MOIS AVANT ::::#####"+timer);
 		return 0;
+	}
+
+	public int getMyProjectsActifs(String username) {
+		// le projet est un cours si la dalai n'est pas encore depassé et qu'il reste des taches en cours
+ 		List<Projet> projets = userService.getMyProjects(username);
+		int cmpt = 0;
+		 Date now = new Date();
+		if(projets != null) {
+			for(Projet projet: projets) {
+				if(projet.getFinProjet().after(now) && verifTacheNotfinish(projet.getNumProjet()) == 1) {
+					cmpt = cmpt + 1;
+				}
+			}
+		}
+		return cmpt;
+	}
+
+	public int verifTacheNotfinish(Long numProjet) {
+		int val = 0;
+		Date now = new Date();
+		List<Tache> tasks = projectTasks(numProjet);
+		if(tasks != null) {
+			for(Tache tache: tasks) {
+				if(tache.getTauxAvancement() != 100) {
+					val = val + 1;
+					break;
+				}
+			}
+		}
+		return val;
+	}
+	
+	//............................................................
+	/////////////////////////////////////////////////////////
+	@Override
+	public int getMyProjectsEnretards(String username) {
+		// le projet est en retard si le delai est depassé et quil reste des taches en cours
+		List<Projet> projets = userService.getMyProjects(username);
+		int cmpt = 0;
+		 Date now = new Date();
+		if(projets != null) {
+			for(Projet projet: projets) {
+				if(projet.getFinProjet().before(now) && verifTacheNotfinish(projet.getNumProjet()) == 1) {
+					cmpt = cmpt + 1;
+				}
+			}
+		}
+		return cmpt;
+	}
+
+	@Override
+	public int getMyProjectsTermines(String username) {
+		// TODO Auto-generated method stub
+		List<Projet> projets = userService.getMyProjects(username);
+		int cmpt = 0;
+		 Date now = new Date();
+		 if(projets != null) {
+				for(Projet projet: projets) {
+					if(verifTacheNotfinish(projet.getNumProjet()) == 0) {
+						cmpt = cmpt + 1;
+					}
+				}
+		}
+		return cmpt;
+
 	}
 	
 

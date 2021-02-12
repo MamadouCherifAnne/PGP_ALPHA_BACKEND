@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +39,7 @@ import com.iscae.alpha.pgp.service.TacheServiceImpl;
 
 @RestController
 @RequestMapping("/fichier")
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FichierController {
 	@Autowired
 	private FichierServiceImp fichierservice;
@@ -69,7 +70,7 @@ public class FichierController {
 	    }
 	  }
 	 
-	/* @GetMapping("/allfiles")
+	@GetMapping("/allfiles")
 	  public ResponseEntity<List<ResponseFile>> getListFiles() {
 	    List<ResponseFile> files = fichierservice.findAll().map(dbFile -> {
 	      String fileDownloadUri = ServletUriComponentsBuilder
@@ -86,7 +87,7 @@ public class FichierController {
 	    }).collect(Collectors.toList());
 
 	    return ResponseEntity.status(HttpStatus.OK).body(files);
-	  } */
+	  } 
 
 	  @GetMapping("/findFileById/{id}")
 	  public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
@@ -97,18 +98,15 @@ public class FichierController {
 	        .body(file.getLogo());
 	  }
 	  
-	 /* @GetMapping(path = "getFile/{id}")
-		public ResponseEntity<Resource> getFichier(@PathVariable Long id) throws Exception {
-		  Fichier file = fichierservice.fidById(id);
-
-			Path path = Paths.get(System.getProperty("user.home") + "/media/Imraguen/Documents/" + document.getFileName());
-			byte[] fileByte = Files.readAllBytes(path);
-
-			ByteArrayResource ressource = new ByteArrayResource(fileByte);
-
-			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + document.getOriginalName())
-					.contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(path.toFile().length()).body(ressource);
-		}*/
-
+	 @DeleteMapping("/deletefile/{idFile}")
+	 public String deleteFile(@PathVariable Long idFile) {
+		 try {
+			 fichierservice.deleteFile(idFile);
+			 return "fichier supprimé";
+		 }catch (Exception e) {
+			 
+			 return e.getMessage() + "Erreur le fichier n'est pas supprimé";
+		 }
+		 
+	 }
 }

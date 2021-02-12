@@ -18,6 +18,7 @@ import com.iscae.alpha.pgp.entities.AffectationUtilisateur;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Depense;
 import com.iscae.alpha.pgp.entities.Facture;
+import com.iscae.alpha.pgp.entities.Fichier;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.Projet;
 import com.iscae.alpha.pgp.entities.Tache;
@@ -389,9 +390,12 @@ public class TacheServiceImpl implements TacheService{
 		Phase phase  = new Phase();
 		Tache tache = this.findTache(idTache);
 		if(tache != null) {
-			 phase = tache.getPhase();
+			phase = tache.getPhase();
+			return phase;
+		}else {
+			return null;
 		}
-		return phase;
+		
 	}
 
 
@@ -414,6 +418,7 @@ public class TacheServiceImpl implements TacheService{
 		}
 
 	@Override
+
 	public double totalCoutTask(Long idTache) {
 		// Total de scout de la taches
 		double totale=0;
@@ -423,6 +428,14 @@ public class TacheServiceImpl implements TacheService{
 		}
 
 		return totale;
+	}
+	public List<Fichier> getFiles(Long idTache) {
+		Tache tache =findTache(idTache);
+		if(tache != null) {
+			return tache.getFichiers();
+		}
+		return null;
+
 	}
 
 	
