@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,13 +26,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.ProjectUtilisateursRepository;
 import com.iscae.alpha.pgp.dao.ProjetRepository;
 import com.iscae.alpha.pgp.dto.MembreProjetDto;
-import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.entities.ProjectUserID;
@@ -50,7 +54,11 @@ public class ProjetServiceImp implements ProjetService{
 	UtilisateurService userService;
 	@Autowired
 	ProjectUtilisateursRepository projetMembreRepo;
-
+	
+	@Autowired
+	TacheService tacheService;
+	
+	private final static Logger log= LoggerFactory.getLogger(ProjetServiceImp.class);
 	
 	@Override
 	public Projet AddProjet(Projet projet) {
@@ -428,6 +436,31 @@ public class ProjetServiceImp implements ProjetService{
 	}
 
 	@Override
+	public double coutTotalProject(Long idProject) {
+		double totale=0;
+		List<Tache> projectTsaks = new ArrayList<>();
+		// Calcul de la somme des cout de chaque taches
+		Projet projet = this.findProjetById(idProject);
+		if(projet != null) {
+			projectTsaks= this.projectTasks(idProject);
+			for (Tache tache : projectTsaks) {
+				totale = totale + tacheService.totalCoutTask(tache.getNumTache());
+			}
+		}
+		return totale;
+	}
+
+	@Override
+	public double coutProjectLastMonth(Long idProject) {
+		// Afficher le cout du Projet pendant 6 mois
+		Date limiteDate = new Date(System.currentTimeMillis()-24*60*60*1000*20);
+		Date today = new Date(System.currentTimeMillis());
+		log.info("La date d'hier"+limiteDate+" La date de today is"+today);
+		long timer =(today.getTime()-limiteDate.getTime())/(1000 *3600*24);
+		System.out.println("VOICI LA DATE DE 6 MOIS AVANT ::::#####"+timer);
+		return 0;
+	}
+
 	public int getMyProjectsActifs(String username) {
 		// le projet est un cours si la dalai n'est pas encore depassé et qu'il reste des taches en cours
  		List<Projet> projets = userService.getMyProjects(username);
@@ -490,6 +523,7 @@ public class ProjetServiceImp implements ProjetService{
 				}
 		}
 		return cmpt;
+
 	}
 	
 

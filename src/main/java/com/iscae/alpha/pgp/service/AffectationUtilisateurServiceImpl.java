@@ -43,6 +43,8 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 		UserToTache idAffect =  new UserToTache(userJob.getUser_task().getIdUser(), userJob.getUser_task().getIdTache());
 		userForJob.setUser_task(idAffect);
 		userForJob.setTempsPasser(userJob.getTempsPasser());
+		//userJob.setDateAffectation(new Date(System.currentTimeMillis()));
+		//System.out.println("VOICI La DATE DE LAFFECTATION"+ userJob.getDateAffectation());
 		Optional<AffectationUtilisateur> verifExistance = userForJobRepo.findById(idAffect);
 		if(!verifExistance.isPresent()) {
 			Utilisateur user =  userService.getUserById(idAffect.getIdUser());
@@ -167,7 +169,7 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 	@Override
 	public Collection<AffectationsTacheDto> getLatestAffectationsForUser(String username) {
 		
-		Date limiteDate = new Date(System.currentTimeMillis()-24*60*60*1000*3);
+		/*Date limiteDate = new Date(System.currentTimeMillis()-24*60*60*1000*3);
 		Date today = new Date(System.currentTimeMillis());
 		log.info("La date d'hier"+limiteDate+" La date de today is"+today);
 		Utilisateur user = userService.getUserByUsername(username);
@@ -194,8 +196,8 @@ public class AffectationUtilisateurServiceImpl implements AffectationUtilisateur
 			}
 			log.info("Les taches dont il est affecter avant 23 jours sont "+affectations.size());
 			
-		}
-		return affectations;
+		}*/
+		return null;//affectations;
 	}
 
 }

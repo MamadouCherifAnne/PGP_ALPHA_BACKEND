@@ -87,8 +87,13 @@ public interface TacheService {
 	// afficher la tache avec sa liste d'informations 
 	public infoDepenseTache getTaskInformationWithDepenses(Long idTache);
 	
+
+	// TotalCout de la tache
+	public double totalCoutTask(Long idTache);
+
 	//liste des fichier d'une tache
 	public List<Fichier> getFiles(Long idTache);
+
 
 
 }

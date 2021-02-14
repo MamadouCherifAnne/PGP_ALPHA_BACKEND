@@ -182,6 +182,12 @@ public class ProjetController {
 		public Utilisateur getProjectOwner(@PathVariable Long idProjet) {
 			return projetService.getProjectOwner(idProjet);
 		}
+		
+		//Afficher les cout du projet dans 6 mois passes
+		@GetMapping(value="/projectCoutLastMonths/{idProjet}")
+		public double getCoutProjectOfLatestMonths(@PathVariable Long idProjet) {
+			return projetService.coutProjectLastMonth(idProjet);
+		}
 
 		@GetMapping(value="/getprojetsActifs/{username}")
 		public int getprojetsActifs(@PathVariable String username) {
