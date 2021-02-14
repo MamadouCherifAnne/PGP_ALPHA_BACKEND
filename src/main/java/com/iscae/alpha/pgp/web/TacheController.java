@@ -195,7 +195,7 @@ public class TacheController {
 	}
 	
 
-	@GetMapping("/TasksInformation/{projetId}")
+	@GetMapping(value="/TasksInformation/{projetId}")
 	public InfoTaches tasksInformation(@PathVariable Long projetId) {
 		return tacheService.TasksInformation(projetId);		
 	}

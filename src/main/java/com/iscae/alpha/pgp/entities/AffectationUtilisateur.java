@@ -26,7 +26,7 @@ public class AffectationUtilisateur implements Serializable {
 	@Column(name ="cout_par_heure")
 	private double coutParHeure;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="date_affectation",nullable=false)
+	@Column(name="date_affectation",nullable=true)
 	private Date dateAffectation;
 	public AffectationUtilisateur() {
 		super();
