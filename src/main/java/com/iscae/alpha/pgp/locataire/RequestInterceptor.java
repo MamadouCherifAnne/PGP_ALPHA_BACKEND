@@ -30,12 +30,13 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         
         Log.info("VOICI LE REQUEST URI DE LAUTHENTIFICATION "+requestURI);
         // implementer en mode production :  if( requestURI.equals("/alfapgpcollaboratif/authenticate/login"))
-        if( requestURI.equals("/authenticate/login")) {
+        if( requestURI.equals("/authenticate/login") || requestURI.equals("/locataire/newLocataire") ) {
         	 
         	 tenantID="alfaconseiltenantbd";
+        	 Log.info("locataire ou Authentification");
          }
         // implementer en mode production :  if(!requestURI.equals("/alfapgpcollaboratif/authenticate/login"))
-         if(!requestURI.equals("/authenticate/login")) {
+         if(!requestURI.equals("/authenticate/login") && !requestURI.equals("/locataire/newLocataire")) {
         	// S'il s'agit d'une autre type de requete on essaye d'interpreter la Key jwt
 				String jwtToken = request.getHeader(ConstantDeSecurity.HEADER_STRING);
 				System.out.println("Le TOKEN :"+jwtToken);

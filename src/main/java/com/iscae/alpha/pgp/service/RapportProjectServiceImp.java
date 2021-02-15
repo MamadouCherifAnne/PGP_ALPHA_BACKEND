@@ -30,13 +30,10 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 		 String statut= "";
 		 Date now = new Date();	 
 		 List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-		 Map<String, Object> item = new HashMap<String, Object>();
-		 item.put("projectName", p.getNomProjet());
-		 item.put("dateDebutProjet", p.getDebutProjet());
-		 item.put("dateFinProjet", p.getFinProjet());
+		 List<Map<String, Object>> items = new ArrayList<>();
 		 
 		 for(Phase phase: p.getPhases()) {
-			 item.put("phaseName", phase.getNomTache());
+			 
 			 for(Tache tache: phase.getTache()) {
 				 if(!(tache.getFinTache()==null)) {
 				 //String statut = "demarée";
@@ -46,17 +43,24 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 					 statut = "En cours";
 				 }
 				 String avancement = ""+ tache.getTauxAvancement()+" %";
+				 Map<String, Object> item = new HashMap<String, Object>();
+				 item.put("phaseName", phase.getNomTache());
+				 item.put("projectName", p.getNomProjet());
+				 item.put("dateDebutProjet", p.getDebutProjet());
+				 item.put("dateFinProjet", p.getFinProjet());
+				 
 				 item.put("taskName", tache.getNomTache());
 				 item.put("statut", statut);
 				 item.put("avancemant", avancement);
 				 item.put("dateDebutTask", tache.getDebutTache());
 				 item.put("dateFinTask", tache.getFinTache());
 				 item.put("priorite", tache.getNiveauPriorite()); 
+				 items.add(item);
 			 }
 			// result.add(item);
 			 }
 		 }
-		 result.add(item);
+		 result.addAll(items);
 		 
 		return result;
 	}

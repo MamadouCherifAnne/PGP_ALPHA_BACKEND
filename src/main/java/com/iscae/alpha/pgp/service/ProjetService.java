@@ -78,5 +78,7 @@ public interface ProjetService {
 		public int getMyProjectsEnretards(String username);
 		
 		public int getMyProjectsTermines(String username);
+		
+		//envoi de rapport 
 
 }

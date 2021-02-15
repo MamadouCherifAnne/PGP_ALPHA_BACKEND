@@ -38,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		// Les privileges sur l'accees aux services
 		http.authorizeRequests().antMatchers("/authenticate/login").permitAll();
+		http.authorizeRequests().antMatchers("/locataire/newLocataire").permitAll();
 		http.authorizeRequests().antMatchers("/utilisateur/all/**").permitAll();
 		http.authorizeRequests().antMatchers("/rapport/export/**").permitAll();
 		http.authorizeRequests().antMatchers("/utilisateur/new/**").permitAll();
