@@ -405,7 +405,7 @@ public class ProjetServiceImp implements ProjetService{
 		// suppression d'un membre dans le projet
 		Utilisateur user= userService.getUserById(idMembre.getIdUser());
 		if(user != null) {
-			List<Projet> projectsUser = userService.getMyProjects(user.getUsername());
+			List<Projet> projectsUser = userService.getProjectOfUser(user.getUsername());
 			if(projectsUser != null && !projectsUser.isEmpty()) {
 				for (Projet projet : projectsUser) {
 					if(projet.getNumProjet() == idMembre.getIdProjet()) {
@@ -463,7 +463,7 @@ public class ProjetServiceImp implements ProjetService{
 
 	public int getMyProjectsActifs(String username) {
 		// le projet est un cours si la dalai n'est pas encore depassé et qu'il reste des taches en cours
- 		List<Projet> projets = userService.getMyProjects(username);
+ 		List<Projet> projets = userService.getProjectOfUser(username);
 		int cmpt = 0;
 		 Date now = new Date();
 		if(projets != null) {
@@ -482,7 +482,7 @@ public class ProjetServiceImp implements ProjetService{
 		List<Tache> tasks = projectTasks(numProjet);
 		if(tasks != null) {
 			for(Tache tache: tasks) {
-				if(tache.getTauxAvancement() != 100) {
+				if(tache.getType()==null && tache.getTauxAvancement() != 100) {
 					val = val + 1;
 					break;
 				}
@@ -496,7 +496,7 @@ public class ProjetServiceImp implements ProjetService{
 	@Override
 	public int getMyProjectsEnretards(String username) {
 		// le projet est en retard si le delai est depassé et quil reste des taches en cours
-		List<Projet> projets = userService.getMyProjects(username);
+		List<Projet> projets = userService.getProjectOfUser(username);
 		int cmpt = 0;
 		 Date now = new Date();
 		if(projets != null) {
@@ -512,7 +512,7 @@ public class ProjetServiceImp implements ProjetService{
 	@Override
 	public int getMyProjectsTermines(String username) {
 		// TODO Auto-generated method stub
-		List<Projet> projets = userService.getMyProjects(username);
+		List<Projet> projets = userService.getProjectOfUser(username);
 		int cmpt = 0;
 		 Date now = new Date();
 		 if(projets != null) {
