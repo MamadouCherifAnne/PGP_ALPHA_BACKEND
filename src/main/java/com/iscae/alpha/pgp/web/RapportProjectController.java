@@ -47,7 +47,7 @@ public class RapportProjectController {
 		System.out.println("point d'entré");
 		try {
 			System.out.println("point de repere1");
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.reportProjet(projetId));
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.reporttacheProjet(projetId));
 			System.out.println("point de repere2");
 			File file = ResourceUtils.getFile("classpath:rapportprotect.jrxml");
 			System.out.println("point de repere3");
@@ -56,7 +56,7 @@ public class RapportProjectController {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperRaport, null, dataSource);
 			System.out.println("point de repere vv");
 			JasperExportManager.exportReportToPdfFile(jasperPrint, "C:\\Users\\Oumar BA\\Desktop\\Rapports"+"\\rapportprojet.pdf");
-			
+			System.out.println("point de repere v8");
 			return "rapport généré dans"+"C:\\\\Users\\\\Oumar BA\\\\Desktop\\\\Rapports";
 		}catch(Exception e) {
 			return "ya un problem";

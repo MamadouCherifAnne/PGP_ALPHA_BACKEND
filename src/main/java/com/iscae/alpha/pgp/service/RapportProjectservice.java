@@ -11,5 +11,7 @@ public interface RapportProjectservice {
 	
 	public List<Map<String, Object>> reportProjet(Long projetId );
 
+	public List<Map<String, Object>> reporttacheProjet(Long projetId );
+	
 	public List<Map<String, Object>> rapportPhase(Long phaseId);
 }

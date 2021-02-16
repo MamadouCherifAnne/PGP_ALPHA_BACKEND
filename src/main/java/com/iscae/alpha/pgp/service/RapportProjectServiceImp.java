@@ -30,15 +30,16 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 		 String statut= "";
 		 Date now = new Date();	 
 		 List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-		 Map<String, Object> item = new HashMap<String, Object>();
-		 item.put("projectName", p.getNomProjet());
-		 item.put("dateDebutProjet", p.getDebutProjet());
-		 item.put("dateFinProjet", p.getFinProjet());
+		
 		 
 		 for(Phase phase: p.getPhases()) {
-			 item.put("phaseName", phase.getNomTache());
+			 Map<String, Object> item = new HashMap<String, Object>();
+			// item.put("projectName", p.getNomProjet());
+			// item.put("dateDebutProjet", p.getDebutProjet());
+			 //item.put("dateFinProjet", p.getFinProjet());
+			 //item.put("phaseName", phase.getNomTache());
 			 for(Tache tache: phase.getTache()) {
-				 if(!(tache.getFinTache()==null)) {
+				 //if(tache.getFinTache() != null) {
 				 //String statut = "demarée";
 				 if(tache.getTauxAvancement() == 100 && isFinished(tache) == 0) { statut = "Termée";}
 				 if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) { statut = "En retard";}
@@ -52,11 +53,14 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 				 item.put("dateDebutTask", tache.getDebutTache());
 				 item.put("dateFinTask", tache.getFinTache());
 				 item.put("priorite", tache.getNiveauPriorite()); 
+				 result.add(item);
+			 
+				 
 			 }
-			// result.add(item);
-			 }
+			
+			
 		 }
-		 result.add(item);
+		 
 		 
 		return result;
 	}
@@ -106,6 +110,34 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 		 }
 		
 		 
+		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> reporttacheProjet(Long projetId) {
+		Projet p = projetService.findProjetById(projetId);
+		String statut= "";
+		Date now = new Date();	 
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+		List<Tache> taches = projetService.projectTasks(projetId);
+		for(Tache tache: taches) {
+			
+			 if(tache.getTauxAvancement() == 100 && isFinished(tache) == 0) { statut = "Termée";}
+			 if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) { statut = "En retard";}
+			 if(tache.getDebutTache().before(now) && tache.getFinTache().after(now) &&tache.getTauxAvancement() != 100) {
+				 statut = "En cours";
+			 }
+			 String avancement = ""+ tache.getTauxAvancement()+" %";
+			 Map<String, Object> item = new HashMap<String, Object>();
+			 item.put("taskName", tache.getNomTache());
+			 item.put("statut", statut);
+			 item.put("avancemant", avancement);
+			 item.put("dateDebutTask", tache.getDebutTache());
+			 item.put("dateFinTask", tache.getFinTache());
+			 item.put("priorite", tache.getNiveauPriorite()); 
+			 result.add(item);
+		}
+		System.out.println("LE SIZE DE LA LISTE DITEM DE TACHE est  #########  "+result.size());
 		return result;
 	}
 
