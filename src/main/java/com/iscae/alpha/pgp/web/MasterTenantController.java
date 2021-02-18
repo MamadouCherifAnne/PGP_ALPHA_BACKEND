@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.iscae.alpha.pgp.ConstantWebApi;
+import com.iscae.alpha.pgp.dto.TenantCompteDto;
+import com.iscae.alpha.pgp.dto.UtilisateurDto;
 import com.iscae.alpha.pgp.entities.DataSourceConfig;
+import com.iscae.alpha.pgp.entities.Utilisateur;
 import com.iscae.alpha.pgp.service.MasterTenantService;
 
 
@@ -18,18 +23,48 @@ public class MasterTenantController {
 	@Autowired
 	MasterTenantService masterTenantservice;
 	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	private static final String urlToAlfaSecurityApp = "utilisateur/";
+	
 	@PostMapping(value = "/newLocataire")
-	public String addNewTenant(@RequestBody DataSourceConfig tenantDS) {
-		DataSourceConfig ds = null;
-		ds =masterTenantservice.addNewLocataire(tenantDS.getName(), tenantDS.getUrl(), tenantDS.getDriverClassName(), 
-				tenantDS.getUrl(), tenantDS.getPassword());
-		if(ds == null) {
-			return "Le compte n'a pas pu être créer! contactez le service Client";
+	public int  addNewTenant(@RequestBody TenantCompteDto compte) {
+		DataSourceConfig tenantDS = compte.getTenantCompte();
+		//DataSourceConfig ds = null;
+	
+		if(masterTenantservice.getByTenantId(compte.getProprietaire().getCompany()) != null) {
+			return 0;
 			
 		}else {
-			return "Votre espace de travail va être configurer. vous allez recevoir un mail de confirmation, merci de patienter!";
-	
+			Utilisateur user   = compte.getProprietaire();
+			// preparer l'ajout simultane dans l'api de gestion de l'authentification"
+			UtilisateurDto userDto = new UtilisateurDto();
+			userDto.setUsername(user.getUsername());
+			userDto.setNom(user.getNom());
+			userDto.setPrenom(user.getPrenom());
+			userDto.setActif(false);
+			userDto.setTelephone(user.getTelephone());
+			userDto.setEmail(user.getEmail());
+			userDto.setAdresse(user.getAdresse());
+			userDto.setCompany(user.getCompany());
+			userDto.setPassword(user.getPassword());
+			
+			String service ="new";
+			String url = ConstantWebApi.urlToSecurityApp + urlToAlfaSecurityApp + service;
+			final Utilisateur responseBody = restTemplate.postForObject(url, userDto, Utilisateur.class);
+			if(responseBody!=null) {
+					// creer lespace et l4utilisqteur
+				//masterTenantservice.addNewLocataire(tenantDS.getName());
+				return 1;
+			}else {
+				return -1;
+			}
 		}
 	}
+	
+	// add proprietaire
+	
+	
 	
 }

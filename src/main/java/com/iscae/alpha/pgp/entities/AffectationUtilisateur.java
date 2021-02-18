@@ -26,8 +26,6 @@ public class AffectationUtilisateur implements Serializable {
 	@Column(name ="cout_par_heure")
 	private double coutParHeure;
 
-	
-
 	public AffectationUtilisateur() {
 		super();
 		// TODO Auto-generated constructor stub

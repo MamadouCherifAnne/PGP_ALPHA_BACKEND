@@ -355,9 +355,9 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 		int val = 0;
 		Date now = new Date();
 		List<Tache> tasks = projService.projectTasks(numProjet);
-		if(tasks != null) {
+		if(tasks != null ) {
 			for(Tache tache: tasks) {
-				if(tache.getTauxAvancement() != 100) {
+				if( tache.getType()==null && tache.getTauxAvancement() != 100) {
 					val = val + 1;
 					break;
 				}

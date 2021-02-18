@@ -42,7 +42,7 @@ public class JWTAutorisationFilter extends OncePerRequestFilter {
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		//mode production :: else if(request.getRequestURI().equals("/alfapgpcollaboratif/authenticate/login"))
-		else if(request.getRequestURI().equals("/authenticate/login")) {
+		else if(request.getRequestURI().equals("/authenticate/login") || request.getRequestURI().equals("/locataire/newLocataire") ) {
 			filterChain.doFilter(request, response);
 			return;
 		}

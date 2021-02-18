@@ -22,7 +22,7 @@ public class MasterTenantServiceImpl  implements MasterTenantService{
 		return null;
 	}
 	@Override
-	public DataSourceConfig addNewLocataire(String tenantName, String url,String driverClass,String username,String password) {
+	public DataSourceConfig addNewLocataire(String tenantName) {
 		// TODO Auto-generated method stub
 		DataSourceConfig newTenant = new DataSourceConfig();
 		DataSourceConfig tenantDb =this.getByTenantId(tenantName);

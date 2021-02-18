@@ -7,7 +7,7 @@ public class ReportProjet {
 	private String taskName;
 	private String phaseName;
 	private String statut;
-	private double avancemant;
+	private String avancemant;
 	private Date dateDebutProjet;
 	private Date dateFinProjet;
 	private Date dateDebutTask;
@@ -76,11 +76,11 @@ public class ReportProjet {
 		this.dateDebutTask = dateDebutTask;
 	}
 
-	public double getAvancemant() {
+	public String getAvancemant() {
 		return avancemant;
 	}
 
-	public void setAvancemant(double avancemant) {
+	public void setAvancemant(String avancemant) {
 		this.avancemant = avancemant;
 	}
 

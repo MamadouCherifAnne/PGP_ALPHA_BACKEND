@@ -2,10 +2,12 @@ package com.iscae.alpha.pgp.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iscae.alpha.pgp.entities.Phase;
 import com.iscae.alpha.pgp.service.RapportProjectServiceImp;
 
 import net.sf.jasperreports.engine.JRException;
@@ -42,14 +45,16 @@ public class RapportProjectController {
 	private static final Logger log = LoggerFactory.getLogger(RapportProjectController.class);
 	
     
+	
+	
 	@GetMapping("/projet/{projetId}")
 	public String rapportProjet(@PathVariable Long projetId) throws JRException {
 		System.out.println("point d'entré");
 		try {
 			System.out.println("point de repere1");
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.reporttacheProjet(projetId));
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.rapportProjet1(projetId));
 			System.out.println("point de repere2");
-			File file = ResourceUtils.getFile("classpath:rapportprotect.jrxml");
+			File file = ResourceUtils.getFile("classpath:lerepport.jrxml");
 			System.out.println("point de repere3");
 			JasperReport jasperRaport = JasperCompileManager.compileReport(file.getAbsolutePath());
 			System.out.println("point de repere 4");
@@ -98,10 +103,10 @@ public class RapportProjectController {
 	public byte[] exportDailyOrders(Long projetId) throws IOException, JRException {
 	    
 		log.info("ENTRER DANS LA METHODE DE EXPORTDAILY DE RAPPORT");
-	    File file = ResourceUtils.getFile("classpath:rapportprotect.jrxml");
+	    File file = ResourceUtils.getFile("classpath:lerepport.jrxml");
 	    JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 	    log.info("RECUPERATION DES TACHES DU PROJET RAPPORTSERVICE");
-	    final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.reportProjet(projetId));
+	    final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(rapportService.rapportProjet1(projetId));
 	    Map<String, Object> parameters = new HashMap<>();
 	    parameters.put("createdBy", "Nikola");
 	    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
@@ -114,7 +119,13 @@ public class RapportProjectController {
 	    JasperExportManager.exportReportToPdfStream(jasperPrint, byteArrayOutputStream);
 	    return byteArrayOutputStream;
 	}
+	
+	
 	///////////////////////////////////////
-
+	@GetMapping("/exporttest/{idprojet}")
+	public List<Phase> exportPhase(@PathVariable Long idprojet) throws FileNotFoundException, JRException {
+		return rapportService.exportPhase(idprojet);
+	}
+ 
 	
 }

@@ -212,7 +212,7 @@ public class TacheController {
 		return tacheService.getPhaseDuneTache(idtache);
 	}
 	
-	@GetMapping(value="/{idTache}")
+	@GetMapping(value="/gettachewithdepenses/{idTache}")
 	public infoDepenseTache gettacheWithDepenses(@PathVariable Long idTache) {
 		return tacheService.getTaskInformationWithDepenses(idTache);
 	}
