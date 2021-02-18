@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.entities.Projet;
+import com.iscae.alpha.pgp.rapport.ReportProjet;
 
 public interface RapportProjectservice {
 	
-	public List<Map<String, Object>> reportProjet(Long projetId );
 
 	public List<Map<String, Object>> rapportPhase(Long phaseId);
+
+	List<ReportProjet> rapportProjet1(Long projetId);
 }
