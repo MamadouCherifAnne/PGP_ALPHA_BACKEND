@@ -43,7 +43,7 @@
 					<textElement textAlignment="Center">
 						<font size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Debut Projet:]]></text>
+					<text><![CDATA[Début Projet:]]></text>
 				</staticText>
 				<textField textAdjust="StretchHeight">
 					<reportElement x="117" y="56" width="111" height="20" forecolor="#FFFF00" uuid="cb09a9ec-647c-42b9-813e-48b684bf8670">
@@ -90,7 +90,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tache]]></text>
+				<text><![CDATA[Tâche]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="52" y="0" width="77" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="81aef851-06e5-4a74-b3af-79aeeec54b79">
@@ -117,7 +117,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Avancemant]]></text>
+				<text><![CDATA[Avancement]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="286" y="0" width="104" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b149bdb3-6f11-45fe-8c44-2453552d73f1">
@@ -126,7 +126,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Date debut]]></text>
+				<text><![CDATA[Date début]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="390" y="0" width="91" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c029afda-6455-469d-a2e2-153bddc25425">
@@ -144,7 +144,7 @@
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Priorite]]></text>
+				<text><![CDATA[Priorité]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

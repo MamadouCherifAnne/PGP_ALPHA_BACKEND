@@ -12,7 +12,7 @@ public class ReportProjet {
 	private Date dateFinProjet;
 	private Date dateDebutTask;
 	private Date dateFinTask;
-	private String priorite;
+	private String priorite; 
 	
 	public ReportProjet() {
 		super();
