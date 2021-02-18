@@ -149,10 +149,13 @@ public class TacheServiceImpl implements TacheService{
 	public Tache addJalon(Tache tache) {
 		// TODO Auto-generated method stub
 		Tache jalon=new Tache();
+		
 		jalon=tache;
 		jalon.setDuree(0);
 		jalon.setFinTache(null);
+		jalon.setDebutTache(tache.getDebutTache());
 		jalon.setType("Jalon");
+		jalon.setPhase(tache.getPhase());
 		
 		return tacheRepository.save(jalon);
 	}
@@ -269,12 +272,14 @@ public class TacheServiceImpl implements TacheService{
 			for(Phase phase: p.getPhases()) {
 				System.err.println("La liste des phases"+phase);
 				for(Tache tache: phase.getTache()) {
+					if(tache.getType() != null) {
 					Log.info("date de debut tache"+tache.getDebutTache());
 					Log.info("date de fin tache"+tache.getFinTache());
 					Log.info("taux d'avencement"+tache.getTauxAvancement());
 					
 					if((tache.getDebutTache().before(now) || tache.getDebutTache() == now) && tache.getFinTache().after(now) && tache.getTauxAvancement() != 100) {
 						cmpt = cmpt + 1;
+					}
 					}
 				}
 					
@@ -304,7 +309,7 @@ public class TacheServiceImpl implements TacheService{
 			for(Phase phase: p.getPhases()) {
 				System.err.println("La liste des phases"+phase);
 				for(Tache tache: phase.getTache()) {
-					if(tache.getTauxAvancement() == 100 && isFinished(tache) == 0) {
+					if(tache.getType() == null && tache.getTauxAvancement() == 100 && isFinished(tache) == 0) {
 						cmpt = cmpt + 1;
 					}
 				}

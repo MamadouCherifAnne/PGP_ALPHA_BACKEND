@@ -1,22 +1,14 @@
 package com.iscae.alpha.pgp.web;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.compress.utils.IOUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iscae.alpha.pgp.dto.JalonDto;
 import com.iscae.alpha.pgp.dto.MembreProjetDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
@@ -133,6 +126,13 @@ public class ProjetController {
 		public List<Tache> allJalonsProject(@PathVariable Long idProjet){
 			
 			return projetService.getAllJalons(idProjet);
+		}
+		
+		
+		@GetMapping("/jalonsOfProject/{idProjet}")
+		public JalonDto jalonsofTheProjet(@PathVariable Long idProjet){
+			
+			return projetService.getJalonsInfos(idProjet);
 		}
 
 	// Tout les commentaires du projets

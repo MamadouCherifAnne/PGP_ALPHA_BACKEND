@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import com.iscae.alpha.pgp.dao.ProjectUtilisateursRepository;
 import com.iscae.alpha.pgp.dao.ProjetRepository;
+import com.iscae.alpha.pgp.dto.JalonDto;
 import com.iscae.alpha.pgp.dto.MembreProjetDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
@@ -524,6 +525,25 @@ public class ProjetServiceImp implements ProjetService{
 		}
 		return cmpt;
 
+	}
+
+	@Override
+	public JalonDto getJalonsInfos(Long numProjet) {
+		// TODO Auto-generated method stub
+		JalonDto mesJalons=new JalonDto();
+		List<Tache> jalons = this.getAllJalons(numProjet);
+		if(jalons != null) {
+			for (Tache jalon : jalons) {
+				if(jalon.getDebutTache() != null) {
+					if(jalon.getDebutTache().before(new Date())) {
+						mesJalons.getJalonRetards().add(jalon);
+						
+					}
+					mesJalons.getJalons().add(jalon);
+				}
+			}
+		}
+		return mesJalons;
 	}
 	
 

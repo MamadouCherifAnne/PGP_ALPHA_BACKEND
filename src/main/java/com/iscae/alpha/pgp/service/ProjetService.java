@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.iscae.alpha.pgp.dto.JalonDto;
 import com.iscae.alpha.pgp.dto.MembreProjetDto;
 import com.iscae.alpha.pgp.entities.Commentaire;
 import com.iscae.alpha.pgp.entities.Phase;
@@ -80,5 +81,6 @@ public interface ProjetService {
 		public int getMyProjectsTermines(String username);
 		
 		//envoi de rapport 
-
+		// affichage de la liste des jalons en retards
+		public JalonDto getJalonsInfos(Long numProjet);
 }

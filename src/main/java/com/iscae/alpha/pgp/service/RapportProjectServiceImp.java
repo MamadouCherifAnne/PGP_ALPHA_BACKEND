@@ -30,7 +30,7 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 		 String statut= "";
 		 Date now = new Date();	 
 		 List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-		 List<Map<String, Object>> items = new ArrayList<>();
+		
 		 
 		 for(Phase phase: p.getPhases()) {
 			 
@@ -55,13 +55,13 @@ public class RapportProjectServiceImp implements RapportProjectservice {
 				 item.put("dateDebutTask", tache.getDebutTache());
 				 item.put("dateFinTask", tache.getFinTache());
 				 item.put("priorite", tache.getNiveauPriorite()); 
-				 items.add(item);
+				 result.add(item);
 			 }
-			// result.add(item);
+			 
 			 }
 		 }
-		 result.addAll(items);
 		 
+		 	System.out.println("LE SIZE DE LA LISTE DES ITEMS DE PROJET ##### "+result.size());
 		return result;
 	}
 	
