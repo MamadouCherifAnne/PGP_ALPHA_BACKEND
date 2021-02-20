@@ -545,6 +545,54 @@ public class ProjetServiceImp implements ProjetService{
 		}
 		return mesJalons;
 	}
+
+	@Override
+	public int getMyProjectsActifsAdmin() {
+		// le projet est un cours si la dalai n'est pas encore depassé et qu'il reste des taches en cours
+		 		List<Projet> projets = this.findAllProjets();
+				int cmpt = 0;
+				 Date now = new Date();
+				if(projets != null) {
+					for(Projet projet: projets) {
+						if(projet.getFinProjet().after(now) && verifTacheNotfinish(projet.getNumProjet()) == 1) {
+							cmpt = cmpt + 1;
+						}
+					}
+				}
+				return cmpt;
+			}
+	@Override
+	public int getMyProjectsEnretardsAdmin() {
+		// le projet est en retard si le delai est depassé et quil reste des taches en cours
+				List<Projet> projets = this.findAllProjets();
+				int cmpt = 0;
+				 Date now = new Date();
+				if(projets != null) {
+					for(Projet projet: projets) {
+						if(projet.getFinProjet().before(now) && verifTacheNotfinish(projet.getNumProjet()) == 1) {
+							cmpt = cmpt + 1;
+						}
+					}
+				}
+				return cmpt;
+			
+	}
+
+	@Override
+	public int getMyProjectsTerminesAdmin() {
+		List<Projet> projets = this.findAllProjets();
+		int cmpt = 0;
+		 Date now = new Date();
+		 if(projets != null) {
+				for(Projet projet: projets) {
+					if(verifTacheNotfinish(projet.getNumProjet()) == 0) {
+						cmpt = cmpt + 1;
+					}
+				}
+		}
+		return cmpt;
+
+	}
 	
 
 

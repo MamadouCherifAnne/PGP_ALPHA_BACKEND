@@ -63,4 +63,19 @@ public interface UtilisateurService {
 		
 		// les projets terminés
 		public List<Projet> getProjetTermines(String username);
+		
+		
+		// Les projets et ces etats pour un administrateurs
+		
+		// Afficher les projets d'un utilisateur admin
+		//public List<Projet> getProjectOfAdmins( );
+		
+		// les projets en cours  admin
+		public List<Projet> getProjetsEncoursAdmin();
+		
+		// les projets en retard
+		public List<Projet> getProjetEnretardAdmin();
+		
+		// les projets terminés
+		public List<Projet> getProjetTerminesAdmin();
 }

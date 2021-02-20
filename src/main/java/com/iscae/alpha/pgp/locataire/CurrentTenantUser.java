@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.iscae.alpha.pgp.TenantContexte;
 
 
-//@Component
+@Component
 public class CurrentTenantUser  implements CurrentTenantIdentifierResolver{ 
 
 

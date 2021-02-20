@@ -83,4 +83,11 @@ public interface ProjetService {
 		//envoi de rapport 
 		// affichage de la liste des jalons en retards
 		public JalonDto getJalonsInfos(Long numProjet);
+		
+		//etats des projets pour les admins
+		public int getMyProjectsActifsAdmin();
+		
+		public int getMyProjectsEnretardsAdmin();
+		
+		public int getMyProjectsTerminesAdmin();
 }

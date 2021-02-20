@@ -223,4 +223,22 @@ public class ProjetController {
 			ByteArrayInputStream stream = projetService.exportProjet(projet);
 			IOUtils.copy(stream, response.getOutputStream());
 		}
+		
+		// Letat des projets pour les administrateurs
+		
+		@GetMapping(value="/getprojetsActifsAdmin")
+		public int getprojetsActifsAdmin() {
+			return  projetService.getMyProjectsActifsAdmin();
+		}
+		
+		@GetMapping(value="/getprojetsEnretardsAdmin")
+		public int getprojetsEnretardsAdmin() {
+			return  projetService.getMyProjectsEnretardsAdmin();
+		}
+		
+		@GetMapping(value="/getprojetTerminesAdmin")
+		public int getprojetsTermines() {
+			return projetService.getMyProjectsTerminesAdmin();
+		}
+		
 }

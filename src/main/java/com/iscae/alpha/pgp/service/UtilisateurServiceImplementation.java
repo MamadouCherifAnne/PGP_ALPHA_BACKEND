@@ -418,5 +418,58 @@ public class UtilisateurServiceImplementation implements UtilisateurService{
 	}
 
 
+
+	@Override
+	public List<Projet> getProjetsEncoursAdmin() {
+		List<Projet> mesProjets = this.projService.findAllProjets();
+		List<Projet> projetsEncours = new ArrayList<>();
+		Date now = new Date();
+		if(mesProjets != null) {
+			for(Projet p: mesProjets) {
+				if(p.getFinProjet().after(now) && existeTacheNotfinish(p.getNumProjet()) == 1) {
+					projetsEncours.add(p);
+				}
+			}
+		}
+		return projetsEncours;
+	}
+
+
+
+	@Override
+	public List<Projet> getProjetEnretardAdmin() {
+		// liste des projets en retard
+				List<Projet> mesProjets = projService.findAllProjets();
+				List<Projet> projetsEnRetard = new ArrayList<>();
+				Date now = new Date();
+				if(mesProjets != null) {
+					for(Projet p: mesProjets) {
+						if(p.getFinProjet().before(now) && existeTacheNotfinish(p.getNumProjet()) == 1) {
+							projetsEnRetard.add(p);
+						}
+					}
+				}
+				return projetsEnRetard;
+	}
+
+
+
+	@Override
+	public List<Projet> getProjetTerminesAdmin() {
+		//liste des projets terminés
+				List<Projet> mesProjets = this.projService.findAllProjets();
+				List<Projet> projetsTerminees = new ArrayList<>();
+				Date now = new Date();
+				if(mesProjets != null) {
+					for(Projet p: mesProjets) {
+						if(existeTacheNotfinish(p.getNumProjet()) == 0) {
+							projetsTerminees.add(p);
+						}
+					}
+				}
+				return projetsTerminees;
+	}
+
+
 }
    

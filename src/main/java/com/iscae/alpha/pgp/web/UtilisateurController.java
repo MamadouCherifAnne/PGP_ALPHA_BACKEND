@@ -251,5 +251,25 @@ public class UtilisateurController {
 			HttpHeaders header = new HttpHeaders();
 			return header;
 		}
+		
+		
+		
+		// Etat des projets pour les administrateurs du workspace
+		
+		@GetMapping(value="/listOfprojetEncoursAdmin")
+		public List<Projet> listOfprojetEncoursAdmin(){
+			return userService.getProjetsEncoursAdmin();
+		}
+		
+		@GetMapping(value="/listOfprojetEnRetardAdmin")
+		public List<Projet> listOfprojetEnRetardAdmin(){
+			return userService.getProjetEnretardAdmin();
+		}
+
+		@GetMapping(value="/listOfprojetTerminesAdmin")
+		public List<Projet> listOfprojetTerminesAdmin(){
+			return userService.getProjetTerminesAdmin();
+		}
+		
 
 }
