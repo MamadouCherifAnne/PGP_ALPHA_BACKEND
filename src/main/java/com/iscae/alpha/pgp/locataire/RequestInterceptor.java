@@ -28,12 +28,12 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
          String tenantID = request.getHeader("Authorization");
         String requestURI = request.getRequestURI();
         
-        Log.info("VOICI LE REQUEST URI DE LAUTHENTIFICATION "+requestURI);
-        // implementer en mode production :  if( requestURI.equals("/alfapgpcollaboratif/authenticate/login"))
+        Log.info("VOICI LE REQUEST URI DE LAUTHENTIFICATION "+request.getRequestURL());
+        // implementer en mode production :  if( requestURI.equals("/alfapgpcollaboratif/authenticate/login") || requestURI.equals("/alfapgpcollaboratif/locataire/newLocataire") 
         if( requestURI.equals("/authenticate/login") || requestURI.equals("/locataire/newLocataire") ) {
         	 
         	 tenantID="alfaconseiltenantbd";
-        	 Log.info("locataire ou Authentification");
+        	 Log.info("locataire ou Authentification "+request.getRequestURI());
          }
         // implementer en mode production :  if(!requestURI.equals("/alfapgpcollaboratif/authenticate/login"))
          if(!requestURI.equals("/authenticate/login") && !requestURI.equals("/locataire/newLocataire")) {

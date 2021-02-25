@@ -50,7 +50,7 @@ public class MasterTenantController {
 			userDto.setCompany(user.getCompany());
 			userDto.setPassword(user.getPassword());
 			
-			String service ="new";
+			String service ="newLocataire";
 			String url = ConstantWebApi.urlToSecurityApp + urlToAlfaSecurityApp + service;
 			final Utilisateur responseBody = restTemplate.postForObject(url, userDto, Utilisateur.class);
 			if(responseBody!=null) {

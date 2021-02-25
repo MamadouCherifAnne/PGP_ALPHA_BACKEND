@@ -146,12 +146,14 @@ public class UtilisateurController {
 				String url = ConstantWebApi.urlToSecurityApp + urlToAlfaSecurityApp + service;
 				System.out.println("VOICI LA KEY JWT de la requete de la modification"+jwtKey);
 				HttpEntity<?> httpEntity= new HttpEntity<>(user,header);
-				final ResponseEntity<Utilisateur> responseBody = restTemplate.exchange(url, HttpMethod.POST,httpEntity, Utilisateur.class);
-				System.out.println("VOICI LA KEY JWT de la requete de la modification"+responseBody.getBody());
-				if(responseBody.getBody() != null) {
-					Utilisateur returnedUser= responseBody.getBody();
+				final Utilisateur responseBody = restTemplate.postForObject(url, user, Utilisateur.class);
+				//final ResponseEntity<Utilisateur> responseBody = restTemplate.exchange(url, HttpMethod.POST,httpEntity, Utilisateur.class);
+				System.out.println("VOICI LA KEY JWT de la requete de la modification"+responseBody);
+				if(responseBody != null) {
+					Utilisateur returnedUser= responseBody;//.getBody();
 					returnedUser.setIdUser(id);
 					Utilisateur user1= userService.updateUser(returnedUser);
+					System.out.println(returnedUser+"////////////////*************////////////");
 					System.out.println("VOICI LA KEY JWT"+jwtKey);
 					
 					message ="Modification réalisé avec succées";
