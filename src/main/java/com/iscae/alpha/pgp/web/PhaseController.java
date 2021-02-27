@@ -30,7 +30,7 @@ public class PhaseController {
 		return  phaseService.addPhase(phase);
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/delete/{phaseId}")
 	public String deleatePhase(@PathVariable Long phaseId) {
 		try {
 			phaseService.deleatePhase(phaseId);
