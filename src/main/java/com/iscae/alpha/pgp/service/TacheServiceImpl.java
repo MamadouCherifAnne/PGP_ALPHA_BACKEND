@@ -272,15 +272,16 @@ public class TacheServiceImpl implements TacheService{
 			for(Phase phase: p.getPhases()) {
 				System.err.println("La liste des phases"+phase);
 				for(Tache tache: phase.getTache()) {
-					if(tache.getType() != null) {
+					if(tache.getType() == null) {
 					Log.info("date de debut tache"+tache.getDebutTache());
 					Log.info("date de fin tache"+tache.getFinTache());
 					Log.info("taux d'avencement"+tache.getTauxAvancement());
-					
+				
 					if((tache.getDebutTache().before(now) || tache.getDebutTache() == now) && tache.getFinTache().after(now) && tache.getTauxAvancement() != 100) {
 						cmpt = cmpt + 1;
 					}
 					}
+					
 				}
 					
 			}
@@ -347,7 +348,7 @@ public class TacheServiceImpl implements TacheService{
 					System.err.println("La liste des phases"+phase);
 					for(Tache tache: phase.getTache()) {
 						Log.info("date now"+now);
-						if(tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) {
+						if(tache.getType() == null && tache.getFinTache().before(now) && tache.getTauxAvancement() != 100) {
 							cmpt = cmpt + 1;
 						}
 					}
@@ -369,7 +370,7 @@ public class TacheServiceImpl implements TacheService{
 				System.err.println("La liste des phases"+phase);
 				for(Tache tache: phase.getTache()) {
 					Log.info("date now"+now);
-					if(tache.getDebutTache().after(now)) {
+					if(tache.getType() == null && tache.getDebutTache().after(now)) {
 						cmpt = cmpt + 1;
 					}
 				}

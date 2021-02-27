@@ -64,17 +64,30 @@ public class UtilisateurController {
 	}
 	
 	@PostMapping(value="/delete/{id}", consumes="application/json", produces="application/json")
-	public boolean deleteUser(@PathVariable Long id) {
+	public boolean deleteUser(@PathVariable Long id, @RequestHeader(name="Authorization")String jwtKey) {
 		boolean deleteResult=false;
-		String service ="delete/"+id;
+		Utilisateur user = userService.getUserById(id);
+		if(user !=null) {
+		String service ="delete/"+user.getUsername();
 		// Supprimer l'utilisateur de l'autre cote
+		Utilisateur userDto = new Utilisateur();
 		String url = ConstantWebApi.urlToSecurityApp+ urlToAlfaSecurityApp+service;
-		final boolean responseBody = restTemplate.getForObject(url, Boolean.class);
 		
-		if(responseBody==true) {
+		
+		// Preparer les entete des requetes
+		HttpHeaders header = getHeader();
+		header.set("Authorization",jwtKey);
+
+		HttpEntity<?> httpEntity= new HttpEntity<>(1,header);
+		final ResponseEntity<Boolean> responseBody = restTemplate.exchange(url, HttpMethod.POST,httpEntity, Boolean.class);
+		
+		if(responseBody.getBody()==true) {
 			 deleteResult=userService.deleteUser(id);
 		}
 			return deleteResult;
+		}else {
+			return deleteResult;
+		}
 	
 	}
 	
@@ -146,12 +159,14 @@ public class UtilisateurController {
 				String url = ConstantWebApi.urlToSecurityApp + urlToAlfaSecurityApp + service;
 				System.out.println("VOICI LA KEY JWT de la requete de la modification"+jwtKey);
 				HttpEntity<?> httpEntity= new HttpEntity<>(user,header);
-				final ResponseEntity<Utilisateur> responseBody = restTemplate.exchange(url, HttpMethod.POST,httpEntity, Utilisateur.class);
-				System.out.println("VOICI LA KEY JWT de la requete de la modification"+responseBody.getBody());
-				if(responseBody.getBody() != null) {
-					Utilisateur returnedUser= responseBody.getBody();
+				final Utilisateur responseBody = restTemplate.postForObject(url, user, Utilisateur.class);
+				//final ResponseEntity<Utilisateur> responseBody = restTemplate.exchange(url, HttpMethod.POST,httpEntity, Utilisateur.class);
+				System.out.println("VOICI LA KEY JWT de la requete de la modification"+responseBody);
+				if(responseBody != null) {
+					Utilisateur returnedUser= responseBody;//.getBody();
 					returnedUser.setIdUser(id);
 					Utilisateur user1= userService.updateUser(returnedUser);
+					System.out.println(returnedUser+"////////////////*************////////////");
 					System.out.println("VOICI LA KEY JWT"+jwtKey);
 					
 					message ="Modification réalisé avec succées";
